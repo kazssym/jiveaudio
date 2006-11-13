@@ -24,7 +24,7 @@
     <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
     <RELEASELIBPATH value="$(BCB)\lib\release"/>
     <LINKER value="ilink32"/>
-    <USERDEFINES value="_WINDOWS;STDC_HEADERS;HAVE_FCNTL_H;HAVE_IO_H;_DEBUG"/>
+    <USERDEFINES value="_WINDOWS;STDC_HEADERS=1;HAVE_FCNTL_H=1;HAVE_IO_H=1;HAVE_TEMPNAM=1;_DEBUG"/>
     <SYSDEFINES value="NO_STRICT;_NO_VCL;USEPACKAGES"/>
     <MAINSOURCE value="npaudio.bpf"/>
     <INCLUDEPATH value="plugin;java;nspr;$(DXSDK)\include;$(BCB)\include;$(BCB)\include\vcl"/>

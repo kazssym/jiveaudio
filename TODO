@@ -1,12 +1,19 @@
 To-do list of JiveAudio.  -*-Outline-*-
 
-* Loop in the Win32 configuration
+* In the POSIX configuration:
+
+** Use tmpfile.
+
+** Handle PCM audio streams directly.
+
+* In the Win32 configuration:
+
+** Change to the windowless operation.
+
+** Implement loop playback.
 
 * Documentation
 
 * Popup menu
 
 * Scripting
-
-Planned for version 2.1.
-

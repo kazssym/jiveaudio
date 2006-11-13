@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([JiveAudio], [2.0.7], [jiveaudio@lists.hypercore.co.jp], [jiveaudio])
+AC_INIT([JiveAudio], [2.0.8], [jiveaudio@lists.yaromai.net], [jiveaudio])
 AC_CONFIG_SRCDIR([audio.cpp])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.9])
@@ -24,6 +24,7 @@ AC_TYPE_SIZE_T
 
 # Checks for library functions.
 AC_FUNC_FORK
+AC_CHECK_FUNCS([tempnam])
 
 case $host_os in
 linux-gnu*)

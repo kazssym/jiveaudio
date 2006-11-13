@@ -1,5 +1,10 @@
 History of user-visible changes in JiveAudio -*-Outline-*-
 
+* Version 2.0.8
+
+Fixed the problem preventing users without proper write permissions
+from playing audio streams.
+
 * Version 2.0.7
 
 Work around a problem that the resource loading does not finish in the

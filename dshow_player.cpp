@@ -49,6 +49,8 @@ dshow_player::start ()
     if (graph != 0)
 	return;
 
+    close_stream ();
+    
     WCHAR wcname[FILENAME_MAX];
     MultiByteToWideChar (CP_ACP, MB_PRECOMPOSED, file_name, -1,
 			 wcname, FILENAME_MAX);

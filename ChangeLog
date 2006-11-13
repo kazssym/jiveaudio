@@ -1,3 +1,29 @@
+2005-02-19  Kaz Sasayama  <kazssym@hypercore.co.jp>
+
+	* TODO: Updated.
+
+	* NEWS: Updated.
+
+	* README: Updated.
+
+	* npaudio.rc: Updated with a new file version.
+
+	* dshow_player.cpp (start): Calls close_stream before start
+	playing.
+
+	* media_player.h (class file_media_player): Made file_name a
+	pointer.
+	* file_media_player.cpp: Flattened common.h.
+	(~file_media_player): Now calls close_stream.
+	(clean): Frees file_name.
+	(open_stream): Uses tempnam if available.  Does not use creat.
+
+	* npaudio.bpr: Updated macro definitions.
+
+	* configure.ac: New contact address.  New version.  New test for
+	tempnam.
+	
+
 2005-02-12  Kaz Sasayama  <kazssym@hypercore.co.jp>
 
 	* NEWS: Updated.

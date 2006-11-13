@@ -67,7 +67,7 @@ public:
     size_t write_stream (const void *buf, size_t nbytes);
     void close_stream ();
 protected:
-    char file_name[L_tmpnam];
+    char *file_name;
 private:
     int fildes;
 

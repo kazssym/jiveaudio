@@ -46,11 +46,8 @@ them into your browser's plugin directory by hand.
 KNOWN PROBLEMS
 ----------------------------------------------------------------------
 
-In the Win32 configuration, this program may not work when it is used
-by restricted user accounts because it is unlikely for those accounts
-to have a write permission to the current directory which is normally
-the browser's installation directory.  This will be fixed later.
+No major problems are known.
 
 
 ---
-$ProjectHeader: jiveaudio 1.7 Mon, 13 Nov 2006 18:35:08 +0900 kazssym $
+$ProjectHeader: jiveaudio 1.8 Mon, 13 Nov 2006 18:37:41 +0900 kazssym $

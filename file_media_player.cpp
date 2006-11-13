@@ -16,14 +16,27 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include "common.h"
+#if _WIN32
+#define STRICT 1
+#include <windows.h>
+#pragma hdrstop
+#endif
 
 #include "media_player.h"
 
-#ifdef HAVE_FCNTL_H
+#include <cstdlib>
+
+#if HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#if HAVE_FCNTL_H
 #include <fcntl.h>
 #else
 #define O_RDONLY 0
@@ -31,7 +44,7 @@
 #define O_RDWR   2
 #endif
 
-#ifdef HAVE_IO_H
+#if HAVE_IO_H
 #include <io.h>
 #endif
 
@@ -46,24 +59,26 @@
 using namespace std;
 
 file_media_player::file_media_player () :
+    file_name (0),
     fildes (-1)
 {
-    file_name[0] = '\0';
 }
 
 file_media_player::~file_media_player ()
 {
+    close_stream ();
     clean ();
 }
 
 void
 file_media_player::clean ()
 {
-    if (file_name[0] == '\0')
+    if (file_name == 0)
         return;
 
     remove (file_name);
-    file_name[0] = '\0';
+    free (file_name);
+    file_name = 0;
 }
 
 bool
@@ -73,12 +88,13 @@ file_media_player::open_stream (const char *mime_type)
         close (fildes);
 
     clean ();
-    tmpnam (file_name);
-#if !defined O_CREAT
-    fildes = creat (file_name, 0600);
+#if HAVE_TEMPNAM
+    file_name = tempnam (0, "jive");
 #else
-    fildes = open (file_name, O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
+    file_name = static_cast <char *> (malloc (L_tmpnam));
+    tmpnam (file_name);
 #endif
+    fildes = open (file_name, O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
     if (fildes == -1)
         return false;
 
