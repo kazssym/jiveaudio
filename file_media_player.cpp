@@ -48,12 +48,22 @@ using namespace std;
 file_media_player::file_media_player():
   fildes(-1)
 {
-  tmpnam(file_name);
+  file_name[0] = '\0';
 }
 
 file_media_player::~file_media_player()
 {
+  clean();
+}
+
+void
+file_media_player::clean()
+{
+  if (file_name[0] == '\0')
+    return;
+
   remove(file_name);
+  file_name[0] = '\0';
 }
 
 bool
@@ -62,7 +72,8 @@ file_media_player::open_stream(const char *mime_type)
   if (fildes != -1)
     close(fildes);
 
-  remove(file_name);
+  clean();
+  tmpnam(file_name);
 #if !defined O_CREAT
   fildes = creat(file_name, 0600);
 #else

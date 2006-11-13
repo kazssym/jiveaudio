@@ -151,7 +151,7 @@ exec_media_player::run(void *arg)
 #endif /* _POSIX_THREADS */
 
 void
-exec_media_player::play()
+exec_media_player::start()
 {
   if (fileno != -1)
     return;

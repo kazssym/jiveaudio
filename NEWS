@@ -1,5 +1,12 @@
 History of user-visible changes in JiveAudio.  -*-Outline-*-
 
+* Version 2.0.6
+
+Added handling of parameter `autostart', though there is no other way
+to start playback yet.
+
+Now clears the plugin background in black.
+
 * Version 2.0.5
 
 Fixed an obscure Plugin ABI bug.

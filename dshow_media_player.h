@@ -16,50 +16,29 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
-#ifndef _EXEC_MEDIA_PLAYER_H
-#define _EXEC_MEDIA_PLAYER_H 1
+#ifndef _DSHOW_MEDIA_PLAYER_H
+#define _DSHOW_MEDIA_PLAYER_H 1
 
 #include "media_player.h"
 
-class exec_media_player:
+#if defined _WIN32
+
+#include <dshow.h>
+
+class dshow_media_player:
   public file_media_player
 {
 public:
-  exec_media_player(const char *command_name);
-  ~exec_media_player();
-
-  virtual void exec(int stream_fileno);
+  dshow_media_player();
+  ~dshow_media_player();
 
   void start();
   void stop();
 
 protected:
-  const char *command_name;
-  int fileno;
-#ifdef _POSIX_THREADS
-  pthread_t thread;
-  pthread_mutex_t thread_mutex;
-#endif /* _POSIX_THREADS */
-  pid_t child;
-
-  pid_t spawn(int fileno);
-#ifdef _POSIX_THREADS
-  void run();
-  static void *run(void *);
-#endif
+  IGraphBuilder *graph;
 };
 
-class sox_media_player:
-  public exec_media_player
-{
-public:
-  sox_media_player(const char *command_name);
+#endif /* _WIN32 */
 
-  void exec(int stream_fileno);
-  bool open_stream(const char *mime_type);
-
-protected:
-  const char *file_format;
-};
-
-#endif /* !_EXEC_MEDIA_PLAYER_H */
+#endif /* !_DSHOW_MEDIA_PLAYER_H */

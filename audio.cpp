@@ -24,13 +24,20 @@
 #include <npapi.h>
 
 #include <new>
-#include <cstdio>
 #include <cstring>
-#include <csignal>
+
+#if HAVE_SYSLOG_H
+#  include <syslog.h>
+#else /* !HAVE_SYSLOG_H */
+#  define LOG_DEBUG 7
+extern "C" void syslog(int prio, const char *format, ...);
+#endif /* !HAVE_SYSLOG_H */
 
 #if defined _WIN32
-#  include <dshow.h>
+#  include "dshow_media_player.h"
 #else
+#  include <X11/Intrinsic.h>
+#  include <X11/StringDefs.h>
 #  include "exec_media_player.h"
 #endif
 
@@ -39,30 +46,33 @@ using namespace std;
 struct audio_data
 {
   bool loop;
+  bool autostart;
 #if defined _WIN32
-  IGraphBuilder *graph;
-#else /* !_WIN32 */
+  HWND window;
+  WNDPROC old_proc;
+#else
+  Widget window;
+#endif
   media_player *player;
-#endif /* !_WIN32 */
 };
 
 #if defined _WIN32
 BOOL WINAPI
 DllMain(HINSTANCE instance, DWORD reason, LPVOID)
 {
-  return TRUE;
+  return true;
 }
-#endif /* _WIN32 */
+#endif /* defined _WIN32 */
 
 /* Initializes this plugin.  */
 NPError
 NPP_Initialize()
 {
 #if defined _WIN32
-  HRESULT result = CoInitialize(0);
+  HRESULT result = CoInitializeEx(0, COINIT_MULTITHREADED);
   if (result != S_OK && result != S_FALSE)
     return NPERR_GENERIC_ERROR;
-#endif /* _WIN32 */
+#endif
   return NPERR_NO_ERROR;
 }
 
@@ -72,7 +82,7 @@ NPP_Shutdown()
 {
 #if defined _WIN32
   CoUninitialize();
-#endif /* _WIN32 */
+#endif
 }
 
 #if defined XP_UNIX
@@ -86,26 +96,24 @@ NPP_GetMIMEDescription()
     "audio/x-midi:mid,midi:MIDI Sequence;"
     "audio/midi::MIDI Sequence";
 }
-#endif /* XP_UNIX */
+#endif /* defined XP_UNIX */
 
 /* Returns the value of a plugin variable.  */
 NPError
 NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 {
   if (instance != 0)
-    fprintf(stderr, "%s: NPP_GetValue (%d)\n", __FILE__, variable);
+    syslog(LOG_DEBUG, "%s: NPP_GetValue %d", __FILE__, variable);
   switch (variable)
     {
 #if defined XP_UNIX
     case NPPVpluginNameString:
       *((const char **) value) = PACKAGE_NAME " Plugin";
       break;
-
     case NPPVpluginDescriptionString:
       *((const char **) value) = PACKAGE_STRING;
       break;
-#endif /* XP_UNIX */
-
+#endif
     default:
       break;
     }
@@ -117,55 +125,69 @@ NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 NPError
 NPP_SetValue(NPP instance, NPNVariable variable, void *value)
 {
-  fprintf(stderr, "%s: NPP_SetValue (%d)\n", __FILE__, variable);
+  syslog(LOG_DEBUG, "%s: NPP_SetValue %d", __FILE__, variable);
   return NPERR_NO_ERROR;
 }
 
-static void
+inline void
+release_window(audio_data *data)
+{
+  if (data->window == 0)
+    return;
+
+#if defined _WIN32
+  SetWindowLong(data->window, GWL_WNDPROC,
+                reinterpret_cast <LONG> (data->old_proc));
+#endif
+  data->window = 0;
+}
+
+inline void
 stop(audio_data *data)
 {
-#if defined _WIN32
-  if (data->graph != 0)
-    {
-      IMediaControl *control;
-      data->graph->QueryInterface(IID_IMediaControl, (void **) &control);
-      control->Stop();
-      control->Release();
-      data->graph->Release();
-      data->graph = 0;
-    }
-#else /* !_WIN32 */
-  if (data->player != 0)
-    {
-      data->player->stop();
-      delete data->player;
-      data->player = 0;
-    }
-#endif /* !_WIN32 */
+  if (data->player == 0)
+    return;
+
+  data->player->stop();
+  delete data->player;
+  data->player = 0;
 }
 
 NPError
 NPP_New(NPMIMEType mime_type, NPP instance, uint16 mode,
 	int16 argc, char **argn, char **argv, NPSavedData *savedData)
 {
-  fprintf(stderr, "%s: NPP_New (\"%s\", %d)\n", __FILE__, mime_type, mode);
+  syslog(LOG_DEBUG, "%s: NPP_New \"%s\" %d", __FILE__, mime_type, mode);
   instance->pdata = NPN_MemAlloc(sizeof (audio_data));
   if (instance->pdata == 0)
     return NPERR_OUT_OF_MEMORY_ERROR;
 
   audio_data *data = static_cast <audio_data *> (instance->pdata);
   data->loop = false;
+  data->autostart = mode == NP_FULL;
+  data->window = 0;
+  data->player = 0;
+
   for (int i = 0; i != argc; ++i)
     {
-      fprintf(stderr, "%s: %s=\"%s\"\n", __FILE__, argn[i], argv[i]);
+      syslog(LOG_DEBUG, "  name=\"%s\" value=\"%s\"", argn[i], argv[i]);
       if (strcmp(argn[i], "loop") == 0)
-	data->loop = argv[i][0] != 'f';
+	{
+	  char c = argv[i][0];
+	  if (c == 't' || c == 'T')
+	    data->loop = true;
+	  else if (c == 'f' || c == 'F')
+	    data->loop = false;
+	}
+      else if (strcmp(argn[i], "autostart") == 0)
+	{
+	  char c = argv[i][0];
+	  if (c == 't' || c == 'T')
+	    data->autostart = true;
+	  else if (c == 'f' || c == 'F')
+	    data->autostart = false;
+	}
     }
-#if defined _WIN32
-  data->graph = 0;
-#else /* !_WIN32 */
-  data->player = 0;
-#endif /* !_WIN32 */
 
 #ifdef WINDOWLESS
   /* FIXME: Windowless plugins are apparently not implemented in
@@ -178,10 +200,11 @@ NPP_New(NPMIMEType mime_type, NPP instance, uint16 mode,
 NPError
 NPP_Destroy(NPP instance, NPSavedData **savedData)
 {
-  fprintf(stderr, "%s: NPP_Destroy\n", __FILE__);
+  syslog(LOG_DEBUG, "%s: NPP_Destroy", __FILE__);
 
   audio_data *data = static_cast <audio_data *> (instance->pdata);
   stop(data);
+  release_window(data);
   NPN_MemFree(data);
   return NPERR_NO_ERROR;
 }
@@ -189,20 +212,100 @@ NPP_Destroy(NPP instance, NPSavedData **savedData)
 void
 NPP_Print(NPP instance, NPPrint *print)
 {
-  fprintf(stderr, "%s: NPP_Print\n", __FILE__);
+  syslog(LOG_DEBUG, "%s: NPP_Print", __FILE__);
 }
+
+#if defined _WIN32
+inline boolean
+clear(HWND w, HDC dc)
+{
+  RECT bounds;
+  if (!GetClientRect(w, &bounds))
+    return false;
+
+  HBRUSH black = static_cast <HBRUSH> (GetStockObject(BLACK_BRUSH));
+  if (black == 0)
+    return false;
+
+  return FillRect(dc, &bounds, black);
+}
+
+extern "C" LRESULT CALLBACK
+WindowProc(HWND w, UINT message, WPARAM param1, LPARAM param2)
+  throw ()
+{
+  audio_data *data =
+    reinterpret_cast <audio_data *> (GetWindowLong(w, GWL_USERDATA));
+  LRESULT result;
+  switch (message)
+    {
+    case WM_ERASEBKGND:
+      result = clear(w, reinterpret_cast <HDC> (param1));
+      break;
+    case WM_PAINT:
+      result = DefWindowProc(w, message, param1, param2);
+      break;
+    default:
+      result = CallWindowProc(data->old_proc, w, message, param1, param2);
+      break;
+    }
+  return result;
+}
+#endif /* defined _WIN32 */
 
 NPError
 NPP_SetWindow(NPP instance, NPWindow *window)
 {
-  fprintf(stderr, "%s: NPP_SetWindow\n", __FILE__);
+  syslog(LOG_DEBUG, "%s: NPP_SetWindow", __FILE__);
+
+  audio_data *data = static_cast <audio_data *> (instance->pdata);
+#if defined _WIN32
+#  if defined XP_WIN
+  HWND w = static_cast <HWND> (window->window);
+  if (data->window != w)
+    {
+      release_window(data);
+      data->window = w;
+
+      SetWindowLong(data->window, GWL_USERDATA,
+                    reinterpret_cast <LONG> (data));
+      LONG old = SetWindowLong(data->window, GWL_WNDPROC,
+                               reinterpret_cast <LONG> (&WindowProc));
+      data->old_proc = reinterpret_cast <WNDPROC> (old);
+      InvalidateRect(data->window, 0, true);
+
+      if (data->player != 0)
+        data->player->set_window(data->window);
+    }
+#  endif
+#else /* !defined _WIN32 */
+#  if defined XP_UNIX
+  Display *display =
+    static_cast <NPSetWindowCallbackStruct *> (window->ws_info)->display;
+  Widget w =
+    XtWindowToWidget(display, reinterpret_cast <Window> (window->window));
+  if (data->window != w)
+    {
+      release_window(data);
+      data->window = w;
+
+      Arg args[1];
+      XtSetArg(args[0], XtNbackground,
+	       BlackPixelOfScreen(XtScreen(data->window)));
+      XtSetValues(data->window, args, 1);
+
+      if (data->player != 0)
+	data->player->set_window(data->window);
+    }
+#  endif
+#endif /* !defined _WIN32 */
   return NPERR_NO_ERROR;
 }
 
 int16
 NPP_HandleEvent(NPP instance, NPEvent *event)
 {
-  fprintf(stderr, "%s: NPP_HandleEvent\n", __FILE__);
+  syslog(LOG_DEBUG, "%s: NPP_HandleEvent", __FILE__);
   return 0;
 }
 
@@ -210,44 +313,43 @@ NPError
 NPP_NewStream(NPP instance, NPMIMEType mime_type, NPStream *stream,
 	      NPBool seekable, uint16 *mode)
 {
-  fprintf(stderr, "%s: NPP_NewStream (\"%s\", %d)\n", __FILE__, mime_type, seekable);
+  syslog(LOG_DEBUG, "%s: NPP_NewStream \"%s\" %d", __FILE__, mime_type, seekable);
 
   audio_data *data = static_cast <audio_data *> (instance->pdata);
   stop(data);
-#if defined _WIN32
-  *mode = NP_ASFILEONLY;
-#else /* !_WIN32 */
   try
     {
+#if defined _WIN32
+      data->player = new dshow_media_player();
+#else
       if (strstr(mime_type, "mid") != 0)
 	data->player = new exec_media_player("timidity");
       else
 	data->player = new sox_media_player("play");
+#endif
     }
   catch (const bad_alloc &e)
     {
       return NPERR_OUT_OF_MEMORY_ERROR;
     }
+
   data->player->set_loop(data->loop);
+  if (data->window != 0)
+    data->player->set_window(data->window);
+
   data->player->open_stream(mime_type);
-#endif /* !_WIN32 */
   return NPERR_NO_ERROR;
 }
 
 NPError
 NPP_DestroyStream(NPP instance, NPStream *stream, NPReason reason)
 {
-  fprintf(stderr, "%s: NPP_DestroyStream (%d)\n", __FILE__, reason);
+  syslog(LOG_DEBUG, "%s: NPP_DestroyStream %d", __FILE__, reason);
 
   audio_data *data = static_cast <audio_data *> (instance->pdata);
-#if defined _WIN32
-  if (reason != NPRES_DONE)
-    stop(data);
-#else /* !_WIN32 */
   data->player->close_stream();
-  if (reason == NPRES_DONE)
-    data->player->play();
-#endif /* !_WIN32 */
+  if (reason == NPRES_DONE && data->autostart)
+    data->player->start();
   return NPERR_NO_ERROR;
 }
 
@@ -255,47 +357,26 @@ int32
 NPP_WriteReady(NPP instance, NPStream *stream)
 {
   audio_data *data = static_cast <audio_data *> (instance->pdata);
-#if defined _WIN32
-  return 4096;
-#else /* !_WIN32 */
   return data->player->stream_buffer_size();
-#endif /* !_WIN32 */
 }
 
 int32
 NPP_Write(NPP instance, NPStream *stream, int32 off, int32 len, void *buf)
 {
   audio_data *data = static_cast <audio_data *> (instance->pdata);
-#if defined _WIN32
-  return len;
-#else /* !_WIN32 */
-  return data->player->write_stream(buf, len);
-#endif /* !_WIN32 */
+  size_t k = data->player->write_stream(buf, len);
+  if (k == (size_t) -1)
+    return -1;
+  return k;
 }
 
 void
 NPP_StreamAsFile(NPP instance, NPStream *stream, const char *name)
 {
-  fprintf(stderr, "%s: NPP_StreamAsFile (\"%s\")\n", __FILE__, name);
-
-  audio_data *data = static_cast <audio_data *> (instance->pdata);
-#if defined _WIN32
-  WCHAR wname[FILENAME_MAX];
-  MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, name, -1, wname, FILENAME_MAX);
-
-  CoCreateInstance(CLSID_FilterGraph, 0, CLSCTX_INPROC_SERVER,
-                   IID_IGraphBuilder, (void **) &data->graph);
-  data->graph->RenderFile(wname, 0);
-
-  IMediaControl *control;
-  data->graph->QueryInterface(IID_IMediaControl, (void **) &control);
-  control->Run();
-  control->Release();
-#endif /* _WIN32 */
 }
 
 void
 NPP_URLNotify(NPP instance, const char *URL, NPReason reason, void *data)
 {
-  fprintf(stderr, "%s: NPP_URLNotify\n", __FILE__);
+  syslog(LOG_DEBUG, "%s: NPP_URLNotify", __FILE__);
 }

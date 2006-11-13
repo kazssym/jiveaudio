@@ -16,17 +16,34 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
-#if HAVE_CONFIG_H
-#  include "config.h"
-#endif
+#define _GNU_SOURCE 1
+#define _REENTRANT 1
+
+#include "common.h"
+
+#include <cstdio>
+#include <cstdarg>
+
+using namespace std;
+
+#if !HAVE_SYSLOG_H
+extern "C" void
+syslog(int prio, const char *format, ...)
+  throw ()
+{
+  va_list args;
+  va_start(args, format);
 
 #if defined _WIN32
-#  include <windows.h>
-#  define STDC_HEADERS 1
-#  define HAVE_FCNTL_H 1
-#  define HAVE_IO_H 1
-#endif
+  char buf[256];
+  vsnprintf(buf, 256, format, args);
+  OutputDebugString(buf);
+  OutputDebugString("\n");
+#else /* !_WIN32 */
+  fprintf(stderr, format, args);
+  fputs("\n", stderr);
+#endif /* _WIN32 */
 
-#if HAVE_UNISTD_H
-#  include <unistd.h>
-#endif
+  va_end(args);
+}
+#endif /* !HAVE_SYSLOG_H */

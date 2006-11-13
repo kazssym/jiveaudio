@@ -4,7 +4,8 @@
   <MACROS>
     <VERSION value="BCB.06.00"/>
     <PROJECT value="npaudio.dll"/>
-    <OBJFILES value="np_entry.obj npn_gate.obj audio.obj new.obj"/>
+    <OBJFILES value="np_entry.obj npn_gate.obj audio.obj dshow_media_player.obj 
+      file_media_player.obj media_player.obj syslog.obj new.obj"/>
     <RESFILES value="npaudio.res"/>
     <DEFFILE value="npaudio.def"/>
     <RESDEPEN value="$(RESFILES)"/>
@@ -32,8 +33,8 @@
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <CFLAG1 value="-WD -Od -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -X- -r- -a8 -b- -k -y -v -vi- 
-      -tWD -tWM -c"/>
+    <CFLAG1 value="-WD -O2 -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -X- -a8 -b- -k -y -v -vi -tWD 
+      -tWM -c"/>
     <PFLAGS value="-$YD -$W -$O- -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zi"/>
@@ -53,6 +54,10 @@
       <FILE FILENAME="np_entry.cpp" FORMNAME="" UNITNAME="np_entry.cpp" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="npn_gate.cpp" FORMNAME="" UNITNAME="npn_gate.cpp" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="audio.cpp" FORMNAME="" UNITNAME="audio" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="dshow_media_player.cpp" FORMNAME="" UNITNAME="dshow_media_player" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="file_media_player.cpp" FORMNAME="" UNITNAME="file_media_player" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="media_player.cpp" FORMNAME="" UNITNAME="media_player" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="syslog.cpp" FORMNAME="" UNITNAME="syslog" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="new.cpp" FORMNAME="" UNITNAME="new" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
@@ -64,7 +69,7 @@ IncludeVerInfo=1
 AutoIncBuild=1
 MajorVer=2
 MinorVer=0
-Release=4
+Release=6
 Build=0
 Debug=0
 PreRelease=0
@@ -76,8 +81,8 @@ CodePage=1252
 
 [Version Info Keys]
 CompanyName=Hypercore Software Design, Ltd
-FileDescription=JiveAudio 2.0.5
-FileVersion=2.0.5.0
+FileDescription=JiveAudio 2.0.6
+FileVersion=2.0.6.0
 InternalName=
 LegalCopyright=Copyright (C) 2003 Hypercore Software Design, Ltd
 LegalTrademarks=

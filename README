@@ -45,4 +45,4 @@ default.  To use JiveAudio in your browser, you must copy or symlink
 them into your browser's plugin directory by hand.
 
 ---
-$ProjectHeader: jiveaudio 1.5 Mon, 13 Nov 2006 18:31:43 +0900 kazssym $
+$ProjectHeader: jiveaudio 1.6 Mon, 13 Nov 2006 18:33:22 +0900 kazssym $

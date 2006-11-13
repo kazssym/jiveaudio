@@ -21,18 +21,53 @@
 
 #include "common.h"
 
-#include "media_player.h"
+#include "dshow_media_player.h"
 
-media_player::media_player():
-  loop(false)
+using namespace std;
+
+#if defined _WIN32
+
+dshow_media_player::dshow_media_player():
+  graph(0)
 {
 }
 
-media_player::~media_player()
+dshow_media_player::~dshow_media_player()
 {
+  stop();
 }
 
 void
-media_player::set_window(window_type window)
+dshow_media_player::start()
 {
+  if (graph != 0)
+    return;
+
+  WCHAR wname[FILENAME_MAX];
+  MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, file_name, -1, wname, FILENAME_MAX);
+
+  CoCreateInstance(CLSID_FilterGraph, 0, CLSCTX_INPROC_SERVER,
+                   IID_IGraphBuilder, (void **) &graph);
+  graph->RenderFile(wname, 0);
+
+  IMediaControl *control;
+  graph->QueryInterface(IID_IMediaControl, (void **) &control);
+  control->Run();
+  control->Release();
 }
+
+void
+dshow_media_player::stop()
+{
+  if (graph == 0)
+    return;
+
+  IMediaControl *control;
+  graph->QueryInterface(IID_IMediaControl, (void **) &control);
+  control->Stop();
+  control->Release();
+  graph->Release();
+  graph = 0;
+}
+
+#endif /* _WIN32 */

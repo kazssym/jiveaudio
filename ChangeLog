@@ -1,3 +1,147 @@
+2003-04-02  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Version 2.0.6.
+
+	* TODO: Updated.
+
+	* NEWS: Updated.
+
+	* configure.ac: Update PACKAGE_VERSION.
+	* npaudio.bpr (FileDescription): Updated.
+	(FileVersion): Updated.
+	(Release): Updated.
+
+2003-03-30  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* npaudio.def: Add WindowProc to EXPORTS.
+
+	* audio.cpp (struct audio_data) [defined _WIN32]: Add member
+	old_proc.
+	(release_window): New function.
+	(NPP_Destroy): Call release_window.
+	(clear, WindowProc): New function.
+	(NPP_SetWindow) [debined _WIN32]: Subclass the window.
+
+	* syslog.cpp: Avoid forward declaration for syslog.
+
+2003-03-28  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* audio.cpp (struct audio_data): Replace member widget to window.
+	Also change all users.
+	(NPP_SetWindow) [!defined _WIN32]: Set the background color to
+	black.
+
+	* media_player.cpp (media_player): Remove initialization of widget.
+	(~media_player): Remove call to release_widget.
+	(set_window): Renamed from set_widget.  Remove all code.
+	(release_widget): Removed.
+
+	* media_player.h (class media_player): Renamed widget_type to
+	window_type, set_widget to set_window, and remove member widget
+	and release_widget.
+
+2003-03-27  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* audio.cpp (struct audio_data): Add member widget.
+	(NPP_New): Turn autostart on when full window.  Initialize
+	data->widget.
+	(NPP_SetWindow): Set data->widget.
+	(NPP_NewStream): Call data->player->set_widget.
+
+	* media_player.cpp (media_player): Initialize member widget.
+	(~media_player): Call release_widget.
+	(set_widget, release_widget): New function.
+
+	* media_player.h (class media_player): Add typdef widget_type and
+	member widget, methods set_widget and release_widget.
+
+	* common.h: Use #if for autoconf macros.
+
+2003-03-26  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* nspr/Makefile.am (noinst_HEADERS): Add obsolete/protypes.h.
+	(SUBDIRS): Removed.
+	* nspr/Makefile.in: Regenerated.
+
+	* configure.ac: Remove nspr/obsolete/Makefile from config files.
+	* configure: Regenerated.
+
+	* nspr/obsolete/Makefile.am: Removed.
+	* nspr/obsolete/Makefile.in: Removed.
+
+2003-03-25  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* audio.cpp (struct audio_data): Add member autostart.
+	(NPP_Initialize) [_WIN32]: Use CoInitializeEx.
+	(NPP_New): Handle autostart.  Modify argv test.
+	(NPP_DestroyStream): Start only if autostart.
+
+	* media_player.h (class media_player): Remove throw () from
+	set_loop.
+	(set_loop): Remove throw ().
+
+	* syslog.cpp (syslog): Compile if !HAVE_SYSLOG_H.  Add code for
+	non-Win32 systems without syslog.
+
+	* npaudio.res: Updated.
+	* npaudio.bpr: Updated.
+
+2003-03-21  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* audio.cpp: Use syslog with LOG_DEBUG instead of fprintf.
+
+	* Makefile.am (libaudioplugin_la_SOURCES): Add syslog.cpp.
+	* Makefile.in: Regenerated.
+
+	* syslog.cpp: New file.
+
+	* configure.ac: Add check for <syslog.h>.
+	* configure: Regenerated.
+	* config.h.in: Regenerated.
+
+2003-03-20  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* TODO: Updated.
+
+	* file_media_player.cpp (clean): New function.
+	(file_media_player): Clear file_name.
+	(file_media_player): Call clean.
+	(open_stream): Call clean and tmpnam.
+
+	* media_player.h (class file_media_player): Add new method clean.
+
+	* audio.cpp (struct audio_data): Remove _WIN32-specific member.
+	(stop): Make inline.
+	(stop, NPP_New, NPP_DestroyStream, NPP_WriteReady, NPP_Write,
+	NPP_StreamAsFile): Remove _WIN32-specific code.
+	(NPP_NewStream) [_WIN32]: Use dshow_media_player.
+	(NPP_Write): Check for errors.
+	(NPP_StreamAsFile): Remove fprintf call.
+
+	* npaudio.bpr: Updated with new files.
+
+	* Makefile.am (libaudioplugin_la_SOURCES): Add
+	dshow_media_player.cpp.
+	(noinst_HEADERS): Add dshow_media_player.h.
+	* Makefile.in: Regenerated.
+
+	* dshow_media_player.h: New file.
+	* dshow_media_player.cpp: New file.
+
+	* Makefile.am (noinst_DATA, CLEANFILES): New macro.
+	(EXTRA_DIST): Add install.js.in.
+	(install.js): New target.
+	* Makefile.in: Regenerated.
+
+	* install.js.in: New file.
+
+	* media_player.h (class media_player): Rename method play to
+	start.  Also change all users and drived classes.
+
+2003-03-19  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* jiveaudio.texi: Add @dircategory and @direntry.
+
 2003-03-18  Kaz Sasayama  <kaz2003@hypercore.co.jp>
 
 	* Version 2.0.5.
