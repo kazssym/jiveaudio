@@ -1,0 +1,9 @@
+History of user-visible changes in JiveAudio.  -*-Outline-*-
+
+* Version 2.0.2
+
+Documentation updates.
+
+* Version 2.0.1
+
+Rewrote from scratch for Mozilla using the Netscape Gecko Plugin SDK.

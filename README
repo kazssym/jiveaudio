@@ -1,0 +1,17 @@
+JiveAudio is a set of media plugins for Mozilla.
+
+On GNU/Linux, JiveAudio currently requires sox (play) and timidity
+installed on your path.
+
+== INSTALLATION ==
+
+First, read the file INSTALL for basic instructions.
+
+Netscape Plugin SDK is no longer required.
+
+JiveAudio installs its plugins into `LIBDIR/mozilla/plugins' by
+default.  If you do not have enough privileges, you can manually
+install the plugins into your `$HOME/.mozilla/plugins' instead.
+
+---
+$ProjectHeader: jiveaudio 1.2 Mon, 13 Nov 2006 18:25:41 +0900 kazssym $

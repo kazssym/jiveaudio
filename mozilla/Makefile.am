@@ -1,6 +1,5 @@
 ## Process this file with automake to produce a Makefile.in.
 
-noinst_HEADERS = npapi.h npupp.h jri.h jritypes.h jri_md.h jni.h jni_md.h \
-prtypes.h prcpucfg.h
+noinst_HEADERS = npapi.h npupp.h prtypes.h prcpucfg.h jri.h
 
 SUBDIRS = obsolete

@@ -1,4 +1,121 @@
+2003-02-16  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Version 2.0.2.
+
+	* configure.ac: Change PACKAGE_VERSION.  Change the test file for
+	the source directory.
+	* configure: Regenerated.
+
+	* NEWS: Updated.
+
+	* README: Updated.
+
+	* Makefile.am (libaudioplugin_la_SOURCES): Change the file suffix.
+	(libmidiplugin_la_SOURCES): Likewise.
+	* Makefile.in: Regenerated.
+
+	* np_entry.cpp: Renamed from np_entry.c.
+	* npn_gate.cpp: Renamed from npn_gate.c.
+
+	* audio.cpp [_WIN32] (DllMain): New function.
+
+	* midi.cpp [_WIN32] (DllMain): New function.
+
+2003-02-15  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* mozilla/Makefile.in: Regenerated.
+	* mozilla/obsolete/Makefile.in: Regenerated.
+
+	* Makefile.am (libaudioplugin_la_SOURCES): Change the file suffix.
+	(libmidiplugin_la_SOURCES): Likewise.
+	* Makefile.in: Regenerated.
+
+	* audio.cpp: Renamed from audio.c.
+	* midi.cpp: Renamed from midi.c.
+
+	* configure.ac: Add AC_PROG_CXX.
+	* configure: Regenerated.
+
+	* np_entry.c [XP_WIN] (NP_Initialize): Use NPP_Initialize.
+	[XP_MAC] (Private_Initialize): Use NPP_Initialize.
+	[XP_MAC] (Private_Shutdown): Use NPP_Shutdown.
+
+	* midi_mime.h: Removed.
+
+	* Makefile.am (libmidiplugin_la_SOURCES): Delete midi_mime.c.
+	* Makefile.in: Regenerated.
+
+	* midi.c [XP_UNIX] (NPP_GetMIMEDescription): Moved from
+	midi_mime.c.
+	(NPP_GetValue): Handle NPPVpluginNameString and
+	NPPVpluginDescriptionString only if XP_UNIX.
+	(NPP_SetValue): Fix the type of variable.
+	(stop): Hide if _WIN32.
+	(NPP_Destroy): Do not call if _WIN32.
+	(NPP_NewStream): Likewise.
+	(NPP_StreamAsFile): Hide code if _WIN32.
+
+	* mozilla/npapi.h: Test _WIN32 instead of _WINDOWS.
+
+	* audio_mime.c: Removed.
+
+	* Makefile.am (libaudioplugin_la_SOURCES): Delete audio_mime.c.
+	* Makefile.in: Regenerated.
+
+	* audio.c (NPP_GetValue): Handle NPPVpluginNameString and
+	NPPVpluginDescriptionString only if XP_UNIX.
+	(NPP_SetValue): Fix the type of variable.
+	(stop): Hide if _WIN32.
+	(NPP_Destroy): Do not call stop if _WIN32.
+	(NPP_NewStream): Likewise and also do not set format.
+	(NPP_StreamAsFile): Hide code if _WIN32.
+	[XP_UNIX] (NPP_GetMIMEDescription): Moved from audio_mime.c.
+
+2003-02-13  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Makefile.am (INCLUDES): Remove -DXP_UNIX.
+	* Makefile: Regenerated.
+
+	* audio.c: Remove the inclusion of <unistd.h>.
+	* midi.c: Likewise.
+
+	* common.h [HAVE_UNISTD_H]: Include <unistd.h>.
+	[_WIN32]: Include <windows.h>.
+
+	* audio.c: Move the _GNU_SOURCE definition to the beginning.
+	* audio_mime.c: Likewise.
+	* midi.c: Likewise.
+	* midi_mime.c: Likewise.
+
+	* NEWS: Updated.
+
+	* AUTHORS: Updated.
+
+	* README: Updated.
+
 2003-02-12  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* mozilla/npupp.h (struct _NPPluginFuncs): #if out javaClass.
+	* np_entry.c (fillPluginFunctionTable): #if out the javaClass
+	initialization.
+
+	* audio_mime.c (NPP_GetMIMEDescription): Remove extensions for
+	audio/wav.
+	* midi_mime.c (NPP_GetMIMEDescription): Remove extensions for
+	audio/midi.
+
+	* audio.c (NPP_StreamAsFile): Avoid EXIT_FAILURE.
+	* midi.c (NPP_StreamAsFile): Likewise.
+
+	* mozilla/Makefile.am (noinst_HEADERS): Delete removed files.
+	* mozilla/Makefile.in: Rebuilt.
+
+	* mozilla/jritypes.h: Removed.
+	* mozilla/jri_md.h: Removed.
+	* mozilla/jni.h: Removed.
+	* mozilla/jni_md.h: Removed.
+
+	* mozilla/jri.h: Replaced with a dummy header.
 
 	* Version 2.0.1.
 

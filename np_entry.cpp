@@ -89,7 +89,9 @@ static NPError fillPluginFunctionTable(NPPluginFuncs* aNPPFuncs)
   aNPPFuncs->getvalue      = NPP_GetValue;
   aNPPFuncs->setvalue      = NPP_SetValue;
 #endif
+#if 0
   aNPPFuncs->javaClass     = NULL;
+#endif
 
   return NPERR_NO_ERROR;
 }
@@ -149,7 +151,7 @@ NPError OSCALL NP_Initialize(NPNetscapeFuncs* aNPNFuncs)
   if(rv != NPERR_NO_ERROR)
     return rv;
 
-  return NS_PluginInitialize();
+  return NPP_Initialize();
 }
 
 NPError OSCALL NP_GetEntryPoints(NPPluginFuncs* aNPPFuncs)
@@ -206,13 +208,13 @@ short gResFile; // Refnum of the plugin's resource file
 
 NPError Private_Initialize(void)
 {
-  NPError rv = NS_PluginInitialize();
+  NPError rv = NPP_Initialize();
   return rv;
 }
 
 void Private_Shutdown(void)
 {
-  NS_PluginShutdown();
+  NPP_Shutdown();
   __destroy_global_chain();
 }
 

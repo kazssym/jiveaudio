@@ -1,12 +1,13 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([JiveAudio], 2.0.1, [bugs@hypercore.co.jp], jiveaudio)
-AC_CONFIG_SRCDIR(audio.c)
+AC_INIT([JiveAudio], 2.0.2, [bugs@hypercore.co.jp], jiveaudio)
+AC_CONFIG_SRCDIR(audio.cpp)
 AM_INIT_AUTOMAKE(AC_PACKAGE_TARNAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
 AC_DISABLE_STATIC
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_LIBTOOL
 
 # Checks for libraries.

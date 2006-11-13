@@ -38,7 +38,7 @@
 
 
 /*
- *  npapi.h $Revision: 1.1 $
+ *  npapi.h $Revision: 1.2 $
  *  Netscape client plug-in API spec
  */
 
@@ -84,7 +84,7 @@
 #	endif /* XP_OS2 */
 #endif /* __OS2__ */
 
-#ifdef _WINDOWS
+#ifdef _WIN32
 #	ifndef XP_WIN
 #		define XP_WIN 1
 #	endif /* XP_WIN */
