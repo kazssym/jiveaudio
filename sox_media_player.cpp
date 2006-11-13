@@ -16,16 +16,38 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
+#define _GNU_SOURCE 1
+#define _REENTRANT 1
 
-#if defined _WIN32
-#  include <windows.h>
-#  define STDC_HEADERS 1
-#  define HAVE_FCNTL_H 1
-#endif
+#include "common.h"
 
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-#endif
+#include "exec_media_player.h"
+
+#include <cstring>
+
+using namespace std;
+
+sox_media_player::sox_media_player(const char *_command_name):
+  exec_media_player(_command_name)
+{
+}
+
+void
+sox_media_player::exec(int stream_fileno)
+{
+  dup2(stream_fileno, 0);
+  close(stream_fileno);
+
+  execlp(command_name, command_name, "-t", file_format,
+	 "-", (const char *) 0);
+  perror(command_name);
+}
+
+bool
+sox_media_player::open_stream(const char *mime_type)
+{
+  file_format = "ul";
+  if (strstr(mime_type, "wav") != 0)
+    file_format = "wav";
+  return exec_media_player::open_stream(mime_type);
+}

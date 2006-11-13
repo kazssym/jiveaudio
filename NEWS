@@ -1,5 +1,12 @@
 History of user-visible changes in JiveAudio.  -*-Outline-*-
 
+* Version 2.0.4
+
+Added support for loop playback.
+
+Merged two plugins into one.  The old plugin files libmidiplugin.*
+must be removed from the installation directory.
+
 * Version 2.0.3
 
 Nothing special.

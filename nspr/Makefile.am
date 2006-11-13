@@ -1,6 +1,6 @@
 ## Process this file with automake to produce a Makefile.in.
 
-noinst_HEADERS = npapi.h npupp.h prtypes.h jri.h \
+noinst_HEADERS = prtypes.h \
 _linux.cfg _win95.cfg
 
 SUBDIRS = obsolete

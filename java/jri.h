@@ -16,16 +16,16 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
+#ifndef _JRI_H
+#define _JRI_H
 
-#if defined _WIN32
+#ifdef _WINDOWS
 #  include <windows.h>
-#  define STDC_HEADERS 1
-#  define HAVE_FCNTL_H 1
 #endif
 
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-#endif
+#include <stdio.h>
+
+typedef struct jref_object *jref;
+typedef struct JRIEnv_object *JRIEnv;
+
+#endif /* !_JRI_H */

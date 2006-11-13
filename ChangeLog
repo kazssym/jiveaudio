@@ -1,3 +1,166 @@
+2003-02-25  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Version 2.0.4.
+
+	* configure.ac: Update PACKAGE_VERSION.
+	* configure: Regenerated.
+
+	* npaudio.bpr (FileDescription): Updated.
+	(FileVersion): Updated.
+
+	* NEWS: Updated.
+
+	* audio.cpp (NPP_NewStream) [!_WIN32]: Use the nothrow version of
+	new.
+
+	* Makefile.am (libaudioplugin_la_SOURCES): Add the new file.
+	* Makefile.in: Regenerated.
+
+	* new.cpp: New file.
+
+2003-02-24  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* audio.cpp (struct audio_data): Add new member: loop.
+	(struct audio_data) [!_WIN32]: Replace members child and
+	file_format with player.
+	(stop) [!_WIN32]: Stop and delete data->player.
+	(NPP_New): Handle parameter "loop".
+	(NPP_New) [!_WIN32]: Change the member initialization.
+	(NPP_NewStream) [_WIN32]: Use NP_ASFILEONLY.
+	(NPP_NewStream) [!_WIN32]: Instantiate and set up a media player.
+	(NPP_DestroyStream) [!_WIN32]: Start playback if the stream is
+	successfully finished.
+	(NPP_WriteReady, NPP_Write): Remove the debug message.
+	(NPP_WriteReady) [!_WIN32]: Return the player's buffer size.
+	(NPP_Write) [!_WIN32]: Write data to the player.
+	(NPP_StreamAsFile) [!_WIN32]: Remove the code.
+
+	* Makefile.am (libaudioplugin_la_SOURCES): Add the new files:
+	sox_media_player.cpp, exec_media_player.cpp,
+	file_media_player.cpp, and media_player.cpp.
+	(noinst_HEADERS): Add the new files: exec_media_player.h
+	media_player.h.
+	* Makefile.in: Regenerated.
+
+2003-02-23  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* media_player.h: New file.
+	* media_player.cpp: New file.
+	* file_media_player.cpp: New file.
+	* exec_media_player.h: New file.
+	* exec_media_player.cpp: New file.
+	* sox_media_player.cpp: New file.
+
+	* audio.cpp (NPP_StreamAsFile): Reformat the code.
+
+	* audio.cpp: Add #include <npapi.h>.
+
+	* common.h: Remove #include <npapi.h>.
+
+	* audio.cpp: Use the C++ headers if available.
+
+	* common.h [_WIN32] (STDC_HEADERS, HAVE_FCNTL_H): Defined to 1.
+
+	* audio.cpp: Modify the head comment.  Define _REENTRANT.
+	(NPP_GetValue) [XP_UNIX]: Use PACKAGE_NAME for the plugin name.
+	(NPP_New): Add comment.
+	* common.h: Modify the head comment.
+	* java/jri.h: Modify the head comment.
+
+	* npaudio.bpr: Modify the include path.  Clean up histories.
+
+	* audio.cpp (stop) [_WIN32]: Release the filter graph.
+	(NPP_New) [_WIN32]: Do not create a filter graph here.
+	(NPP_Destroy): Do not release the filter graph here.
+	(NPP_StreamAsFile) [_WIN32]: Create a new filter graph.
+
+	* NEWS: Updated.
+
+	* audio.cpp (struct audio_data) [!_WIN32]: Move member file_format
+	from audio_stream_data.
+	(struct audio_stream_data): Removed.
+	(NPP_NewStream): Remove allocation of the stream private data.
+	(NPP_NewStream) [!_WIN32]: Use data->file_format.
+	(NPP_DestroyStream): Remove deallocation of the stream private data.
+	(NPP_StreamAsFile) [!_WIN32]: Use data->file_format.
+	(NPP_StreamAsFile) [!_WIN32]: Avoid STDIN_FILENO and STDOUT_FILENO.
+	(NPP_StreamAsFile) [!_WIN32]: Rename variable null to null_device.
+	(NPP_StreamAsFile) [!_WIN32]: Call setsid.
+	(stop) [!_WIN32]: Kill the child process group.
+
+	* configure.ac: Update the directory names.
+	* configure: Regenerated.
+
+	* Makefile.am (INCLUDES): Update the directory names.
+	(SUBDIRS): Update the directory name.
+	* Makefile.in: Regenerated.
+	* nspr/Makefile.in: Regenerated.
+	* nspr/obsolete/Makefile.in: Regenerated.
+
+	* Rename directory mozilla to nspr.
+
+2003-02-22  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* configure.ac: Add the new Makefiles to AC_CONFIG_FILES.
+	* configure: Regenerated.
+
+	* Makefile.am (INCLUDES): Add the new directories to the include
+	path.
+	(SUBDIRS): Add the new directories.
+	* Makefile.in: Regenerated.
+
+	* mozilla/Makefile.am (noinst_HEADERS): Delete npapi.h, npupp.h,
+	and jri.h.
+	* mozilla/Makefile.in: Regenerated.
+
+	* xpcom/Makefile.am: New file.
+	* xpcom/Makefile.in: Generated.
+
+	* java/Makefile.am: New file.
+	* java/Makefile.in: Generated.
+
+	* java/jri.h: Moved from mozilla.
+
+	* plugin/Makefile.am: New file.
+	* plugin/Makefile.in: Generated.
+
+	* plugin/npapi.h: Moved from mozilla.
+	* plugin/npupp.h: Moved from mozilla.
+
+	* midi.cpp: Removed.
+
+	* Makefile.am (plugins_LTLIBRARIES): Remove libmidiplugin.la.
+	(libmidiplugin_la_LDFLAGS, libmidiplugin_la_SOURCES): Removed.
+	* Makefile.in: Regenerated.
+
+	* audio.cpp (struct audio_stream_data): New struct.
+	(NPP_GetMIMEDescription): Add MIDI sequence types.
+	(NPP_New): Set to the windowless mode.
+	(NPP_NewStream): Store an audio_stream_data as the stream private
+	data.
+	(NPP_DestroyStream): Correct an argument type.
+	(NPP_DestroyStream): Stop playback if reason != NPRES_DONE.
+	(NPP_DestroyStream): Deallocate the stream private data.
+	(NPP_StreamAsFile): Handle MIDI type.
+
+	* midi.cpp: Updated as audio.cpp.
+
+	* audio.cpp (struct audio_data) [!_WIN32]: Remove member: format.
+	(NPP_Initialize, NPP_Shutdown, NPP_GetMIMEDescription,
+	NPP_GetValue, NPP_SetValue): Add function comments.
+	(NPP_Initialize, NPP_Shutdown): Remove fprintf for debugging.
+	(NPP_Initialize) [_WIN32]: Check the result of CoInitialize.
+	(NPP_GetValue): Omit debug messages if instance is null.
+	(NPP_GetValue, NPP_SetValue, NPP_New, NPP_Destroy, NPP_Print,
+	NPP_SetWindow, NPP_HandleEvent, NPP_NewStream, NPP_DestroyStream,
+	NPP_WriteReady, NPP_Write, NPP_StreamAsFile, NPP_URLNotify):
+	Modify debug messages.
+	(NPP_NewStream) [!_WIN32]: Store format in stream->pdata.
+	(NPP_StreamAsFile) [!_WIN32]: Use format in stream->pdata.
+
+	* Makefile.am (INCLUDES): Modify the include path.
+	* Makefile.in: Regenerated.
+
 2003-02-21  Kaz Sasayama  <kaz2003@hypercore.co.jp>
 
 	* Version 2.0.3.

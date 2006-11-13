@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([JiveAudio], 2.0.3, [jiveaudio@lists.hypercore.co.jp], jiveaudio)
+AC_INIT([JiveAudio], 2.0.4, [jiveaudio@lists.hypercore.co.jp], jiveaudio)
 AC_CONFIG_SRCDIR(audio.cpp)
 AM_INIT_AUTOMAKE(AC_PACKAGE_TARNAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -34,6 +34,7 @@ linux-gnu*)
   prcpucfg=_linux.cfg
   ;;
 esac
-AC_CONFIG_LINKS(mozilla/prcpucfg.h:mozilla/$prcpucfg)
-AC_CONFIG_FILES(Makefile mozilla/Makefile mozilla/obsolete/Makefile)
+AC_CONFIG_LINKS(nspr/prcpucfg.h:nspr/$prcpucfg)
+AC_CONFIG_FILES(Makefile plugin/Makefile java/Makefile xpcom/Makefile \
+nspr/Makefile nspr/obsolete/Makefile)
 AC_OUTPUT

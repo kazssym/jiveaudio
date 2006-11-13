@@ -16,16 +16,27 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
-#ifdef HAVE_CONFIG_H
-#  include "config.h"
-#endif
+#define _GNU_SOURCE 1
+#define _REENTRANT 1
 
-#if defined _WIN32
-#  include <windows.h>
-#  define STDC_HEADERS 1
-#  define HAVE_FCNTL_H 1
-#endif
+#include "common.h"
 
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-#endif
+#include <npapi.h>
+
+#include <new>
+
+using namespace std;
+
+const nothrow_t nothrow = {};
+
+void *
+operator new(size_t nbytes, const nothrow_t &) throw ()
+{
+  return NPN_MemAlloc(nbytes);
+}
+
+void
+operator delete(void *ptr) throw ()
+{
+  NPN_MemFree(ptr);
+}

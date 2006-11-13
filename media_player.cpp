@@ -1,4 +1,4 @@
-/* JiveAudio - plugins for Mozilla
+/* JiveAudio - multimedia plugin for Mozilla
    Copyright (C) 2003 Hypercore Software Design, Ltd.
 
    This program is free software; you can redistribute it and/or
@@ -16,16 +16,18 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
-#ifndef _JRI_H
-#define _JRI_H
+#define _GNU_SOURCE 1
+#define _REENTRANT 1
 
-#ifdef _WINDOWS
-#  include <windows.h>
-#endif
+#include "common.h"
 
-#include <stdio.h>
+#include "media_player.h"
 
-typedef struct jref_object *jref;
-typedef struct JRIEnv_object *JRIEnv;
+media_player::media_player():
+  loop(false)
+{
+}
 
-#endif /* !_JRI_H */
+media_player::~media_player()
+{
+}
