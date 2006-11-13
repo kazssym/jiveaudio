@@ -16,28 +16,40 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include "common.h"
+#if _WIN32
+#define STRICT 1
+#include <windows.h>
+#pragma hdrstop
+#endif
 
-#include <npapi.h>
+#include <stdio.h>
+#include <stdarg.h>
 
-#include <new>
-
-using namespace std;
-
-void *
-operator new(size_t nbytes) throw (bad_alloc)
-{
-  void *ptr = NPN_MemAlloc(nbytes);
-  if (ptr == 0)
-    throw bad_alloc();
-  return ptr;
-}
-
+#if !HAVE_SYSLOG_H
 void
-operator delete(void *ptr) throw ()
+syslog (int prio, const char *format, ...)
 {
-  NPN_MemFree(ptr);
+    va_list args;
+#if _WIN32
+    char buf[512];
+#endif
+
+    va_start (args, format);
+
+#if _WIN32
+    vsnprintf (buf, 512, format, args);
+    OutputDebugString (buf);
+#else /* !_WIN32 */
+    vfprintf (stderr, format, args);
+    fputs ("\n", stderr);
+#endif /* !_WIN32 */
+
+    va_end (args);
 }
+#endif /* !HAVE_SYSLOG_H */

@@ -16,58 +16,64 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include "common.h"
+#if _WIN32
+#define STRICT 1
+#include <windows.h>
+#pragma hdrstop
+#endif
 
-#include "dshow_media_player.h"
+#include "dshow_player.h"
 
 using namespace std;
 
 #if defined _WIN32
-
-dshow_media_player::dshow_media_player():
-  graph(0)
+dshow_player::dshow_player () :
+    graph (0)
 {
 }
 
-dshow_media_player::~dshow_media_player()
+dshow_player::~dshow_player ()
 {
-  stop();
-}
-
-void
-dshow_media_player::start()
-{
-  if (graph != 0)
-    return;
-
-  WCHAR wname[FILENAME_MAX];
-  MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, file_name, -1, wname, FILENAME_MAX);
-
-  CoCreateInstance(CLSID_FilterGraph, 0, CLSCTX_INPROC_SERVER,
-                   IID_IGraphBuilder, (void **) &graph);
-  graph->RenderFile(wname, 0);
-
-  IMediaControl *control;
-  graph->QueryInterface(IID_IMediaControl, (void **) &control);
-  control->Run();
-  control->Release();
+    stop ();
 }
 
 void
-dshow_media_player::stop()
+dshow_player::start ()
 {
-  if (graph == 0)
-    return;
+    if (graph != 0)
+	return;
 
-  IMediaControl *control;
-  graph->QueryInterface(IID_IMediaControl, (void **) &control);
-  control->Stop();
-  control->Release();
-  graph->Release();
-  graph = 0;
+    WCHAR wcname[FILENAME_MAX];
+    MultiByteToWideChar (CP_ACP, MB_PRECOMPOSED, file_name, -1,
+			 wcname, FILENAME_MAX);
+
+    CoCreateInstance (CLSID_FilterGraph, 0, CLSCTX_INPROC_SERVER,
+		      IID_IGraphBuilder, (void **) &graph);
+    graph->RenderFile (wcname, 0);
+
+    IMediaControl *control;
+    graph->QueryInterface (IID_IMediaControl, (void **) &control);
+    control->Run ();
+    control->Release ();
 }
 
+void
+dshow_player::stop ()
+{
+    if (graph == 0)
+	return;
+
+    IMediaControl *control;
+    graph->QueryInterface (IID_IMediaControl, (void **) &control);
+    control->Stop ();
+    control->Release ();
+    graph->Release ();
+    graph = 0;
+}
 #endif /* _WIN32 */

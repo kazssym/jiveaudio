@@ -47,20 +47,20 @@
 
 using namespace std;
 
-exec_media_player::exec_media_player(const char *_command_name):
-  command_name(_command_name),
-  fileno(-1),
+external_player::external_player (const char *_command_name) :
+    command_name (_command_name),
+    fileno (-1),
 #ifdef _POSIX_THREADS
-  thread(0),
+    thread (0),
 #endif /* _POSIX_THREADS */
-  child(0)
+    child (0)
 {
 #ifdef _POSIX_THREADS
   pthread_mutex_init(&thread_mutex, 0);
 #endif /* _POSIX_THREADS */
 }
 
-exec_media_player::~exec_media_player()
+external_player::~external_player ()
 {
   stop();
 #ifdef _POSIX_THREADS
@@ -69,7 +69,7 @@ exec_media_player::~exec_media_player()
 }
 
 void
-exec_media_player::exec(int stream_fileno)
+external_player::exec (int stream_fileno)
 {
   dup2(stream_fileno, 0);
   close(stream_fileno);
@@ -79,7 +79,7 @@ exec_media_player::exec(int stream_fileno)
 }
 
 pid_t
-exec_media_player::spawn(int fileno)
+external_player::spawn (int fileno)
 {
   int p = fork();
   if (p == -1)
@@ -107,7 +107,7 @@ exec_media_player::spawn(int fileno)
 
 #ifdef _POSIX_THREADS
 void
-exec_media_player::run()
+external_player::run ()
 {
   pthread_mutex_lock(&thread_mutex);
   if (fileno != -1)
@@ -139,9 +139,9 @@ exec_media_player::run()
 }
 
 void *
-exec_media_player::run(void *arg)
+external_player::run (void *arg)
 {
-  exec_media_player *player = static_cast <exec_media_player *> (arg);
+  external_player *player = static_cast <external_player *> (arg);
   if (player == 0)
     return 0;
 
@@ -151,7 +151,7 @@ exec_media_player::run(void *arg)
 #endif /* _POSIX_THREADS */
 
 void
-exec_media_player::start()
+external_player::start ()
 {
   if (fileno != -1)
     return;
@@ -176,7 +176,7 @@ exec_media_player::start()
 }
 
 void
-exec_media_player::stop()
+external_player::stop ()
 {
   if (fileno == -1)
     return;

@@ -1,3 +1,95 @@
+2005-02-12  Kaz Sasayama  <kazssym@hypercore.co.jp>
+
+	* NEWS: Updated.
+
+	* dshow_player.h: Change spacing.
+	(class dshow_player): Renamed from class dshow_media_player.  Also
+	change all references.
+	* dshow_player.cpp: Flatten "common.h" and change spacing.
+
+	* exec_media_player.h (class external_player): Renamed from class
+	exec_media_player.  Also change all references.
+	* sox_media_player.cpp: Change spacing.
+
+	* media_player.h: Remove <windows.h> and change spacing.
+	* media_player.cpp: Flatten "common.h" and change spacing.
+	* file_media_player.cpp: Change spacing.
+
+	* common.h (STRICT): New macro.
+
+	* audio.cpp: Remove __FILE__ from syslog messages.
+	(NPP_GetMIMEDescription): Change the description.
+	(NPP_GetValue): Change the desription string.
+	(NPP_SetWindow): Reconstruct conditional sections.
+	(NPP_NewStream): Check the return value from open_stream.
+	(NPP_DestroyStream): Comment out a call to close_stream.
+
+	* npaudio.bpr: Updated.
+
+	* configure.ac: Require Automake 1.9 or later.
+
+	* README: Added known problems.
+
+2005-02-11  Kaz Sasayama  <kazssym@hypercore.co.jp>
+
+	* syslog.c: Changed from C++ to C and renamed.  Also change all
+	references.
+	* syslog.c: Exclude "common.h"
+
+	* dshow_player.h: Renamed from dshow_media_player.h.  Also change
+	all references.
+	* dshow_player.cpp: Renamed from dshow_media_player.cpp.  Also
+	change all references.
+
+	* npaudio.bpr: Updated.
+
+	* nspr/prtypes.h: Updated.
+
+	* plugin/npapi.h: Updated.
+	* plugin/npupp.h: Updated.
+
+	* configure.ac: Change version to 2.0.7.
+
+	* audio.cpp: Exclude "common.h".
+	(struct plugin_data): Renamed from struct audio_data.  Also change
+	all references.
+
+	* npaudio.res: Removed.
+	* npaudio.rc: New file.
+	* Makefile.am (EXTRA_DIST): Remove npaudio.res and add npaudio.rc.
+
+	* Makefile.am (SUBDIRS): Remove xpcom.
+	* configure.ac: Remove xpcom/Makefile from AC_OUTPUT_FILES.
+	
+	* new.cpp: Removed.
+	* Makefile.am (libaudioplugin_la_SOURCES): Remove new.cpp.
+
+2003-05-24  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* npaudio.bpr: Changed to the Windows EOL convention.
+
+	* syslog.cpp (syslog) [_WIN32]: Remove unnecessary line break.
+
+2003-04-10  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* configure.ac: Use AC_CONFIG_HEADERS instead of AM_CONFIG_HEADER.
+
+	* Makefile.am (pkglib_DATA): Renamed from noinst_DATA.
+	(AM_CPPFLAGS): Renamed from INCLUDES.
+
+	* configure.ac: Add explicit quotes.
+
+	* nspr/Makefile.am (nobase_noinst_HEADERS): Add nobase_.
+
+	* Upgrade to Automake 1.7.  All Makefile.in's regenerated.
+
+	* TODO: Updated.
+
+2003-04-08  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Upgrade to automake 1.6.  All Makefile.in's regenerated.
+	* configure.ac: Updated for automake 1.6.
+
 2003-04-02  Kaz Sasayama  <kaz2003@hypercore.co.jp>
 
 	* Version 2.0.6.

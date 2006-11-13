@@ -1,36 +1,34 @@
-JiveAudio is a multimedia plugin for Mozilla/Netscape.
+JiveAudio is a multimedia plugin for Mozilla.
 
-In the GNU/Linux configuration, JiveAudio currently requires sox
-(play) and timidity installed on your path.
+In the POSIX configuration, JiveAudio currently requires sox (play)
+and timidity installed on your path.
 
 
 COMPATIBLE SYSTEMS
 ----------------------------------------------------------------------
 
-- POSIX configuration:
+POSIX configuration:
 
-  - Debian GNU/Linux 3.0 (i386)
+- Debian GNU/Linux 3.0 (i386)
 
-- Win32 configuration (to be verified):
+Win32 configuration (to be verified):
 
-  - Windows 98 (including Second Edition) with DirectX 8.0 (or later)
-  - Windows Millennium Edition with DirectX 8.0 (or later)
-  - Windows 2000 with DirectX 8.0 (or later)
-  - Windows XP
+- Windows 98 (including Second Edition) with DirectX 8.0 (or later)
+- Windows Millennium Edition with DirectX 8.0 (or later)
+- Windows 2000 with DirectX 8.0 (or later)
+- Windows XP
 
 
 COMPATIBLE COMPILERS
 ----------------------------------------------------------------------
 
-- POSIX configuration:
+POSIX configuration:
 
-  - GCC 2.95.X (Note that GCC 3.0 and later uses new incompatible C++
-    ABIs, and thus cannot be used until Mozilla's default compiler is
-    changed.)
+- GCC 3.2.X (or later)
 
-- Win32 configuration:
+Win32 configuration:
 
-  - Borland C++Builder 6 (or later)
+- Borland C++Builder 6 (or later)
 
 
 INSTALLATION
@@ -40,9 +38,19 @@ First, read the file INSTALL for basic instructions.
 
 Netscape Plugin SDK is no longer required.
 
-This package installs the plugin files into `LIBDIR/jiveaudio' by
+This package installs the plugin files into 'LIBDIR/jiveaudio' by
 default.  To use JiveAudio in your browser, you must copy or symlink
 them into your browser's plugin directory by hand.
 
+
+KNOWN PROBLEMS
+----------------------------------------------------------------------
+
+In the Win32 configuration, this program may not work when it is used
+by restricted user accounts because it is unlikely for those accounts
+to have a write permission to the current directory which is normally
+the browser's installation directory.  This will be fixed later.
+
+
 ---
-$ProjectHeader: jiveaudio 1.6 Mon, 13 Nov 2006 18:33:22 +0900 kazssym $
+$ProjectHeader: jiveaudio 1.7 Mon, 13 Nov 2006 18:35:08 +0900 kazssym $

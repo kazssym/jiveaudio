@@ -38,7 +38,7 @@
 
 
 /*
- *  npupp.h $Revision: 1.2 $
+ *  npupp.h $Revision: 1.3 $
  *  function call mecahnics needed by platform specific glue code.
  */
 
@@ -387,7 +387,7 @@ typedef UniversalProcPtr NPP_HandleEventUPP;
 enum {
 	uppNPP_HandleEventProcInfo = kThinkCStackBased
 		| STACK_ROUTINE_PARAMETER(1, SIZE_CODE(sizeof(NPP)))
-		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof(NPEvent *)))
+		| STACK_ROUTINE_PARAMETER(2, SIZE_CODE(sizeof(void *)))
 		| RESULT_SIZE(SIZE_CODE(sizeof(int16)))
 };
 #define NewNPP_HandleEventProc(FUNC)		\
@@ -397,7 +397,7 @@ enum {
 
 #else
 
-typedef int16 (* NP_LOADDS NPP_HandleEventUPP)(NPP instance, NPEvent* event);
+typedef int16 (* NP_LOADDS NPP_HandleEventUPP)(NPP instance, void* event);
 #define NewNPP_HandleEventProc(FUNC)		\
 		((NPP_HandleEventUPP) (FUNC))
 #define CallNPP_HandleEventProc(FUNC,  NPParg, voidPtr)		\
@@ -1127,7 +1127,7 @@ typedef struct _NPNetscapeFuncs {
 #endif
 
 
-#ifdef XP_MAC
+#if defined(XP_MAC) || defined(XP_MACOSX)
 /******************************************************************************************
  * Mac platform-specific plugin glue stuff
  *******************************************************************************************/
@@ -1181,9 +1181,9 @@ enum
 
 typedef struct _BPSupportedMIMETypes
 {
- SInt32    structVersion;      // struct version
- Handle    typeStrings;        // STR# formated handle, allocated by plug-in
- Handle    infoStrings;        // STR# formated handle, allocated by plug-in
+ SInt32    structVersion;      /* struct version */
+ Handle    typeStrings;        /* STR# formated handle, allocated by plug-in */
+ Handle    infoStrings;        /* STR# formated handle, allocated by plug-in */
 } BPSupportedMIMETypes;
 OSErr BP_GetSupportedMIMETypes(BPSupportedMIMETypes *mimeInfo, UInt32 flags);
 
@@ -1201,16 +1201,16 @@ enum {
 		(const char *)CallUniversalProc((UniversalProcPtr)(FUNC), (ProcInfoType)uppNP_GetMIMEDescEntryProc)
 
 
-#else  // !_NPUPP_USE_UPP_
+#else  /* !_NPUPP_USE_UPP_ */
 
- // NP_GetMIMEDescription
+ /* NP_GetMIMEDescription */
 #define NP_GETMIMEDESCRIPTION_NAME "NP_GetMIMEDescription"
 typedef const char* (* NP_LOADDS NP_GetMIMEDescriptionUPP)();
 #define NewNP_GetMIMEDescEntryProc(FUNC)		\
 		((NP_GetMIMEDescriptionUPP) (FUNC))
 #define CallNP_GetMIMEDescEntryProc(FUNC)		\
 		(*(FUNC))()
-// BP_GetSupportedMIMETypes
+/* BP_GetSupportedMIMETypes */
 typedef OSErr (* NP_LOADDS BP_GetSupportedMIMETypesUPP)(BPSupportedMIMETypes*, UInt32);
 #define NewBP_GetSupportedMIMETypesEntryProc(FUNC)		\
 		((BP_GetSupportedMIMETypesUPP) (FUNC))
@@ -1280,6 +1280,7 @@ extern "C" {
 /* plugin meta member functions */
 
 char*	NP_GetMIMEDescription(void);
+/* 2003-05-22 - The next line was added by Kaz Sasayama.  */
 NPError	NP_GetValue(void*, NPPVariable, void*);
 NPError	NP_Initialize(NPNetscapeFuncs*, NPPluginFuncs*);
 NPError	NP_Shutdown(void);

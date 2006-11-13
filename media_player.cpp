@@ -16,23 +16,30 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include "common.h"
+#if _WIN32
+#define STRICT 1
+#include <windows.h>
+#pragma hdrstop
+#endif
 
 #include "media_player.h"
 
-media_player::media_player():
-  loop(false)
+media_player::media_player () :
+    loop (false)
 {
 }
 
-media_player::~media_player()
+media_player::~media_player ()
 {
 }
 
 void
-media_player::set_window(window_type window)
+media_player::set_window (window_type window)
 {
 }

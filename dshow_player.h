@@ -16,29 +16,25 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
-#ifndef _DSHOW_MEDIA_PLAYER_H
-#define _DSHOW_MEDIA_PLAYER_H 1
+#ifndef _DSHOW_PLAYER_H
+#define _DSHOW_PLAYER_H 1
 
 #include "media_player.h"
 
-#if defined _WIN32
-
+#if _WIN32
 #include <dshow.h>
 
-class dshow_media_player:
-  public file_media_player
+class dshow_player : public file_media_player
 {
 public:
-  dshow_media_player();
-  ~dshow_media_player();
+    dshow_player ();
+    ~dshow_player ();
 
-  void start();
-  void stop();
-
+    void start ();
+    void stop ();
 protected:
-  IGraphBuilder *graph;
+    IGraphBuilder *graph;
 };
-
 #endif /* _WIN32 */
 
-#endif /* !_DSHOW_MEDIA_PLAYER_H */
+#endif /* !defined _DSHOW_PLAYER_H */

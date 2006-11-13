@@ -27,27 +27,27 @@
 
 using namespace std;
 
-sox_media_player::sox_media_player(const char *_command_name):
-  exec_media_player(_command_name)
+sox_media_player::sox_media_player (const char *_command_name) :
+    external_player (_command_name)
 {
 }
 
 void
-sox_media_player::exec(int stream_fileno)
+sox_media_player::exec (int stream_fileno)
 {
-  dup2(stream_fileno, 0);
-  close(stream_fileno);
+  dup2 (stream_fileno, 0);
+  close (stream_fileno);
 
-  execlp(command_name, command_name, "-t", file_format,
-	 "-", (const char *) 0);
-  perror(command_name);
+  execlp (command_name, command_name, "-t", file_format,
+	  "-", (const char *) 0);
+  perror (command_name);
 }
 
 bool
-sox_media_player::open_stream(const char *mime_type)
+sox_media_player::open_stream (const char *mime_type)
 {
-  file_format = "ul";
-  if (strstr(mime_type, "wav") != 0)
-    file_format = "wav";
-  return exec_media_player::open_stream(mime_type);
+    file_format = "ul";
+    if (strstr (mime_type, "wav") != 0)
+	file_format = "wav";
+    return external_player::open_stream (mime_type);
 }

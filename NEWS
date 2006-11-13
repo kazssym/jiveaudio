@@ -1,4 +1,9 @@
-History of user-visible changes in JiveAudio.  -*-Outline-*-
+History of user-visible changes in JiveAudio -*-Outline-*-
+
+* Version 2.0.7
+
+Work around a problem that the resource loading does not finish in the
+Win32 configuration though this plugin is still not working right.
 
 * Version 2.0.6
 

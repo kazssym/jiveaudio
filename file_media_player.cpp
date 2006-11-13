@@ -24,93 +24,92 @@
 #include "media_player.h"
 
 #ifdef HAVE_FCNTL_H
-#  include <fcntl.h>
+#include <fcntl.h>
 #else
-#  define O_RDONLY 0
-#  define O_WRONLY 1
-#  define O_RDWR   2
+#define O_RDONLY 0
+#define O_WRONLY 1
+#define O_RDWR   2
 #endif
 
 #ifdef HAVE_IO_H
-#  include <io.h>
+#include <io.h>
 #endif
 
-#if !defined O_EXCL
-#  define O_EXCL 0
+#ifndef O_EXCL
+#define O_EXCL 0
 #endif
 
-#if !defined O_BINARY
-#  define O_BINARY 0
+#ifndef O_BINARY
+#define O_BINARY 0
 #endif
 
 using namespace std;
 
-file_media_player::file_media_player():
-  fildes(-1)
+file_media_player::file_media_player () :
+    fildes (-1)
 {
-  file_name[0] = '\0';
+    file_name[0] = '\0';
 }
 
-file_media_player::~file_media_player()
+file_media_player::~file_media_player ()
 {
-  clean();
+    clean ();
 }
 
 void
-file_media_player::clean()
+file_media_player::clean ()
 {
-  if (file_name[0] == '\0')
-    return;
+    if (file_name[0] == '\0')
+        return;
 
-  remove(file_name);
-  file_name[0] = '\0';
+    remove (file_name);
+    file_name[0] = '\0';
 }
 
 bool
-file_media_player::open_stream(const char *mime_type)
+file_media_player::open_stream (const char *mime_type)
 {
-  if (fildes != -1)
-    close(fildes);
+    if (fildes != -1)
+        close (fildes);
 
-  clean();
-  tmpnam(file_name);
+    clean ();
+    tmpnam (file_name);
 #if !defined O_CREAT
-  fildes = creat(file_name, 0600);
+    fildes = creat (file_name, 0600);
 #else
-  fildes = open(file_name, O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
+    fildes = open (file_name, O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
 #endif
-  if (fildes == -1)
-    return false;
+    if (fildes == -1)
+        return false;
 
-  return true;
+    return true;
 }
 
 size_t
-file_media_player::stream_buffer_size() const
+file_media_player::stream_buffer_size () const
 {
-  if (fildes == -1)
-    return 0;
+    if (fildes == -1)
+        return 0;
 
-  return 4096;
+    return 4096;
 }
 
 size_t
-file_media_player::write_stream(const void *buf, size_t nbytes)
+file_media_player::write_stream (const void *buf, size_t nbytes)
 {
-  if (fildes == -1)
-    return (size_t) -1;
+    if (fildes == -1)
+        return (size_t) -1;
 
-  size_t k = write(fildes, buf, nbytes);
-  return k;
+    size_t k = write (fildes, buf, nbytes);
+    return k;
 }
 
 void
-file_media_player::close_stream()
+file_media_player::close_stream ()
 {
-  if (fildes == -1)
-    return;
+    if (fildes == -1)
+        return;
 
-  close(fildes);
-  fildes = -1;
+    close (fildes);
+    fildes = -1;
 }
-

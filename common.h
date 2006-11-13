@@ -20,7 +20,8 @@
 #  include "config.h"
 #endif
 
-#if defined _WIN32
+#if _WIN32
+#  define STRICT 1
 #  include <windows.h>
 #  define STDC_HEADERS 1
 #  define HAVE_FCNTL_H 1

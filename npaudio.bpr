@@ -4,8 +4,8 @@
   <MACROS>
     <VERSION value="BCB.06.00"/>
     <PROJECT value="npaudio.dll"/>
-    <OBJFILES value="np_entry.obj npn_gate.obj audio.obj dshow_media_player.obj 
-      file_media_player.obj media_player.obj syslog.obj new.obj"/>
+    <OBJFILES value="np_entry.obj npn_gate.obj audio.obj dshow_player.obj file_media_player.obj 
+      media_player.obj syslog.obj"/>
     <RESFILES value="npaudio.res"/>
     <DEFFILE value="npaudio.def"/>
     <RESDEPEN value="$(RESFILES)"/>
@@ -24,21 +24,20 @@
     <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
     <RELEASELIBPATH value="$(BCB)\lib\release"/>
     <LINKER value="ilink32"/>
-    <USERDEFINES value="_WINDOWS;STRICT;_DEBUG"/>
+    <USERDEFINES value="_WINDOWS;STDC_HEADERS;HAVE_FCNTL_H;HAVE_IO_H;_DEBUG"/>
     <SYSDEFINES value="NO_STRICT;_NO_VCL;USEPACKAGES"/>
     <MAINSOURCE value="npaudio.bpf"/>
-    <INCLUDEPATH value="plugin;java;xpcom;nspr;E:\MSSDK\include;$(BCB)\include;$(BCB)\include\vcl"/>
+    <INCLUDEPATH value="plugin;java;nspr;$(DXSDK)\include;$(BCB)\include;$(BCB)\include\vcl"/>
     <LIBPATH value="$(BCB)\lib\obj;$(BCB)\lib"/>
     <WARNINGS value="-w-par"/>
     <OTHERFILES value=""/>
   </MACROS>
   <OPTIONS>
-    <CFLAG1 value="-WD -O2 -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -X- -a8 -b- -k -y -v -vi -tWD 
-      -tWM -c"/>
-    <PFLAGS value="-$YD -$W -$O- -$A8 -v -JPHNE -M"/>
+    <CFLAG1 value="-WD -Od -Vx -Ve -X- -r- -a8 -b -d -k -y -v -vi- -tWD -tWM -c"/>
+    <PFLAGS value="-$Y+ -$W -$O- -$A8 -v -JPHNE -M"/>
     <RFLAGS value=""/>
     <AFLAGS value="/mx /w2 /zi"/>
-    <LFLAGS value="-D&quot;&quot; -aa -Tpd -x -Gn -Gi -v"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpd -x -Gn -v"/>
     <OTHERFILES value=""/>
   </OPTIONS>
   <LINKER>
@@ -48,69 +47,47 @@
     <OTHERFILES value=""/>
   </LINKER>
   <FILELIST>
-      <FILE FILENAME="npaudio.res" FORMNAME="" UNITNAME="npaudio.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="npaudio.bpf" FORMNAME="" UNITNAME="npaudio" CONTAINERID="BPF" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="npaudio.def" FORMNAME="" UNITNAME="npaudio.def" CONTAINERID="DefTool" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="np_entry.cpp" FORMNAME="" UNITNAME="np_entry.cpp" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="npn_gate.cpp" FORMNAME="" UNITNAME="npn_gate.cpp" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="npaudio.rc" FORMNAME="" UNITNAME="npaudio.rc" CONTAINERID="RC" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="np_entry.cpp" FORMNAME="" UNITNAME="np_entry" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="npn_gate.cpp" FORMNAME="" UNITNAME="npn_gate" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="audio.cpp" FORMNAME="" UNITNAME="audio" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="dshow_media_player.cpp" FORMNAME="" UNITNAME="dshow_media_player" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="dshow_player.cpp" FORMNAME="" UNITNAME="dshow_player" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="file_media_player.cpp" FORMNAME="" UNITNAME="file_media_player" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="media_player.cpp" FORMNAME="" UNITNAME="media_player" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="syslog.cpp" FORMNAME="" UNITNAME="syslog" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="new.cpp" FORMNAME="" UNITNAME="new" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="syslog.c" FORMNAME="" UNITNAME="syslog" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
 
   <IDEOPTIONS>
 [Version Info]
-IncludeVerInfo=1
-AutoIncBuild=1
-MajorVer=2
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
 MinorVer=0
-Release=6
+Release=0
 Build=0
 Debug=0
 PreRelease=0
 Special=0
 Private=0
 DLL=0
-Locale=1033
-CodePage=1252
+Locale=1041
+CodePage=932
 
 [Version Info Keys]
-CompanyName=Hypercore Software Design, Ltd
-FileDescription=JiveAudio 2.0.6
-FileVersion=2.0.6.0
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
 InternalName=
-LegalCopyright=Copyright (C) 2003 Hypercore Software Design, Ltd
+LegalCopyright=
 LegalTrademarks=
-OriginalFilename=npaudio.dll
-ProductName=JiveAudio Plugin
-ProductVersion=2.0
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
 Comments=
-MIMEType=audio/basic|audio/x-wav|audio/wav|audio/x-midi|audio/midi
-FileExtents=au,snd|wav||mid,midi|
-FileOpenName=Basic Audio|WAV Audio|WAV Audio|MIDI Sequence|MIDI Sequence
-
-[HistoryLists\hlIncludePath]
-Count=2
-Item0=plugin;java;xpcom;nspr;E:\MSSDK\include;$(BCB)\include;$(BCB)\include\vcl
-Item1=$(BCB)\include;$(BCB)\include\vcl
-
-[HistoryLists\hlLibraryPath]
-Count=1
-Item0=$(BCB)\lib\obj;$(BCB)\lib
-
-[HistoryLists\hlDebugSourcePath]
-Count=1
-Item0=$(BCB)\source\vcl
-
-[HistoryLists\hlConditionals]
-Count=2
-Item0=_WINDOWS;STRICT;_DEBUG
-Item1=_DEBUG
 
 [Debugging]
 DebugSourceDirs=$(BCB)\source\vcl
