@@ -1,0 +1,10 @@
+2003-02-12  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Version 2.0.1.
+
+	* configure.ac: Update PACKAGE_VERSION.
+
+2003-02-11  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Begin hacking.
+
