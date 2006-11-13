@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([JiveAudio], 2.0.2, [bugs@hypercore.co.jp], jiveaudio)
+AC_INIT([JiveAudio], 2.0.3, [jiveaudio@lists.hypercore.co.jp], jiveaudio)
 AC_CONFIG_SRCDIR(audio.cpp)
 AM_INIT_AUTOMAKE(AC_PACKAGE_TARNAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -25,5 +25,15 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_FUNC_FORK
 
+case $host_os in
+linux-gnu*)
+  prcpucfg=_linux.cfg
+  ;;
+*)
+  AC_MSG_WARN([Unknown host operating system; assuming GNU/Linux])
+  prcpucfg=_linux.cfg
+  ;;
+esac
+AC_CONFIG_LINKS(mozilla/prcpucfg.h:mozilla/$prcpucfg)
 AC_CONFIG_FILES(Makefile mozilla/Makefile mozilla/obsolete/Makefile)
 AC_OUTPUT

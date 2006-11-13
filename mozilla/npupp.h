@@ -38,7 +38,7 @@
 
 
 /*
- *  npupp.h $Revision: 1.2 $
+ *  npupp.h $Revision: 1.3 $
  *  function call mecahnics needed by platform specific glue code.
  */
 
@@ -1282,6 +1282,7 @@ extern "C" {
 /* plugin meta member functions */
 
 char*	NP_GetMIMEDescription(void);
+NPError	NP_GetValue(void*, NPPVariable, void*);
 NPError	NP_Initialize(NPNetscapeFuncs*, NPPluginFuncs*);
 NPError	NP_Shutdown(void);
 

@@ -1,4 +1,81 @@
+2003-02-21  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Version 2.0.3.
+
+	* configure.ac: Update PACKAGE_VERSION.
+	* configure: Regenerated.
+
+	* npaudio.bpr (FileDescription): Update version numbers.
+
+	* NEWS: Updated.
+
+	* mozilla/npupp.h: Add prototype for NP_GetValue.
+
+2003-02-20  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* audio.cpp (stop): Define also if _WIN32.
+	(stop) [_WIN32]: Stop playback.
+	(NPP_New): Initialize audio_data members explicitly.
+	(NPP_Destroy, NPP_NewStream): Use stop also if _WIN32.
+
+	* configure.ac: Create link mozilla/prcpucfg.h according to the
+	host operating system.
+	* configure: Regenerated.
+
+	* mozilla/Makefile.am (noinst_HEADERS): Remove prcpucfg.h.  Add
+	the new files.
+	(distclean-local): New target.
+	* mozilla/Makefile.in: Regenerated.
+
+	* mozilla/_linux.cfg: Renamed from prcpucfg.h.
+	* mozilla/_win95.cfg: New file.
+
+	* Makefile.am (INCLUDES): Add -Imozilla
+	* Makefile.in: Regenerated.
+
+	* audio.cpp (struct audio_data) [_WIN32]: Add new member graph.
+	[_WIN32]: Remove static vaiables.
+	(NPP_New, NPP_Destroy, NPP_NewStream, NPP_StreamAsFile) [_WIN32]:
+	Use the new struct member instead of the removed static variables.
+
+	* Makefile.am (EXTRA_DIST): Add the new files.
+	* Makefile: Regenerated.
+
+	* npaudio.bpr: New file.
+	* npaudio.bpf: New file.
+	* npaudio.res: New file.
+	* npaudio.def: New file.
+
+	* NEWS: Add new entry for version 2.0.3.
+
+	* audio.cpp (struct audio_data): New struct.
+	[!_WIN32]: Remove static variables.
+	[!_WIN32] (stop): Add new argument data.  Also change all callers.
+	[!_WIN32] (stop): Use the struct member instead of the removed
+	static variables.
+	(NPP_New): Allocate the private data.
+	(NPP_Destroy): Deallocate the private data.
+	(NPP_NewStream, NPP_StreamAsFile) [!_WIN32]: Use the struct member
+	instead of the removed static variables.
+	(NPP_NewStream) [!_WIN32]: Check for audio/wav too.
+
+	* audio.cpp [_WIN32]: Include <dshow.h>.
+	(NPP_Initialize) [_WIN32]: Call CoInitialize.
+	(NPP_Shutdown) [_WIN32]: Call CoUninitialize.
+	[_WIN32]: Add new static variables: graph & control.
+	(NPP_New) [_WIN32]: Initialize static variables.
+	(NPP_Destroy) [_WIN32]: Clean up static variables.
+	(NPP_NewStream) [_WIN32]: Stop playback.
+	(NPP_StreamAsFile) [_WIN32]: Start playback of the file.
+
+	* mozilla/npapi.h: Revert to test _WINDOWS for Windows platforms.
+
+	* mozilla/jri.h [_WINDOWS]: Include <windows.h>.
+
 2003-02-16  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* configure.ac: Change the bug reporting address.
+	* configure: Regenerated.
 
 	* Version 2.0.2.
 

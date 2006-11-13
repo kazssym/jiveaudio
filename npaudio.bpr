@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="npaudio.dll"/>
+    <OBJFILES value="np_entry.obj npn_gate.obj audio.obj"/>
+    <RESFILES value="npaudio.res"/>
+    <DEFFILE value="npaudio.def"/>
+    <RESDEPEN value="$(RESFILES)"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value=""/>
+    <SPARELIBS value=""/>
+    <PACKAGES value="vcl.bpi rtl.bpi vclx.bpi bcbsmp.bpi dbrtl.bpi adortl.bpi vcldb.bpi 
+      qrpt.bpi bdertl.bpi vcldbx.bpi dsnap.bpi cds.bpi bdecds.bpi teeui.bpi 
+      teedb.bpi tee.bpi teeqr.bpi ibxpress.bpi visualclx.bpi visualdbclx.bpi 
+      vclie.bpi xmlrtl.bpi inet.bpi inetdbbde.bpi inetdbxpress.bpi inetdb.bpi 
+      nmfast.bpi bcbie.bpi soaprtl.bpi dbexpress.bpi dbxcds.bpi"/>
+    <PATHCPP value=".;"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="_WINDOWS;STRICT;_DEBUG"/>
+    <SYSDEFINES value="NO_STRICT;_NO_VCL;USEPACKAGES"/>
+    <MAINSOURCE value="npaudio.bpf"/>
+    <INCLUDEPATH value="mozilla;E:\MSSDK\include;$(BCB)\include;$(BCB)\include\vcl"/>
+    <LIBPATH value="$(BCB)\lib\obj;$(BCB)\lib"/>
+    <WARNINGS value="-w-par"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <CFLAG1 value="-WD -Od -H=$(BCB)\lib\vcl60.csm -Hc -Vx -Ve -X- -r- -a8 -b- -k -y -v -vi- 
+      -tWD -tWM -c"/>
+    <PFLAGS value="-$YD -$W -$O- -$A8 -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zi"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpd -x -Gn -Gi -v"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0d32.obj $(PACKAGES) $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cw32mt.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="npaudio.res" FORMNAME="" UNITNAME="npaudio.res" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="npaudio.bpf" FORMNAME="" UNITNAME="npaudio" CONTAINERID="BPF" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="npaudio.def" FORMNAME="" UNITNAME="npaudio.def" CONTAINERID="DefTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="np_entry.cpp" FORMNAME="" UNITNAME="np_entry.cpp" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="npn_gate.cpp" FORMNAME="" UNITNAME="npn_gate.cpp" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="audio.cpp" FORMNAME="" UNITNAME="audio" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=1
+AutoIncBuild=1
+MajorVer=0
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1033
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=Hypercore Software Design, Ltd
+FileDescription=JiveAudio 2.0.3
+FileVersion=0.0.0.0
+InternalName=
+LegalCopyright=Copyright (C) 2003 Hypercore Software Design, Ltd
+LegalTrademarks=
+OriginalFilename=npaudio.dll
+ProductName=JiveAudio Plugin
+ProductVersion=2.0.3
+Comments=
+MIMEType=audio/basic|audio/x-wav|audio/wav|audio/x-midi|audio/midi
+FileExtents=au,snd|wav||mid,midi|
+FileOpenName=Basic Audio|WAV Audio|WAV Audio|MIDI Sequence|MIDI Sequence
+
+[HistoryLists\hlIncludePath]
+Count=5
+Item0=mozilla;E:\MSSDK\include;$(BCB)\include;$(BCB)\include\vcl
+Item1=mozilla;$(BCB)\include;$(BCB)\include\vcl
+Item2=F:\projects\jiveaudio;F:\projects\jiveaudio\mozilla;$(BCB)\include;$(BCB)\include\vcl
+Item3=\\Flore\kazssym\src\jiveaudio\2.0-win32;\\Flore\kazssym\src\jiveaudio\2.0-win32\mozilla;$(BCB)\include;$(BCB)\include\vcl
+Item4=\\Flore\kazssym\src\jiveaudio\2.0-win32;$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=3
+Item0=$(BCB)\lib\obj;$(BCB)\lib
+Item1=F:\projects\jiveaudio;$(BCB)\lib\obj;$(BCB)\lib
+Item2=\\Flore\kazssym\src\jiveaudio\2.0-win32;$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=4
+Item0=_WINDOWS;STRICT;_DEBUG
+Item1=STRICT;_DEBUG
+Item2=STRICT
+Item3=_DEBUG
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+LinkCGLIB=0
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
+
+[Linker]
+LibPrefix=
+LibSuffix=
+LibVersion=
+  </IDEOPTIONS>
+</PROJECT>

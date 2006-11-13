@@ -3,7 +3,7 @@
 mozilla_libdir = $(libdir)/mozilla
 pluginsdir = $(mozilla_libdir)/plugins
 
-INCLUDES = -I$(srcdir)/mozilla
+INCLUDES = -Imozilla -I$(srcdir)/mozilla
 
 plugins_LTLIBRARIES = libaudioplugin.la libmidiplugin.la
 
@@ -14,5 +14,7 @@ libmidiplugin_la_LDFLAGS = -module -avoid-version
 libmidiplugin_la_SOURCES = np_entry.cpp npn_gate.cpp midi.cpp
 
 noinst_HEADERS = npplat.h common.h
+
+EXTRA_DIST = npaudio.bpr npaudio.bpf npaudio.res npaudio.def
 
 SUBDIRS = mozilla

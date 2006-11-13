@@ -20,6 +20,10 @@
 
 #include "common.h"
 
+#if defined _WIN32
+#  include <dshow.h>
+#endif
+
 #include <stdio.h>
 #include <signal.h>
 
@@ -39,6 +43,16 @@
 #  define O_RDWR   2
 #endif
 
+struct audio_data
+{
+#if defined _WIN32
+  IGraphBuilder *graph;
+#else /* !_WIN32 */
+  pid_t child;
+  const char *format;
+#endif /* !_WIN32 */
+};
+
 #if defined _WIN32
 BOOL WINAPI
 DllMain(HINSTANCE instance, DWORD reason, LPVOID)
@@ -51,6 +65,9 @@ NPError
 NPP_Initialize(void)
 {
   fprintf(stderr, "libaudioplugin: NPP_Initialize\n");
+#if defined _WIN32
+  CoInitialize(NULL);
+#endif /* _WIN32 */
   return NPERR_NO_ERROR;
 }
 
@@ -58,9 +75,12 @@ void
 NPP_Shutdown(void)
 {
   fprintf(stderr, "libaudioplugin: NPP_Shutdown\n");
+#if defined _WIN32
+  CoUninitialize();
+#endif /* _WIN32 */
 }
 
-#ifdef XP_UNIX
+#if defined XP_UNIX
 char *
 NPP_GetMIMEDescription(void)
 {
@@ -76,7 +96,7 @@ NPP_GetValue(NPP instance, NPPVariable variable, void *value)
   fprintf(stderr, "libaudioplugin: NPP_GetValue (%d)\n", variable);
   switch (variable)
     {
-#ifdef XP_UNIX
+#if defined XP_UNIX
     case NPPVpluginNameString:
       *((const char **) value) = "JiveAudio Plugin";
       break;
@@ -100,30 +120,42 @@ NPP_SetValue(NPP instance, NPNVariable variable, void *value)
   return NPERR_NO_ERROR;
 }
 
-#ifndef _WIN32
-static const char *format = "ul";
-static pid_t child = 0;
-
 static void
-stop(void)
+stop(audio_data *data)
 {
-  if (child > 0) {
-    kill(child, SIGTERM);
-    waitpid(child, NULL, 0);
-    child = 0;
+#if defined _WIN32
+  IMediaControl *control;
+  data->graph->QueryInterface(IID_IMediaControl, (void **) &control);
+  control->Stop();
+  control->Release();
+#else /* !_WIN32 */
+  if (data->child > 0) {
+    kill(data->child, SIGTERM);
+    waitpid(data->child, NULL, 0);
+    data->child = 0;
   }
-}
 #endif /* !_WIN32 */
+}
 
 NPError
 NPP_New(NPMIMEType MIMEType, NPP instance, uint16 mode,
 	int16 argc, char **argn, char **argv, NPSavedData *savedData)
 {
-  int i;
-
   fprintf(stderr, "libaudioplugin: NPP_New (%s, %d)\n", MIMEType, mode);
-  for (i = 0; i != argc; ++i)
+  for (int i = 0; i != argc; ++i)
     fprintf(stderr, "\t%s=%s\n", argn[i], argv[i]);
+
+  instance->pdata = NPN_MemAlloc(sizeof (audio_data));
+  if (instance->pdata == 0)
+    return NPERR_OUT_OF_MEMORY_ERROR;
+
+  audio_data *data = static_cast <audio_data *> (instance->pdata);
+#if defined _WIN32
+  CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER,
+                   IID_IGraphBuilder, (void **) &data->graph);
+#else /* !_WIN32 */
+  data->child = 0;
+#endif /* !_WIN32 */
   return NPERR_NO_ERROR;
 }
 
@@ -131,9 +163,12 @@ NPError
 NPP_Destroy(NPP instance, NPSavedData **savedData)
 {
   fprintf(stderr, "libaudioplugin: NPP_Destroy\n");
-#ifndef _WIN32
-  stop();
-#endif
+  audio_data *data = static_cast <audio_data *> (instance->pdata);
+  stop(data);
+#if defined _WIN32
+  data->graph->Release();
+#endif /* _WIN32 */
+  NPN_MemFree(data);
   return NPERR_NO_ERROR;
 }
 
@@ -162,12 +197,14 @@ NPP_NewStream(NPP instance, NPMIMEType MIMEType, NPStream *stream,
 	      NPBool seekable, uint16 *mode)
 {
   fprintf(stderr, "libaudioplugin: NPP_NewStream (%s, %d)\n", MIMEType, seekable);
-#ifndef _WIN32
-  stop();
-  if (strcmp(MIMEType, "audio/x-wav") == 0)
-    format = "wav";
+  audio_data *data = static_cast <audio_data *> (instance->pdata);
+  stop(data);
+#if !defined _WIN32
+  if (strcmp(MIMEType, "audio/x-wav") == 0
+      || strcmp (MIMEType, "audio/wav") == 0)
+    data->format = "wav";
   else
-    format = "ul";
+    data->format = "ul";
 #endif /* !_WIN32 */
   *mode = NP_ASFILEONLY;
   return NPERR_NO_ERROR;
@@ -197,25 +234,31 @@ NPP_Write(NPP instance, NPStream *stream, int32 off, int32 len, void *buf)
 void
 NPP_StreamAsFile(NPP instance, NPStream *stream, const char *name)
 {
-#ifndef _WIN32
-  int fileno;
-#endif
-
   fprintf(stderr, "libaudioplugin: NPP_StreamAsFile (%s)\n", name);
-#ifndef _WIN32
-  fileno = open(name, O_RDONLY);
+  audio_data *data = static_cast <audio_data *> (instance->pdata);
+#if defined _WIN32
+  WCHAR wname[FILENAME_MAX];
+  MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, name, -1, wname, FILENAME_MAX);
+  data->graph->RenderFile(wname, NULL);
+
+  IMediaControl *control;
+  data->graph->QueryInterface(IID_IMediaControl, (void **) &control);
+  control->Run();
+  control->Release();
+#else /* !_WIN32 */
+  int fileno = open(name, O_RDONLY);
   if (fileno == -1) {
     perror(name);
     return;
   }
 
-  child = fork();
-  if (child == -1) {
+  data->child = fork();
+  if (data->child == -1) {
     perror("fork");
     return;
   }
 
-  if (child == 0) {
+  if (data->child == 0) {
     int null;
 
     dup2(fileno, STDIN_FILENO);
@@ -223,7 +266,7 @@ NPP_StreamAsFile(NPP instance, NPStream *stream, const char *name)
     null = open("/dev/null", O_WRONLY);
     dup2(null, STDOUT_FILENO);
     close(null);
-    execlp("play", "play", "-t", format, "-", (char *) 0);
+    execlp("play", "play", "-t", data->format, "-", (char *) 0);
     perror("execlp");
     _exit(1);
   }

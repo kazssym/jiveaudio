@@ -19,6 +19,10 @@
 #ifndef _JRI_H
 #define _JRI_H
 
+#ifdef _WINDOWS
+#  include <windows.h>
+#endif
+
 #include <stdio.h>
 
 typedef struct jref_object *jref;
