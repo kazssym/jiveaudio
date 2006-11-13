@@ -16,6 +16,10 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
+#if HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 1 VERSIONINFO
     FILEVERSION 2, 0, 8, 0
     PRODUCTVERSION 2, 0
@@ -25,7 +29,7 @@
     BLOCK "StringFileInfo" {
         BLOCK "040904e4" {
 	    VALUE "CompanyName", "Hypercore Online Solutions\0"
-	    VALUE "FileDescription", "JiveAudio 2.0.8 Plugin for Mozilla\0"
+	    VALUE "FileDescription", "JiveAudio 2.0.8 for Mozilla\0"
 	    VALUE "FileVersion", "2.0.8.0\0"
 	    VALUE "LegalCopyright", "Copyright (C) 2003 Hypercore Online Solutions\0"
 	    VALUE "OriginalFilename", "npaudio.dll\0"

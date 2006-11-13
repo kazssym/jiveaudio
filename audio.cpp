@@ -109,18 +109,17 @@ NPP_GetMIMEDescription ()
 NPError
 NPP_GetValue (NPP instance, NPPVariable variable, void *value)
 {
-    if (instance != 0)
-        syslog (LOG_DEBUG, "NPP_GetValue %d", variable);
     switch (variable) {
-#if defined XP_UNIX
+#ifdef XP_UNIX
     case NPPVpluginNameString:
-        *((const char **) value) = PACKAGE_NAME " Plugin";
+        *((const char **) value) = PACKAGE_NAME;
         break;
     case NPPVpluginDescriptionString:
-        *((const char **) value) = PACKAGE_STRING " Plugin for Mozilla";
+        *((const char **) value) = PACKAGE_STRING " for Mozilla";
         break;
 #endif
     default:
+        syslog (LOG_DEBUG, "NPP_GetValue %d", variable);
         break;
     }
 
@@ -174,7 +173,8 @@ NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
     data->window = 0;
     data->player = 0;
     for (int i = 0; i != argc; ++i) {
-        syslog (LOG_DEBUG, "  name=\"%s\" value=\"%s\"", argn[i], argv[i]);
+        syslog (LOG_DEBUG, "  name=\"%s\" value=\"%s\"",
+                argn[i], argv[i]);
         if (strcmp (argn[i], "loop") == 0) {
 	    char c = argv[i][0];
 	    if (c == 't' || c == 'T')
@@ -193,7 +193,10 @@ NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
 #if WINDOWLESS
     /* FIXME: Windowless plugins are apparently not implemented in
        Mozilla 1.0 on POSIX systems.  */
-    NPN_SetValue (instance, NPPVpluginWindowBool, (void *) false);
+    NPN_SetValue (instance, NPPVpluginWindowBool,
+                  reinterpret_cast <void *> (false));
+    NPN_SetValue (instance, NPPVpluginTransparentBool,
+                  reinterpret_cast <void *> (false));
 #endif
     return NPERR_NO_ERROR;
 }
@@ -219,36 +222,38 @@ NPP_Print (NPP instance, NPPrint *print)
 
 #if _WIN32
 inline boolean
-clear (HWND w, HDC dc)
+clear (HDC dc, const RECT *rect)
 {
-    RECT bounds;
-    if (!GetClientRect (w, &bounds))
-        return false;
-
-    HBRUSH black = static_cast <HBRUSH> (GetStockObject (BLACK_BRUSH));
+    HBRUSH black =
+        static_cast <HBRUSH> (GetStockObject (BLACK_BRUSH));
     if (black == 0)
         return false;
 
-    return FillRect (dc, &bounds, black);
+    return FillRect (dc, rect, black);
 }
 
 extern "C" LRESULT CALLBACK
 WindowProc (HWND w, UINT message, WPARAM param1, LPARAM param2)
-    throw ()
 {
     plugin_data *data =
-        reinterpret_cast <plugin_data *> (GetWindowLong (w, GWL_USERDATA));
+        reinterpret_cast <plugin_data *>
+            (GetWindowLong (w, GWL_USERDATA));
 
     LRESULT result;
     switch (message) {
     case WM_ERASEBKGND:
-        result = clear (w, reinterpret_cast <HDC> (param1));
+        RECT bounds;
+        if (!GetClientRect (w, &bounds))
+            result = false;
+        else
+            result = clear (reinterpret_cast <HDC> (param1), &bounds);
         break;
     case WM_PAINT:
         result = DefWindowProc (w, message, param1, param2);
         break;
     default:
-        result = CallWindowProc (data->old_proc, w, message, param1, param2);
+        result = CallWindowProc (data->old_proc,
+                                 w, message, param1, param2);
         break;
     }
     return result;
@@ -260,6 +265,7 @@ NPP_SetWindow (NPP instance, NPWindow *window)
 {
     syslog (LOG_DEBUG, "NPP_SetWindow");
 
+#if !WINDOWLESS
     plugin_data *data = static_cast <plugin_data *> (instance->pdata);
 
 #if _WIN32
@@ -291,21 +297,38 @@ NPP_SetWindow (NPP instance, NPWindow *window)
         if (data->player != 0)
             data->player->set_window (data->window);
     }
+#endif /* !WINDOWLESS */
     return NPERR_NO_ERROR;
 }
 
 int16
-NPP_HandleEvent (NPP instance, void *event)
+NPP_HandleEvent (NPP instance, void *event_data)
 {
     syslog (LOG_DEBUG, "NPP_HandleEvent");
-    return 0;
+
+    NPEvent *event = static_cast <NPEvent *> (event_data);
+#ifdef XP_WIN
+    switch (event->event) {
+    case WM_PAINT:
+        syslog (LOG_DEBUG, "  event = WM_PAINT");
+        return clear (reinterpret_cast <HDC> (event->wParam),
+                      reinterpret_cast <LPRECT> (event->lParam));
+    default:
+        syslog (LOG_DEBUG, "  event = %x", event->event);
+        break;
+    }
+#endif
+#ifdef XP_UNIX
+#endif
+    return false;
 }
 
 NPError
 NPP_NewStream (NPP instance, NPMIMEType mime_type, NPStream *stream,
 	       NPBool seekable, uint16 *mode)
 {
-    syslog (LOG_DEBUG, "NPP_NewStream \"%s\" %d", mime_type, seekable);
+    syslog (LOG_DEBUG, "NPP_NewStream \"%s\" %d",
+            mime_type, seekable);
 
     plugin_data *data = static_cast <plugin_data *> (instance->pdata);
 
@@ -354,7 +377,8 @@ NPP_WriteReady (NPP instance, NPStream *stream)
 }
 
 int32
-NPP_Write (NPP instance, NPStream *stream, int32 off, int32 len, void *buf)
+NPP_Write (NPP instance, NPStream *stream,
+           int32 off, int32 len, void *buf)
 {
     plugin_data *data = static_cast <plugin_data *> (instance->pdata);
 
@@ -370,7 +394,8 @@ NPP_StreamAsFile (NPP instance, NPStream *stream, const char *name)
 }
 
 void
-NPP_URLNotify (NPP instance, const char *URL, NPReason reason, void *data)
+NPP_URLNotify (NPP instance, const char *URL, NPReason reason,
+               void *data)
 {
     syslog (LOG_DEBUG, "NPP_URLNotify");
 }
