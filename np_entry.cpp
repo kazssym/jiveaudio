@@ -89,9 +89,7 @@ static NPError fillPluginFunctionTable(NPPluginFuncs* aNPPFuncs)
   aNPPFuncs->getvalue      = NPP_GetValue;
   aNPPFuncs->setvalue      = NPP_SetValue;
 #endif
-#if 0
   aNPPFuncs->javaClass     = NULL;
-#endif
 
   return NPERR_NO_ERROR;
 }

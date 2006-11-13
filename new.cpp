@@ -27,12 +27,13 @@
 
 using namespace std;
 
-const nothrow_t nothrow = {};
-
 void *
-operator new(size_t nbytes, const nothrow_t &) throw ()
+operator new(size_t nbytes) throw (bad_alloc)
 {
-  return NPN_MemAlloc(nbytes);
+  void *ptr = NPN_MemAlloc(nbytes);
+  if (ptr == 0)
+    throw bad_alloc();
+  return ptr;
 }
 
 void

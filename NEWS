@@ -1,5 +1,12 @@
 History of user-visible changes in JiveAudio.  -*-Outline-*-
 
+* Version 2.0.5
+
+Fixed an obscure Plugin ABI bug.
+
+Changed the installation directory to `LIBDIR/jiveaudio'.  The plugin
+files must be copied or symlinked by hand now.
+
 * Version 2.0.4
 
 Added support for loop playback.

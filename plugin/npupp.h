@@ -38,7 +38,7 @@
 
 
 /*
- *  npupp.h $Revision: 1.1 $
+ *  npupp.h $Revision: 1.2 $
  *  function call mecahnics needed by platform specific glue code.
  */
 
@@ -1089,9 +1089,7 @@ typedef struct _NPPluginFuncs {
     NPP_PrintUPP print;
     NPP_HandleEventUPP event;
     NPP_URLNotifyUPP urlnotify;
-#if 0
     JRIGlobalRef javaClass;
-#endif
     NPP_GetValueUPP getvalue;
     NPP_SetValueUPP setvalue;
 } NPPluginFuncs;

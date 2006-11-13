@@ -1,0 +1,105 @@
+\input texinfo                  @c -*- Texinfo -*-
+@c %**start of header
+@setfilename jiveaudio.info
+@settitle JiveAudio Reference Manual
+@c $Format: "@set DATE $Date$" $
+@set DATE Mon, 13 Nov 2006 18:31:43 +0900
+@c %**end of header
+
+@ifinfo
+This file documents JiveAudio.
+
+Copyright 2003 Hypercore Software Design, Ltd.
+
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+@end ifinfo
+
+@titlepage
+@title JiveAudio Reference Manual
+@subtitle Version 2.0
+@author Kaz Sasayama
+@page
+@vskip 0pt plus 1filll
+
+Last updated @value{DATE}.
+
+Copyright @copyright{} 2003 Hypercore Software Design, Ltd.
+
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top, Getting Started, (dir), (dir)
+@top JiveAudio
+
+This document describes JiveAudio.
+
+This document applies to version 2.0 of the program named JiveAudio,
+and was last updated @value{DATE}.
+
+JiveAudio is a multimedia plugin for WWW browsers based on Netscape
+Gecko.
+@end ifnottex
+
+@menu
+* Getting Started::             
+* Using JiveAudio::             
+
+@detailmenu
+ --- The Detailed Node Listing ---
+
+Getting Started with JiveAudio
+
+* XPInstall::                   
+* Manual Installation::         
+
+Using JiveAudio in Your Web Page
+
+* Embedding::                   
+* Scripting::                   
+
+@end detailmenu
+@end menu
+
+@node Getting Started, Using JiveAudio, Top, Top
+@chapter Getting Started with JiveAudio
+
+@iftex
+JiveAudio is a multimedia plugin for WWW browsers based on Netscape
+Gecko.
+@end iftex
+
+This chapter describes how to install JiveAudio into your browser.
+
+@menu
+* XPInstall::                   
+* Manual Installation::         
+@end menu
+
+@node XPInstall, Manual Installation, Getting Started, Getting Started
+@section XPInstall
+
+@node Manual Installation,  , XPInstall, Getting Started
+@section Manual Installation
+
+@node Using JiveAudio,  , Getting Started, Top
+@chapter Using JiveAudio in Your Web Page
+
+@menu
+* Embedding::                   
+* Scripting::                   
+@end menu
+
+@node Embedding, Scripting, Using JiveAudio, Using JiveAudio
+@section Embedding Media Objects
+
+@node Scripting,  , Embedding, Using JiveAudio
+@section Scripting JiveAudio
+
+@bye

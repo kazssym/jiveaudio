@@ -167,9 +167,11 @@ NPP_New(NPMIMEType mime_type, NPP instance, uint16 mode,
   data->player = 0;
 #endif /* !_WIN32 */
 
+#ifdef WINDOWLESS
   /* FIXME: Windowless plugins are apparently not implemented in
      Mozilla 1.0 on POSIX systems.  */
   NPN_SetValue(instance, NPPVpluginWindowBool, (void *) false);
+#endif
   return NPERR_NO_ERROR;
 }
 
@@ -215,13 +217,17 @@ NPP_NewStream(NPP instance, NPMIMEType mime_type, NPStream *stream,
 #if defined _WIN32
   *mode = NP_ASFILEONLY;
 #else /* !_WIN32 */
-  if (strstr(mime_type, "mid") != 0)
-    data->player = new (nothrow) exec_media_player("timidity");
-  else
-    data->player = new (nothrow) sox_media_player("play");
-  if (data->player == 0)
-    return NPERR_OUT_OF_MEMORY_ERROR;
-
+  try
+    {
+      if (strstr(mime_type, "mid") != 0)
+	data->player = new exec_media_player("timidity");
+      else
+	data->player = new sox_media_player("play");
+    }
+  catch (const bad_alloc &e)
+    {
+      return NPERR_OUT_OF_MEMORY_ERROR;
+    }
   data->player->set_loop(data->loop);
   data->player->open_stream(mime_type);
 #endif /* !_WIN32 */

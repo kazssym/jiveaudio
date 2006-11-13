@@ -1,17 +1,48 @@
-JiveAudio is a set of media plugins for Mozilla.
+JiveAudio is a multimedia plugin for Mozilla/Netscape.
 
-On GNU/Linux, JiveAudio currently requires sox (play) and timidity
-installed on your path.
+In the GNU/Linux configuration, JiveAudio currently requires sox
+(play) and timidity installed on your path.
 
-== INSTALLATION ==
+
+COMPATIBLE SYSTEMS
+----------------------------------------------------------------------
+
+- POSIX configuration:
+
+  - Debian GNU/Linux 3.0 (i386)
+
+- Win32 configuration (to be verified):
+
+  - Windows 98 (including Second Edition) with DirectX 8.0 (or later)
+  - Windows Millennium Edition with DirectX 8.0 (or later)
+  - Windows 2000 with DirectX 8.0 (or later)
+  - Windows XP
+
+
+COMPATIBLE COMPILERS
+----------------------------------------------------------------------
+
+- POSIX configuration:
+
+  - GCC 2.95.X (Note that GCC 3.0 and later uses new incompatible C++
+    ABIs, and thus cannot be used until Mozilla's default compiler is
+    changed.)
+
+- Win32 configuration:
+
+  - Borland C++Builder 6 (or later)
+
+
+INSTALLATION
+----------------------------------------------------------------------
 
 First, read the file INSTALL for basic instructions.
 
 Netscape Plugin SDK is no longer required.
 
-JiveAudio installs its plugins into `LIBDIR/mozilla/plugins' by
-default.  If you do not have enough privileges, you can manually
-install the plugins into your `$HOME/.mozilla/plugins' instead.
+This package installs the plugin files into `LIBDIR/jiveaudio' by
+default.  To use JiveAudio in your browser, you must copy or symlink
+them into your browser's plugin directory by hand.
 
 ---
-$ProjectHeader: jiveaudio 1.4 Mon, 13 Nov 2006 18:29:46 +0900 kazssym $
+$ProjectHeader: jiveaudio 1.5 Mon, 13 Nov 2006 18:31:43 +0900 kazssym $

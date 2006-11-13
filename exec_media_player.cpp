@@ -156,8 +156,6 @@ exec_media_player::play()
   if (fileno != -1)
     return;
 
-  stop();
-
   fileno = open(file_name, O_RDONLY | O_BINARY);
   if (fileno == -1)
     {
@@ -180,28 +178,28 @@ exec_media_player::play()
 void
 exec_media_player::stop()
 {
-  if (fileno != -1)
-    {
-      close(fileno);
-      fileno = -1;
+  if (fileno == -1)
+    return;
+
+  close(fileno);
+  fileno = -1;
 
 #ifdef _POSIX_THREADS
-      if (thread != 0)
-	{
-	  pthread_mutex_lock(&thread_mutex);
-	  if (child != 0)
-	    kill(-child, SIGTERM);
-	  pthread_mutex_unlock(&thread_mutex);
-	  pthread_join(thread, 0);
-	  thread = 0;
-	}
-#else /* !_POSIX_THREADS */
+  if (thread != 0)
+    {
+      pthread_mutex_lock(&thread_mutex);
       if (child != 0)
-	{
-	  kill(-child, SIGTERM);
-	  waitpid(child, 0, 0);
-	  child = 0;
-	}
-#endif /* !_POSIX_THREADS */
+	kill(-child, SIGTERM);
+      pthread_mutex_unlock(&thread_mutex);
+      pthread_join(thread, 0);
+      thread = 0;
     }
+#else /* !_POSIX_THREADS */
+  if (child != 0)
+    {
+      kill(-child, SIGTERM);
+      waitpid(child, 0, 0);
+      child = 0;
+    }
+#endif /* !_POSIX_THREADS */
 }

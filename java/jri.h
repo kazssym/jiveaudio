@@ -27,5 +27,6 @@
 
 typedef struct jref_object *jref;
 typedef struct JRIEnv_object *JRIEnv;
+typedef void *JRIGlobalRef;
 
 #endif /* !_JRI_H */

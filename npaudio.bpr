@@ -4,7 +4,7 @@
   <MACROS>
     <VERSION value="BCB.06.00"/>
     <PROJECT value="npaudio.dll"/>
-    <OBJFILES value="np_entry.obj npn_gate.obj audio.obj"/>
+    <OBJFILES value="np_entry.obj npn_gate.obj audio.obj new.obj"/>
     <RESFILES value="npaudio.res"/>
     <DEFFILE value="npaudio.def"/>
     <RESDEPEN value="$(RESFILES)"/>
@@ -53,6 +53,7 @@
       <FILE FILENAME="np_entry.cpp" FORMNAME="" UNITNAME="np_entry.cpp" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="npn_gate.cpp" FORMNAME="" UNITNAME="npn_gate.cpp" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="audio.cpp" FORMNAME="" UNITNAME="audio" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="new.cpp" FORMNAME="" UNITNAME="new" CONTAINERID="C/C++ コンパイラ" DESIGNCLASS="" LOCALCOMMAND=""/>
   </FILELIST>
   <BUILDTOOLS>
   </BUILDTOOLS>
@@ -61,9 +62,9 @@
 [Version Info]
 IncludeVerInfo=1
 AutoIncBuild=1
-MajorVer=0
+MajorVer=2
 MinorVer=0
-Release=0
+Release=4
 Build=0
 Debug=0
 PreRelease=0
@@ -75,8 +76,8 @@ CodePage=1252
 
 [Version Info Keys]
 CompanyName=Hypercore Software Design, Ltd
-FileDescription=JiveAudio 2.0.4
-FileVersion=2.0.4.0
+FileDescription=JiveAudio 2.0.5
+FileVersion=2.0.5.0
 InternalName=
 LegalCopyright=Copyright (C) 2003 Hypercore Software Design, Ltd
 LegalTrademarks=

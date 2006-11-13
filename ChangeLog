@@ -1,3 +1,86 @@
+2003-03-18  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* Version 2.0.5.
+
+	* npaudio.bpr (FileDescription, FileVersion): Update the version
+	number.
+
+	* configure.ac: Set PACKAGE_VERSION to 2.0.5.
+	* configure: Regenerated.
+
+	* exec_media_player.cpp (play): Remove a call to stop.
+	(stop): Use an explicit return for already-closed case.
+
+	* audio.cpp (NPP_New): Go back to the windowed mode by default.
+
+	* NEWS: Updated.
+
+	* jiveaudio.texi: Updated.
+
+	* file_media_player.cpp: Updated for member rename.  Include
+	<io.h> if available.
+	(write_stream): Add cast for a return value.
+
+	* media_player.h (class media_player): Change the return type of
+	write_stream to size_t.  Also update all derived classes.
+	(class file_media_player): Rename member fileno to fildes, and
+	make it private.
+
+	* common.h [_WIN32] (HAVE_IO_H): New define.
+
+	* configure.ac: Add check for <io.h>.
+	* configure: Regenerated.
+	* config.h.in: Regenerated.
+
+2003-03-17  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* jiveaudio.texi: Updated.
+
+	* np_entry.cpp (fillPluginFunctionTable): Restore the assignment
+	to member javaClass.
+
+	* plugin/npupp.h (struct _NPPluginFuncs): Restore member
+	javaClass.
+
+	* java/jri.h: Add typedef JRIGlobalRef.
+
+2003-03-14  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* README: Updated.
+
+	* npaudio.bpr: Updated.
+	* npaudio.res: Updated.
+
+	* Upgrade to automake 1.5.  All Makefile.in's regenerated.
+	* depcomp: New file.
+	* aclocal.m4: Regenerated.
+	* configure: Regenerated.
+
+	* Makefile.am (noinst_TEXINFOS): New macro.
+	(INCLUDES): Reformat lines.
+	(libaudioplugin_la_SOURCES): Likewise.
+
+	* jiveaudio.texi: New file.
+	* texinfo.tex: New file.
+
+2003-02-27  Kaz Sasayama  <kaz2003@hypercore.co.jp>
+
+	* README: Updated.
+
+	* NEWS: Updated.
+
+	* Makefile.am (mozilla_libdir, pluginsdir): Removed.
+	(pkglib_LTLIBRARIES): Renamed from plugins_LTLIBRARIES.
+	* Makefile.in: Regenerated.
+
+	* audio.cpp (NPP_NewStream) [!_WIN32]: Handle allocation errors by
+	exceptions.
+
+	* new.cpp: Remove nothrow.
+	(operator new): Modified to the normal throwing version.
+
+	* TODO: New file.
+
 2003-02-25  Kaz Sasayama  <kaz2003@hypercore.co.jp>
 
 	* Version 2.0.4.

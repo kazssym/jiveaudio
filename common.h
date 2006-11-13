@@ -24,6 +24,7 @@
 #  include <windows.h>
 #  define STDC_HEADERS 1
 #  define HAVE_FCNTL_H 1
+#  define HAVE_IO_H 1
 #endif
 
 #ifdef HAVE_UNISTD_H

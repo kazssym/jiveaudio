@@ -31,6 +31,10 @@
 #  define O_RDWR   2
 #endif
 
+#ifdef HAVE_IO_H
+#  include <io.h>
+#endif
+
 #if !defined O_EXCL
 #  define O_EXCL 0
 #endif
@@ -42,7 +46,7 @@
 using namespace std;
 
 file_media_player::file_media_player():
-  fileno(-1)
+  fildes(-1)
 {
   tmpnam(file_name);
 }
@@ -55,16 +59,16 @@ file_media_player::~file_media_player()
 bool
 file_media_player::open_stream(const char *mime_type)
 {
-  if (fileno != -1)
-    close(fileno);
+  if (fildes != -1)
+    close(fildes);
 
   remove(file_name);
 #if !defined O_CREAT
-  fileno = creat(file_name, 0600);
+  fildes = creat(file_name, 0600);
 #else
-  fileno = open(file_name, O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
+  fildes = open(file_name, O_WRONLY | O_CREAT | O_EXCL | O_BINARY, 0600);
 #endif
-  if (fileno == -1)
+  if (fildes == -1)
     return false;
 
   return true;
@@ -73,29 +77,29 @@ file_media_player::open_stream(const char *mime_type)
 size_t
 file_media_player::stream_buffer_size() const
 {
-  if (fileno == -1)
+  if (fildes == -1)
     return 0;
 
   return 4096;
 }
 
-ssize_t
+size_t
 file_media_player::write_stream(const void *buf, size_t nbytes)
 {
-  if (fileno == -1)
-    return -1;
+  if (fildes == -1)
+    return (size_t) -1;
 
-  ssize_t k = write(fileno, buf, nbytes);
+  size_t k = write(fildes, buf, nbytes);
   return k;
 }
 
 void
 file_media_player::close_stream()
 {
-  if (fileno == -1)
+  if (fildes == -1)
     return;
 
-  close(fileno);
-  fileno = -1;
+  close(fildes);
+  fildes = -1;
 }
 

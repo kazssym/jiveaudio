@@ -30,7 +30,7 @@ public:
   void set_loop(bool loop) throw ();
   virtual bool open_stream(const char *mime_type) = 0;
   virtual size_t stream_buffer_size() const = 0;
-  virtual ssize_t write_stream(const void *buf, size_t nbytes) = 0;
+  virtual size_t write_stream(const void *buf, size_t nbytes) = 0;
   virtual void close_stream() = 0;
   virtual void play() = 0;
   virtual void stop() = 0;
@@ -45,8 +45,8 @@ media_player::set_loop(bool loop) throw ()
   this->loop = loop;
 }
 
-class file_media_player:
-  public media_player
+class file_media_player
+  : public media_player
 {
 public:
   file_media_player();
@@ -54,12 +54,14 @@ public:
 
   bool open_stream(const char *mime_type);
   size_t stream_buffer_size() const;
-  ssize_t write_stream(const void *buf, size_t nbytes);
+  size_t write_stream(const void *buf, size_t nbytes);
   void close_stream();
 
 protected:
   char file_name[L_tmpnam];
-  int fileno;
+
+private:
+  int fildes;
 };
 
 #endif /* !_MEDIA_PLAYER_H */

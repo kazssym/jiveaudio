@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([JiveAudio], 2.0.4, [jiveaudio@lists.hypercore.co.jp], jiveaudio)
+AC_INIT([JiveAudio], 2.0.5, [jiveaudio@lists.hypercore.co.jp], jiveaudio)
 AC_CONFIG_SRCDIR(audio.cpp)
 AM_INIT_AUTOMAKE(AC_PACKAGE_TARNAME, AC_PACKAGE_VERSION)
 AM_CONFIG_HEADER(config.h)
@@ -16,7 +16,7 @@ AC_PROG_LIBTOOL
 AC_PATH_X
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS(fcntl.h unistd.h)
+AC_CHECK_HEADERS(fcntl.h io.h unistd.h)
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_PID_T
