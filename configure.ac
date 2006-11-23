@@ -29,9 +29,11 @@ AC_CHECK_FUNCS([tempnam])
 case $host_os in
 linux-gnu*)
   prcpucfg=_linux.cfg
+AC_DEFINE([MDCPUCFG], ["md/_linux.h"], [Define to the header name.])
   ;;
 mingw32*)
   prcpucfg=_win95.cfg
+AC_DEFINE([MDCPUCFG], ["md/_winnt.h"])
   ;;
 *)
   AC_MSG_WARN([Unknown host operating system; assuming GNU/Linux])
