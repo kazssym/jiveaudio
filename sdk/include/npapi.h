@@ -1,11 +1,11 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
 /* ***** BEGIN LICENSE BLOCK *****
- * Version: NPL 1.1/GPL 2.0/LGPL 2.1
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- * The contents of this file are subject to the Netscape Public License
- * Version 1.1 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://www.mozilla.org/NPL/
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
  *
  * Software distributed under the License is distributed on an "AS IS" basis,
  * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
@@ -14,13 +14,12 @@
  *
  * The Original Code is mozilla.org code.
  *
- * The Initial Developer of the Original Code is 
+ * The Initial Developer of the Original Code is
  * Netscape Communications Corporation.
  * Portions created by the Initial Developer are Copyright (C) 1998
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -28,17 +27,17 @@
  * in which case the provisions of the GPL or the LGPL are applicable instead
  * of those above. If you wish to allow use of your version of this file only
  * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the NPL, indicate your
+ * use your version of this file under the terms of the MPL, indicate your
  * decision by deleting the provisions above and replace them with the notice
  * and other provisions required by the GPL or the LGPL. If you do not delete
  * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the NPL, the GPL or the LGPL.
+ * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
 
 
 /*
- *  npapi.h $Revision: 1.2 $
+ *  npapi.h $Revision: 1.3 $
  *  Netscape client plug-in API spec
  */
 
@@ -76,7 +75,9 @@
 #ifndef NO_NSPR_10_SUPPORT
 #define NO_NSPR_10_SUPPORT
 #endif
+#ifdef OJI
 #include "jri.h"                /* Java Runtime Interface */
+#endif
 
 #if defined (__OS2__ ) || defined (OS2)
 #	ifndef XP_OS2
@@ -85,6 +86,7 @@
 #endif /* __OS2__ */
 
 #ifdef _WINDOWS
+#	include <windef.h>
 #	ifndef XP_WIN
 #		define XP_WIN 1
 #	endif /* XP_WIN */
@@ -101,8 +103,8 @@
 #		undef NULL
 #		ifndef XP_WIN
 #			define XP_WIN 1
-#		endif /* __INTEL__ */
-#	endif /* XP_PC */
+#		endif /* XP_WIN */
+#	endif /* __INTEL__ */
 #endif /* __MWERKS__ */
 
 #if defined(XP_MAC) || defined(XP_MACOSX)
@@ -110,9 +112,12 @@
 	#include <Events.h>
 #endif
 
-#if defined(XP_UNIX) && !defined(NO_X11)
-	#include <X11/Xlib.h>
-	#include <X11/Xutil.h>
+#if defined(XP_UNIX) 
+#	include <stdio.h>
+#	if defined(MOZ_X11)
+#		include <X11/Xlib.h>
+#		include <X11/Xutil.h>
+#	endif
 #endif
 
 /*----------------------------------------------------------------------*/
@@ -120,12 +125,12 @@
 /*----------------------------------------------------------------------*/
 
 #define NP_VERSION_MAJOR 0
-#define NP_VERSION_MINOR 13
+#define NP_VERSION_MINOR 16
 
 
 /* The OS/2 version of Netscape uses RC_DATA to define the
-   mime types, file extentions, etc that are required.
-   Use a vertical bar to seperate types, end types with \0.
+   mime types, file extensions, etc that are required.
+   Use a vertical bar to separate types, end types with \0.
    FileVersion and ProductVersion are 32bit ints, all other
    entries are strings the MUST be terminated wwith a \0.
 
@@ -181,7 +186,7 @@ typedef unsigned short uint16;
 #endif
 
 #ifndef _UINT32
-#    if defined(__alpha)
+#    if defined(__alpha) || defined(__amd64__) || defined(__x86_64__)
 typedef unsigned int uint32;
 #    else  /* __alpha */
 typedef unsigned long uint32;
@@ -197,7 +202,7 @@ typedef short int16;
 #endif
 
 #ifndef _INT32
-#    if defined(__alpha)
+#    if defined(__alpha) || defined(__amd64__) || defined(__x86_64__)
 typedef int int32;
 #    else  /* __alpha */
 typedef long int32;
@@ -305,7 +310,7 @@ typedef struct
 typedef struct
 {
   int32        type;
-#ifndef NO_X11
+#ifdef MOZ_X11
   Display*     display;
   Visual*      visual;
   Colormap     colormap;
@@ -379,9 +384,24 @@ typedef enum {
   NPPVpluginScriptableInstance = (10 | NP_ABI_MASK),
   NPPVpluginScriptableIID = 11,
 
-  /* 12 and over are available on Mozilla builds starting with 0.9.9 */
+  /* Introduced in Mozilla 0.9.9 */
   NPPVjavascriptPushCallerBool = 12,
-  NPPVpluginKeepLibraryInMemory = 13   /* available in Mozilla 1.0 */
+
+  /* Introduced in Mozilla 1.0 */
+  NPPVpluginKeepLibraryInMemory = 13,
+  NPPVpluginNeedsXEmbed         = 14,
+
+  /* Get the NPObject for scripting the plugin. Introduced in Firefox
+   * 1.0 (NPAPI minor version 14).
+   */
+  NPPVpluginScriptableNPObject  = 15,
+
+  /* Get the plugin value (as \0-terminated UTF-8 string data) for
+   * form submission if the plugin is part of a form. Use
+   * NPN_MemAlloc() to allocate memory for the string data. Introduced
+   * in Mozilla 1.8b2 (NPAPI minor version 15).
+   */
+  NPPVformValue = 16
 } NPPVariable;
 
 /*
@@ -398,8 +418,24 @@ typedef enum {
   /* 10 and over are available on Mozilla builds starting with 0.9.4 */
   NPNVserviceManager = (10 | NP_ABI_MASK),
   NPNVDOMElement     = (11 | NP_ABI_MASK),   /* available in Mozilla 1.2 */
-  NPNVDOMWindow      = (12 | NP_ABI_MASK)
+  NPNVDOMWindow      = (12 | NP_ABI_MASK),
+  NPNVToolkit        = (13 | NP_ABI_MASK),
+  NPNVSupportsXEmbedBool = 14,
+
+  /* Get the NPObject wrapper for the browser window. */
+  NPNVWindowNPObject = 15,
+
+  /* Get the NPObject wrapper for the plugins DOM element. */
+  NPNVPluginElementNPObject = 16
 } NPNVariable;
+
+/*
+ * The type of Tookkit the widgets use
+ */
+typedef enum {
+  NPNVGtk12 = 1,
+  NPNVGtk2
+} NPNToolkitType;
 
 /*
  * The type of a NPWindow - it specifies the type of the data structure
@@ -467,7 +503,7 @@ typedef struct _NPEvent
   uint32 wParam;
   uint32 lParam;
 } NPEvent;
-#elif defined (XP_UNIX) && !defined(NO_X11)
+#elif defined (XP_UNIX) && defined(MOZ_X11)
 typedef XEvent NPEvent;
 #else
 typedef void*			NPEvent;
@@ -477,7 +513,7 @@ typedef void*			NPEvent;
 typedef RgnHandle NPRegion;
 #elif defined(XP_WIN)
 typedef HRGN NPRegion;
-#elif defined(XP_UNIX) && !defined(NO_X11)
+#elif defined(XP_UNIX) && defined(MOZ_X11)
 typedef Region NPRegion;
 #else
 typedef void *NPRegion;
@@ -633,7 +669,9 @@ void    NP_LOADDS NPP_Print(NPP instance, NPPrint* platformPrint);
 int16   NP_LOADDS NPP_HandleEvent(NPP instance, void* event);
 void    NP_LOADDS NPP_URLNotify(NPP instance, const char* url,
                                 NPReason reason, void* notifyData);
+#ifdef OJI
 jref    NP_LOADDS NPP_GetJavaClass(void);
+#endif
 NPError NP_LOADDS NPP_GetValue(NPP instance, NPPVariable variable, void *value);
 NPError NP_LOADDS NPP_SetValue(NPP instance, NPNVariable variable, void *value);
 
@@ -664,13 +702,17 @@ void*   NP_LOADDS NPN_MemAlloc(uint32 size);
 void    NP_LOADDS NPN_MemFree(void* ptr);
 uint32  NP_LOADDS NPN_MemFlush(uint32 size);
 void    NP_LOADDS NPN_ReloadPlugins(NPBool reloadPages);
+#ifdef OJI
 JRIEnv* NP_LOADDS NPN_GetJavaEnv(void);
 jref    NP_LOADDS NPN_GetJavaPeer(NPP instance);
+#endif
 NPError NP_LOADDS NPN_GetValue(NPP instance, NPNVariable variable, void *value);
 NPError NP_LOADDS NPN_SetValue(NPP instance, NPPVariable variable, void *value);
 void    NP_LOADDS NPN_InvalidateRect(NPP instance, NPRect *invalidRect);
 void    NP_LOADDS NPN_InvalidateRegion(NPP instance, NPRegion invalidRegion);
 void    NP_LOADDS NPN_ForceRedraw(NPP instance);
+void    NP_LOADDS NPN_PushPopupEnabledState(NPP instance, NPBool enabled);
+void    NP_LOADDS NPN_PopPopupEnabledState(NPP instance);
 
 #ifdef __cplusplus
 }  /* end extern "C" */
