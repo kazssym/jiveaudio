@@ -17,7 +17,7 @@ pkglib_DATA = xpi/install.js
 
 CLEANFILES = xpi/install.js
 
-EXTRA_DIST = xpi/install.js.in jiveaudio.bdsgroup npaudio.bdsproj npaudio.bpf npaudio.def npaudio.rc
+EXTRA_DIST = xpi/install.js.in jiveaudio.bdsgroup npaudio.bdsproj npaudio.bpf npaudio.def plugins/npaudio.rc.in
 
 SUBDIRS = nspr sdk/include doc
 

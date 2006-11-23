@@ -1,3 +1,4 @@
+/* @configure_input@ */
 /* JiveAudio - multimedia plugin for Mozilla
    Copyright (C) 2003 Hypercore Software Design, Ltd.
 
@@ -29,11 +30,11 @@
     BLOCK "StringFileInfo" {
         BLOCK "040904e4" {
 	    VALUE "CompanyName", "Hypercore Online Solutions\0"
-	    VALUE "FileDescription", "JiveAudio 2.0.8 for Mozilla\0"
-	    VALUE "FileVersion", "2.1.0.0\0"
+	    VALUE "FileDescription", "@PACKAGE_STRING@\0"
+	    VALUE "FileVersion", "@PACKAGE_VERSION@.0\0"
 	    VALUE "LegalCopyright", "Copyright (C) 2003-2006 Hypercore Online Solutions\0"
 	    VALUE "OriginalFilename", "npaudio.dll\0"
-	    VALUE "ProductName", "JiveAudio\0"
+	    VALUE "ProductName", "@PACKAGE_NAME@\0"
 	    VALUE "ProductVersion", "2.0\0"
 	    VALUE "MIMEType", "audio/basic|audio/x-wav|audio/wav|audio/x-midi|audio/midi\0"
 	    VALUE "FileExtents", "au,snd|wav||mid,midi|\0"
