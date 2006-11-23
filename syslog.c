@@ -32,8 +32,7 @@
 #include <stdarg.h>
 
 #if !HAVE_SYSLOG_H
-void
-syslog (int prio, const char *format, ...)
+void syslog (int prio, const char *format,...)
 {
     va_list args;
 #if _WIN32
@@ -53,3 +52,4 @@ syslog (int prio, const char *format, ...)
     va_end (args);
 }
 #endif /* !HAVE_SYSLOG_H */
+

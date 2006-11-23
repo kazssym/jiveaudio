@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([JiveAudio], [2.0.8], [jiveaudio@lists.yaromai.net], [jiveaudio])
+AC_INIT([JiveAudio], [2.1.0], [jiveaudio@lists.yaromai.net], [jiveaudio])
 AC_CONFIG_SRCDIR([audio.cpp])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.9])
@@ -30,11 +30,14 @@ case $host_os in
 linux-gnu*)
   prcpucfg=_linux.cfg
   ;;
+mingw32*)
+  prcpucfg=_win95.cfg
+  ;;
 *)
   AC_MSG_WARN([Unknown host operating system; assuming GNU/Linux])
   prcpucfg=_linux.cfg
   ;;
 esac
 AC_CONFIG_LINKS([nspr/prcpucfg.h:nspr/$prcpucfg])
-AC_CONFIG_FILES([Makefile plugin/Makefile java/Makefile nspr/Makefile])
+AC_CONFIG_FILES([Makefile plugin/Makefile java/Makefile nspr/Makefile doc/Makefile])
 AC_OUTPUT
