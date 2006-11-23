@@ -39,5 +39,5 @@ mingw32*)
   ;;
 esac
 AC_CONFIG_LINKS([nspr/prcpucfg.h:nspr/$prcpucfg])
-AC_CONFIG_FILES([Makefile sdk/include/Makefile java/Makefile nspr/Makefile doc/Makefile])
+AC_CONFIG_FILES([Makefile sdk/include/Makefile nspr/Makefile doc/Makefile])
 AC_OUTPUT
