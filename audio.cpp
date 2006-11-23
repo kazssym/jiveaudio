@@ -28,6 +28,9 @@
 #pragma hdrstop
 #endif
 
+#if !_WIN32
+#define MOZ_X11 1
+#endif
 #include <npapi.h>
 
 #include <new>
