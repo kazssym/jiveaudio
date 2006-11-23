@@ -234,8 +234,8 @@
         <FILE FILENAME="npaudio.bpf" CONTAINERID="BPF" LOCALCOMMAND="" UNITNAME="npaudio" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="npaudio.def" CONTAINERID="DefTool" LOCALCOMMAND="" UNITNAME="npaudio.def" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="plugins\npaudio.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="npaudio.rc" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="xpi\np_entry.c" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="np_entry" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="xpi\npn_gate.c" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="npn_gate" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="plugins\np_entry.c" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="np_entry" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="plugins\npn_gate.c" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="npn_gate" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="audio.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="audio" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="dshow_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="dshow_player" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="file_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="file_player" FORMNAME="" DESIGNCLASS=""/>

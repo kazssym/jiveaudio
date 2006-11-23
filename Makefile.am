@@ -1,7 +1,6 @@
 ## Process this file with automake to produce a Makefile.in.
 
-AM_CPPFLAGS = -I$(srcdir)/sdk/include \
-	-I./nspr -I$(srcdir)/nspr
+AM_CPPFLAGS = -I$(srcdir)/sdk/include
 
 pkglib_LTLIBRARIES = libaudioplugin.la
 
@@ -10,7 +9,7 @@ libaudioplugin_la_SOURCES = plugins/np_entry.c plugins/npn_gate.c audio.cpp \
 	sox_media_player.cpp exec_media_player.cpp dshow_player.cpp \
 	file_player.cpp media_player.cpp syslog.c
 
-noinst_HEADERS = npplat.h common.h \
+noinst_HEADERS = plugins/npplat.h common.h \
 	exec_media_player.h dshow_player.h media_player.h
 
 pkglib_DATA = xpi/install.js
