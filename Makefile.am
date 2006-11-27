@@ -5,7 +5,7 @@ AM_CPPFLAGS = -I$(srcdir)/sdk
 pkglib_LTLIBRARIES = libaudioplugin.la
 
 libaudioplugin_la_LDFLAGS = -module -avoid-version
-libaudioplugin_la_SOURCES = plugins/np_entry.c plugins/npn_gate.c audio.cpp \
+libaudioplugin_la_SOURCES = plugins/np_entry.c plugins/npn_gate.cpp audio.cpp \
 	sox_media_player.cpp exec_media_player.cpp dshow_player.cpp \
 	file_player.cpp media_player.cpp syslog.c
 
