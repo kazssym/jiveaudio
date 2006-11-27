@@ -40,6 +40,5 @@ AC_DEFINE([MDCPUCFG], ["md/_winnt.h"])
   prcpucfg=_linux.cfg
   ;;
 esac
-AC_CONFIG_LINKS([nspr/prcpucfg.h:nspr/$prcpucfg])
-AC_CONFIG_FILES([Makefile sdk/include/Makefile nspr/Makefile doc/Makefile plugins/npaudio.rc])
+AC_CONFIG_FILES([Makefile sdk/Makefile doc/Makefile plugins/npaudio.rc])
 AC_OUTPUT

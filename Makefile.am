@@ -1,6 +1,6 @@
 ## Process this file with automake to produce a Makefile.in.
 
-AM_CPPFLAGS = -I$(srcdir)/sdk/include
+AM_CPPFLAGS = -I$(srcdir)/sdk
 
 pkglib_LTLIBRARIES = libaudioplugin.la
 
@@ -18,7 +18,7 @@ CLEANFILES = xpi/install.js
 
 EXTRA_DIST = xpi/install.js.in jiveaudio.bdsgroup npaudio.bdsproj npaudio.bpf npaudio.def plugins/npaudio.rc.in
 
-SUBDIRS = nspr sdk/include doc
+SUBDIRS = sdk doc
 
 xpi/install.js: $(srcdir)/xpi/install.js.in libaudioplugin.la
 	$(INSTALL) -d xpi

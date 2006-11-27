@@ -37,7 +37,7 @@
 
 
 /*
- *  npupp.h $Revision$
+ *  npupp.h $Revision: 3.20 $
  *  function call mecahnics needed by platform specific glue code.
  */
 
