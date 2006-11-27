@@ -1,11 +1,11 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* ***** BEGIN LICENSE BLOCK *****
- * Version: NPL 1.1/GPL 2.0/LGPL 2.1
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- * The contents of this file are subject to the Netscape Public License
- * Version 1.1 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://www.mozilla.org/NPL/
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
  *
  * Software distributed under the License is distributed on an "AS IS" basis,
  * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
@@ -14,7 +14,7 @@
  *
  * The Original Code is mozilla.org code.
  *
- * The Initial Developer of the Original Code is 
+ * The Initial Developer of the Original Code is
  * Netscape Communications Corporation.
  * Portions created by the Initial Developer are Copyright (C) 1998
  * the Initial Developer. All Rights Reserved.
@@ -22,16 +22,16 @@
  * Contributor(s):
  *
  * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or 
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
  * in which case the provisions of the GPL or the LGPL are applicable instead
  * of those above. If you wish to allow use of your version of this file only
  * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the NPL, indicate your
+ * use your version of this file under the terms of the MPL, indicate your
  * decision by deleting the provisions above and replace them with the notice
  * and other provisions required by the GPL or the LGPL. If you do not delete
  * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the NPL, the GPL or the LGPL.
+ * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
 
@@ -41,16 +41,17 @@
 // plugin library
 //
 #if HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 
 #include "npplat.h"
+#include "pluginbase.h"
 
 NPNetscapeFuncs NPNFuncs;
 
 NPError OSCALL NP_Shutdown()
 {
-  NPP_Shutdown();
+  NS_PluginShutdown();
   return NPERR_NO_ERROR;
 }
 
@@ -93,7 +94,9 @@ static NPError fillPluginFunctionTable(NPPluginFuncs* aNPPFuncs)
   aNPPFuncs->getvalue      = NPP_GetValue;
   aNPPFuncs->setvalue      = NPP_SetValue;
 #endif
+#ifdef OJI
   aNPPFuncs->javaClass     = NULL;
+#endif
 
   return NPERR_NO_ERROR;
 }
@@ -125,8 +128,10 @@ static NPError fillNetscapeFunctionTable(NPNetscapeFuncs* aNPNFuncs)
   NPNFuncs.memfree          = aNPNFuncs->memfree;
   NPNFuncs.memflush         = aNPNFuncs->memflush;
   NPNFuncs.reloadplugins    = aNPNFuncs->reloadplugins;
+#ifdef OJI
   NPNFuncs.getJavaEnv       = aNPNFuncs->getJavaEnv;
   NPNFuncs.getJavaPeer      = aNPNFuncs->getJavaPeer;
+#endif
   NPNFuncs.getvalue         = aNPNFuncs->getvalue;
   NPNFuncs.setvalue         = aNPNFuncs->setvalue;
   NPNFuncs.invalidaterect   = aNPNFuncs->invalidaterect;
@@ -153,7 +158,7 @@ NPError OSCALL NP_Initialize(NPNetscapeFuncs* aNPNFuncs)
   if(rv != NPERR_NO_ERROR)
     return rv;
 
-  return NPP_Initialize();
+  return NS_PluginInitialize();
 }
 
 NPError OSCALL NP_GetEntryPoints(NPPluginFuncs* aNPPFuncs)
@@ -180,7 +185,7 @@ NPError NP_Initialize(NPNetscapeFuncs* aNPNFuncs, NPPluginFuncs* aNPPFuncs)
   if(rv != NPERR_NO_ERROR)
     return rv;
 
-  return NPP_Initialize();
+  return NS_PluginInitialize();
 }
 
 char * NP_GetMIMEDescription(void)
@@ -190,7 +195,7 @@ char * NP_GetMIMEDescription(void)
 
 NPError NP_GetValue(void *future, NPPVariable aVariable, void *aValue)
 {
-  return NPP_GetValue((NPP_t *)future, aVariable, aValue);
+  return NS_PluginGetValue(aVariable, aValue);
 }
 
 #endif //XP_UNIX
@@ -210,13 +215,13 @@ short gResFile; // Refnum of the plugin's resource file
 
 NPError Private_Initialize(void)
 {
-  NPError rv = NPP_Initialize();
+  NPError rv = NS_PluginInitialize();
   return rv;
 }
 
 void Private_Shutdown(void)
 {
-  NPP_Shutdown();
+  NS_PluginShutdown();
   __destroy_global_chain();
 }
 
