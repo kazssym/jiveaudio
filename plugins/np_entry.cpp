@@ -45,7 +45,6 @@
 #endif
 
 #include "npplat.h"
-#include "pluginbase.h"
 
 NPNetscapeFuncs NPNFuncs;
 
