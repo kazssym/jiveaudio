@@ -96,7 +96,7 @@
 /* Win32 */
 #elif defined(XP_WIN) || defined(_WINDOWS) || defined(WIN32) || defined(_WIN32)
 #	include <windows.h>
-#	if defined(_MSC_VER) || defined(__GNUC__)
+#	if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__GNUC__)
 #		if defined(WIN32) || defined(_WIN32)
 #			define JNI_PUBLIC_API(ResultType)	_declspec(dllexport) ResultType __stdcall
 #			define JNI_PUBLIC_VAR(VarType)		VarType
