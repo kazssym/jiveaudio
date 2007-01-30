@@ -50,7 +50,7 @@ NPNetscapeFuncs NPNFuncs;
 
 NPError OSCALL NP_Shutdown()
 {
-  NS_PluginShutdown();
+  NPP_Shutdown();
   return NPERR_NO_ERROR;
 }
 
@@ -157,7 +157,7 @@ NPError OSCALL NP_Initialize(NPNetscapeFuncs* aNPNFuncs)
   if(rv != NPERR_NO_ERROR)
     return rv;
 
-  return NS_PluginInitialize();
+  return NPP_Initialize();
 }
 
 NPError OSCALL NP_GetEntryPoints(NPPluginFuncs* aNPPFuncs)
@@ -184,7 +184,7 @@ NPError NP_Initialize(NPNetscapeFuncs* aNPNFuncs, NPPluginFuncs* aNPPFuncs)
   if(rv != NPERR_NO_ERROR)
     return rv;
 
-  return NS_PluginInitialize();
+  return NPP_Initialize();
 }
 
 char * NP_GetMIMEDescription(void)
@@ -194,7 +194,7 @@ char * NP_GetMIMEDescription(void)
 
 NPError NP_GetValue(void *future, NPPVariable aVariable, void *aValue)
 {
-  return NS_PluginGetValue(aVariable, aValue);
+  return NPP_GetValue(NULL, aVariable, aValue);
 }
 
 #endif //XP_UNIX
@@ -214,13 +214,13 @@ short gResFile; // Refnum of the plugin's resource file
 
 NPError Private_Initialize(void)
 {
-  NPError rv = NS_PluginInitialize();
+  NPError rv = NPP_Initialize();
   return rv;
 }
 
 void Private_Shutdown(void)
 {
-  NS_PluginShutdown();
+  NPP_Shutdown();
   __destroy_global_chain();
 }
 
