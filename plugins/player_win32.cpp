@@ -17,22 +17,21 @@
    02111-1307, USA.  */
 
 #if HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
+         
+#if _WIN32                      /* Win32 or Win64 */
+#include <windows.h>
+#endif
+
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
+#include "player_win32.h"
+#pragma package (smart_init)
+
 #if _WIN32
-#define STRICT 1
-#include <windows.h>
-#pragma hdrstop
-#endif
 
-#include "dshow_player.h"
-
-using namespace std;
-
-#if defined _WIN32
 dshow_player::dshow_player () :
     graph (0)
 {
@@ -46,11 +45,12 @@ dshow_player::~dshow_player ()
 void
 dshow_player::start ()
 {
-    if (graph != 0)
-	return;
+    if (graph != 0) {
+	    return;
+    }
 
     close_stream ();
-    
+
     WCHAR wcname[FILENAME_MAX];
     MultiByteToWideChar (CP_ACP, MB_PRECOMPOSED, file_name, -1,
 			 wcname, FILENAME_MAX);
@@ -68,8 +68,9 @@ dshow_player::start ()
 void
 dshow_player::stop ()
 {
-    if (graph == 0)
-	return;
+    if (graph == 0) {
+	    return;
+    }
 
     IMediaControl *control;
     graph->QueryInterface (IID_IMediaControl, (void **) &control);
@@ -78,4 +79,5 @@ dshow_player::stop ()
     graph->Release ();
     graph = 0;
 }
+
 #endif /* _WIN32 */
