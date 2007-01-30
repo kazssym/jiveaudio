@@ -1,5 +1,5 @@
 /*
- * JiveAudio - multimedia plugin for Mozilla -*-C++-*-
+ * JiveAudio - multimedia plugin for Mozilla
  * Copyright (C) 2003-2006 Hypercore Software Design, Ltd.
  *
  * This program is free software; you can redistribute it and/or

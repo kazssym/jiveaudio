@@ -28,17 +28,16 @@ AC_CHECK_FUNCS([tempnam])
 
 case $host_os in
 linux-gnu*)
-  prcpucfg=_linux.cfg
-AC_DEFINE([MDCPUCFG], ["md/_linux.h"], [Define to the header name.])
+  cpucfg=_linux.cfg
   ;;
 mingw32*)
-  prcpucfg=_win95.cfg
-AC_DEFINE([MDCPUCFG], ["md/_winnt.h"])
+  cpucfg=_winnt.cfg
   ;;
 *)
   AC_MSG_WARN([Unknown host operating system; assuming GNU/Linux])
-  prcpucfg=_linux.cfg
+  cpucfg=_linux.cfg
   ;;
 esac
-AC_CONFIG_FILES([Makefile sdk/Makefile doc/Makefile plugins/npaudio.rc])
+AC_CONFIG_LINKS([sdk/prcpucfg.h:sdk/md/$cpucfg])
+AC_CONFIG_FILES([Makefile sdk/Makefile plugins/Makefile doc/Makefile])
 AC_OUTPUT

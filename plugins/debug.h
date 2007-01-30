@@ -1,4 +1,5 @@
-/* JiveAudio - multimedia plugin
+/*
+ * JiveAudio - multimedia plugin
  * Copyright (C) 2003-2006 Hypercore Software Design, Ltd.
  *
  * This program is free software; you can redistribute it and/or
@@ -21,19 +22,21 @@
 #define debugH 1
 
 #if __cplusplus
-#define _DEBUG_API extern "C"
-#else /* !__cplusplus */
-#define _DEBUG_API extern
-#endif /* !__cplusplus */
+#define _C_LINKAGE extern "C"
+#else
+#define _C_LINKAGE extern
+#endif
 
 #if HAVE_SYSLOG_H
+
 #include <syslog.h>
+
 #else /* !HAVE_SYSLOG_H */
 
 #define LOG_DEBUG 7
 
-_DEBUG_API void syslog (int prio, const char *format, ...);
+_C_LINKAGE void syslog (int prio, const char *format, ...);
 
-#endif /* !HAVE_SYSLOG_H */
+#endif /* !HAVE_SYSLOG_H */
 
 #endif
