@@ -22,14 +22,12 @@
 #include <config.h>
 #endif
 
-#define _GNU_SOURCE 1
-#define _REENTRANT 1
-
 #if _WIN32                      /* Win32 or Win64 */
-#define STRICT 1
 #include <windows.h>
 #endif
-#pragma hdrstop
+
+#define _GNU_SOURCE 1
+#define _REENTRANT 1
 
 #include "debug.h"
 #pragma package (smart_init)
