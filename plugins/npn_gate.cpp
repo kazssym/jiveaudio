@@ -44,6 +44,10 @@
 #include <config.h>
 #endif
 
+#if _WIN32                      /* Win32 or Win64 */
+#include <windows.h>
+#endif
+
 #include "npplat.h"
 
 extern NPNetscapeFuncs NPNFuncs;
