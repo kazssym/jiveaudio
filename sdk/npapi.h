@@ -626,7 +626,7 @@ enum NPEventType {
 /*                        Function Prototypes                           */
 /*----------------------------------------------------------------------*/
 
-#if defined(_WINDOWS) && !defined(WIN32)
+#if defined(_WINDOWS) && !(defined(WIN32) || defined(_WIN32))
 #define NP_LOADDS  _loadds
 #else
 #if defined(__OS2__)
