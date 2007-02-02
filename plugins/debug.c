@@ -29,16 +29,16 @@
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include <stdarg.h>
-#include <stdio.h>
-
 #include "debug.h"
 #pragma package (smart_init)
 
 #if !HAVE_SYSLOG_H
 
+#include <stdarg.h>
+#include <stdio.h>
+
 #pragma argsused
-void syslog (int prio, const char *format,...)
+void log (int prio, const char *format,...)
 {
     va_list args;
 #if _WIN32
@@ -47,6 +47,7 @@ void syslog (int prio, const char *format,...)
 
     va_start (args, format);
 
+#if !NDEBUG
 #if _WIN32
     vsnprintf (buf, 512, format, args);
     OutputDebugString (buf);
@@ -54,6 +55,7 @@ void syslog (int prio, const char *format,...)
     vfprintf (stderr, format, args);
     fputs ("\n", stderr);
 #endif /* !_WIN32 */
+#endif /* !NDEBUG */
 
     va_end (args);
 }

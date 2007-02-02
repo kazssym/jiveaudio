@@ -31,11 +31,15 @@
 
 #include <syslog.h>
 
+#define log syslog
+
 #else /* !HAVE_SYSLOG_H */
 
 #define LOG_DEBUG 7
 
-_C_LINKAGE void syslog (int prio, const char *format, ...);
+_C_LINKAGE void log (int prio, const char *format, ...);
+
+#define syslog log
 
 #endif /* !HAVE_SYSLOG_H */
 

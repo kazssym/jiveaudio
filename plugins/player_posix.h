@@ -21,7 +21,9 @@
 
 #ifndef player_posixH
 #define player_posixH 1
-  
+
+#include "player.h"
+
 #if __unix
 
 #include <sys/types.h>

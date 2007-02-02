@@ -27,13 +27,13 @@
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include <cstdio>
-#include <dshow.h>
-
 #include "player_win32.h"
 #pragma package (smart_init)
 
 #if _WIN32
+ 
+#include <cstdio>
+#include <dshow.h>
 
 dshow_player::dshow_player () :
     graph (0)

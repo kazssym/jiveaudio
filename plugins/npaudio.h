@@ -30,6 +30,7 @@
 #include "player.h"
 
 #include <memory>
+#include <npapi.h>
 #include <npruntime.h>
 
 struct plugin_data

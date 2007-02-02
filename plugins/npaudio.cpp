@@ -28,18 +28,18 @@
 
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
+ 
+#include "npaudio.h"
+#pragma package (smart_init)
+
+#include "debug.h"
+#include "player_posix.h"
+#include "player_win32.h"
 
 #include <new>
 #include <cstring>
 #include <cctype>
 #include <cassert>
-#include <npapi.h>
-#include "debug.h"
-#include "player_posix.h"
-#include "player_win32.h"
-
-#include "npaudio.h"
-#pragma package (smart_init)
 
 #if _WIN32
 
@@ -125,6 +125,20 @@ NPError NPP_SetValue (NPP instance, NPNVariable var, void *value)
 }
 
 namespace object {
+    NPObject *allocate (NPP, NPClass *)
+    {
+        try {
+            return new NPObject ();
+        } catch (const std::bad_alloc &e) {
+            return NULL;
+        }
+    }
+
+    void deallocate (NPObject *object)
+    {
+        delete object;
+    }
+
     void invalidate (NPObject *)
     {
         syslog (LOG_DEBUG, "invalidate: Unimplemented function");
@@ -185,8 +199,8 @@ namespace object {
 
 const NPClass default_class = {
     NP_CLASS_STRUCT_VERSION,
-    NULL,
-    NULL,
+    &object::allocate,
+    &object::deallocate,
     &object::invalidate,
     &object::hasMethod,
     &object::invoke,
@@ -195,7 +209,7 @@ const NPClass default_class = {
     &object::getProperty,
     &object::setProperty,
     &object::removeProperty,
-    &object::enumerate
+    &object::enumerate,
 };
 
 #pragma argsused
