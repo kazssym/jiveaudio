@@ -16,14 +16,22 @@
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
 
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
+  
+#if _WIN32                      /* Win32 or Win64 */
+#include <windows.h>
+#endif
+
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include "common.h"
-
-#include "exec_media_player.h"
-
 #include <csignal>
+#include <cstdio>
+#if HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #ifdef HAVE_FCNTL_H
 #  include <fcntl.h>
@@ -34,7 +42,7 @@
 #endif
 
 #ifdef HAVE_SYS_WAIT_H
-#  include <sys/wait.h>
+#include <sys/wait.h>
 #endif
 
 #ifdef _POSIX_THREADS
@@ -45,7 +53,11 @@
 #  define O_BINARY 0
 #endif
 
+#include "exec_media_player.h"
+
 using namespace std;
+
+#if __unix
 
 external_player::external_player (const char *_command_name) :
     command_name (_command_name),
@@ -132,7 +144,7 @@ external_player::run ()
 	  lseek(fileno, 0, SEEK_SET);
 	  pthread_mutex_lock(&thread_mutex);
 	}
-      while (loop && WIFEXITED(status) && fileno != -1);
+      while (a_loop && WIFEXITED(status) && fileno != -1);
       child = 0;
     }
   pthread_mutex_unlock(&thread_mutex);
@@ -203,3 +215,5 @@ external_player::stop ()
     }
 #endif /* !_POSIX_THREADS */
 }
+
+#endif /* __unix */

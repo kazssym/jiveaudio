@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT([JiveAudio], [2.1.0], [jiveaudio@lists.yaromai.net], [jiveaudio])
-AC_CONFIG_SRCDIR([audio.cpp])
+AC_CONFIG_SRCDIR([plugins/npaudio.cpp])
 AC_CONFIG_HEADERS([config.h])
 AM_INIT_AUTOMAKE([1.9])
 

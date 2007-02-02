@@ -15,17 +15,29 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
    02111-1307, USA.  */
+ 
+#if HAVE_CONFIG_H
+#include <config.h>
+#endif
+  
+#if _WIN32                      /* Win32 or Win64 */
+#include <windows.h>
+#endif
 
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include "common.h"
+#include <cstring>
+#include <cstdio>
+#if HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include "exec_media_player.h"
 
-#include <cstring>
-
 using namespace std;
+
+#if __unix
 
 sox_media_player::sox_media_player (const char *_command_name) :
     external_player (_command_name)
@@ -40,7 +52,7 @@ sox_media_player::exec (int stream_fileno)
 
   execlp (command_name, command_name, "-t", file_format,
 	  "-", (const char *) 0);
-  perror (command_name);
+  std::perror (command_name);
 }
 
 bool
@@ -51,3 +63,6 @@ sox_media_player::open_stream (const char *mime_type)
 	file_format = "wav";
     return external_player::open_stream (mime_type);
 }
+
+#endif /* __unix */
+

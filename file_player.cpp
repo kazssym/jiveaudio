@@ -28,9 +28,10 @@
 #pragma hdrstop
 #endif
 
-#include "media_player.h"
+#include "plugins/player.h"
 
 #include <cstdlib>
+#include <cstdio>
 
 #if HAVE_UNISTD_H
 #include <unistd.h>
@@ -101,7 +102,7 @@ file_media_player::open_stream (const char *mime_type)
     return true;
 }
 
-size_t
+long
 file_media_player::stream_buffer_size () const
 {
     if (fildes == -1)
@@ -110,11 +111,11 @@ file_media_player::stream_buffer_size () const
     return 4096;
 }
 
-size_t
-file_media_player::write_stream (const void *buf, size_t nbytes)
+long
+file_media_player::write_stream (const void *buf, long nbytes)
 {
     if (fildes == -1)
-        return (size_t) -1;
+        return -1;
 
     size_t k = write (fildes, buf, nbytes);
     return k;

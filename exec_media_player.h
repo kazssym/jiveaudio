@@ -19,42 +19,6 @@
 #ifndef _EXEC_MEDIA_PLAYER_H
 #define _EXEC_MEDIA_PLAYER_H 1
 
-#include "media_player.h"
+#include "plugins/player_posix.h"
 
-class external_player : public file_media_player
-{
-public:
-    external_player (const char *command_name);
-    ~external_player ();
-
-    virtual void exec (int stream_fileno);
-
-    void start ();
-    void stop ();
-protected:
-    const char *command_name;
-    int fileno;
-#if _POSIX_THREADS
-    pthread_t thread;
-    pthread_mutex_t thread_mutex;
-#endif /* _POSIX_THREADS */
-    pid_t child;
-
-    pid_t spawn (int fileno);
-#if _POSIX_THREADS
-    void run ();
-    static void *run (void *);
-#endif
-};
-
-class sox_media_player : public external_player
-{
-public:
-    sox_media_player (const char *command_name);
-
-    void exec (int stream_fileno);
-    bool open_stream (const char *mime_type);
-protected:
-    const char *file_format;
-};
 #endif /* !_EXEC_MEDIA_PLAYER_H */
