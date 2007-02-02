@@ -53,8 +53,8 @@ protected:
 
 public:
     virtual bool open_stream (const char *mime_type) = 0;
-    virtual size_t stream_buffer_size () const = 0;
-    virtual size_t write_stream (const void *buf, size_t nbytes) = 0;
+    virtual long stream_buffer_size () const = 0;
+    virtual long write_stream (const void *buf, long nbytes) = 0;
     virtual void close_stream () = 0;
 
 public:
@@ -62,6 +62,26 @@ public:
     virtual void stop () = 0;
 
     virtual void set_window (window_type window);
+};
+
+class file_media_player : public player
+{
+public:
+    file_media_player ();
+
+public:
+    virtual ~file_media_player ();
+
+    bool open_stream (const char *mime_type);
+    long stream_buffer_size () const;
+    long write_stream (const void *buf, long nbytes);
+    void close_stream ();
+protected:
+    char *file_name;
+private:
+    int fildes;
+
+    void clean ();
 };
 
 #endif

@@ -1,4 +1,3 @@
-/* -*-C++-*- */
 /*
  * JiveAudio - multimedia plugin for Mozilla
  * Copyright (C) 2003-2006 Hypercore Software Design, Ltd.
@@ -19,15 +18,16 @@
  * 02111-1307, USA.
  */
 
-#ifndef bufferH
-#define bufferH 1
-
-class buffer {
-public:
-    buffer ();
-
-public:
-    virtual ~buffer ();
-};
-
+#if HAVE_CONFIG_H
+#include <config.h>
 #endif
+  
+#if _WIN32                      /* Win32 or Win64 */
+#include <windows.h>
+#endif
+
+#define _GNU_SOURCE 1
+#define _REENTRANT 1
+
+#include "player_posix.h"
+#pragma package (smart_init)

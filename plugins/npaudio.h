@@ -24,20 +24,41 @@
         
 #if !_WIN32
 #define MOZ_X11 1
+#include <X11/Intrinsic.h>
 #endif
 
 #include "player.h"
 
+#include <memory>
+#include <npruntime.h>
+
 struct plugin_data
 {
-    bool loop;
+    NPClass runtime_class;
     bool autostart;
+    bool loop;
 #if _WIN32
     HWND window;
-    WNDPROC old_proc;
 #else /* !_WIN32 */
+    Widget window;
 #endif /* !_WIN32 */
-    class player *player;
+    std::auto_ptr <class player> player;
+
+    static plugin_data *from_instance (NPP instance)
+    {
+        if (instance != NULL) {
+            return static_cast <plugin_data *> (instance->pdata);
+        }
+        return NULL;
+    }
+    
+    static plugin_data *from_object (NPObject *object)
+    {
+        if (object != NULL) {
+            return reinterpret_cast <plugin_data *> (object->_class);
+        }
+        return NULL;
+    }
 };
 
 #endif

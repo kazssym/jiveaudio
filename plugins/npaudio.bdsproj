@@ -34,16 +34,32 @@
         <property category="build.platform" name="win32.default" value="win32b"/>
         <property category="build.platform" name="win32.enabled" value="1"/>
         <property category="build.platform" name="win32.win32b.enabled" value="1"/>
+        <property category="win32.*.win32b.dcc32" name="param.filenames.merge" value="1"/>
+        <property category="win32.*.win32b.tasm32" name="param.listfile.merge" value="1"/>
+        <property category="win32.*.win32b.tasm32" name="param.objfile.merge" value="1"/>
+        <property category="win32.*.win32b.tasm32" name="param.xreffile.merge" value="1"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedOptimizations.containerenabled" value="0"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedWarnings.containerenabled" value="1"/>
+        <property category="win32.Debug_Build.win32b.bcc32" name="option.CP.arg.merge" value="1"/>
+        <property category="win32.Debug_Build.win32b.bcc32" name="option.CP.enabled" value="0"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.1" value="_DEBUG"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.merge" value="1"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="option.D.enabled" value="1"/>
-        <property category="win32.Debug_Build.win32b.bcc32" name="option.vG.enabled" value="1"/>
+        <property category="win32.Debug_Build.win32b.bcc32" name="option.v.enabled" value="1"/>
+        <property category="win32.Debug_Build.win32b.dcc32" name="option.$D.enabled" value="1"/>
+        <property category="win32.Debug_Build.win32b.dcc32" name="option.$O.enabled" value="0"/>
+        <property category="win32.Debug_Build.win32b.dcc32" name="option.D.arg.1" value="DEBUG"/>
+        <property category="win32.Debug_Build.win32b.dcc32" name="option.D.arg.merge" value="1"/>
+        <property category="win32.Debug_Build.win32b.dcc32" name="option.D.enabled" value="1"/>
+        <property category="win32.Debug_Build.win32b.dcc32" name="option.V.enabled" value="1"/>
         <property category="win32.Debug_Build.win32b.ilink32" name="container.SelectedWarnings.containerenabled" value="1"/>
+        <property category="win32.Debug_Build.win32b.ilink32" name="option.Gn.enabled" value="0"/>
         <property category="win32.Debug_Build.win32b.ilink32" name="option.L.arg.1" value="$(BDS)\lib\debug"/>
         <property category="win32.Debug_Build.win32b.ilink32" name="option.L.arg.merge" value="1"/>
         <property category="win32.Debug_Build.win32b.ilink32" name="option.L.enabled" value="1"/>
+        <property category="win32.Debug_Build.win32b.tasm32" name="option.z.enabled" value="1"/>
+        <property category="win32.Debug_Build.win32b.tasm32" name="option.zd.enabled" value="0"/>
+        <property category="win32.Debug_Build.win32b.tasm32" name="option.zi.enabled" value="1"/>
         <property category="win32.Release_Build.win32b.bcc32" name="container.SelectedOptimizations.containerenabled" value="0"/>
         <property category="win32.Release_Build.win32b.bcc32" name="container.SelectedWarnings.containerenabled" value="1"/>
         <property category="win32.Release_Build.win32b.bcc32" name="option.D.arg.1" value="NDEBUG"/>
@@ -53,10 +69,16 @@
         <property category="win32.Release_Build.win32b.bcc32" name="option.Od.enabled" value="0"/>
         <property category="win32.Release_Build.win32b.bcc32" name="option.noregistervars.enabled" value="0"/>
         <property category="win32.Release_Build.win32b.bcc32" name="option.r.enabled" value="1"/>
-        <property category="win32.Release_Build.win32b.bcc32" name="option.vi.enabled" value="1"/>
+        <property category="win32.Release_Build.win32b.dcc32" name="option.$D.enabled" value="0"/>
+        <property category="win32.Release_Build.win32b.dcc32" name="option.$O.enabled" value="1"/>
+        <property category="win32.Release_Build.win32b.dcc32" name="option.V.enabled" value="0"/>
         <property category="win32.Release_Build.win32b.ilink32" name="option.L.arg.1" value="$(BDS)\lib\release"/>
         <property category="win32.Release_Build.win32b.ilink32" name="option.L.arg.merge" value="1"/>
         <property category="win32.Release_Build.win32b.ilink32" name="option.L.enabled" value="1"/>
+        <property category="win32.Release_Build.win32b.tasm32" name="option.z.enabled" value="0"/>
+        <property category="win32.Release_Build.win32b.tasm32" name="option.zd.enabled" value="0"/>
+        <property category="win32.Release_Build.win32b.tasm32" name="option.zi.enabled" value="0"/>
+        <property category="win32.Release_Build.win32b.tasm32" name="option.zn.enabled" value="1"/>
         <optionset name="all_configurations">
           <property category="node" name="displayname" value="All Configurations"/>
           <property category="win32.*.win32b.bcc32" name="container.SelectedOptimizations.containerenabled" value="0"/>
@@ -81,7 +103,7 @@
           <property category="win32.*.win32b.bcc32" name="option.Hh=.arg.1" value="windows.h"/>
           <property category="win32.*.win32b.bcc32" name="option.Hh=.arg.merge" value="0"/>
           <property category="win32.*.win32b.bcc32" name="option.Hh=.enabled" value="1"/>
-          <property category="win32.*.win32b.bcc32" name="option.Hu.enabled" value="0"/>
+          <property category="win32.*.win32b.bcc32" name="option.Hu.enabled" value="1"/>
           <property category="win32.*.win32b.bcc32" name="option.I.arg.1" value="..\"/>
           <property category="win32.*.win32b.bcc32" name="option.I.arg.2" value="..\sdk"/>
           <property category="win32.*.win32b.bcc32" name="option.I.arg.3" value="$(BDS)\include"/>
@@ -124,11 +146,11 @@
           <property category="win32.*.win32b.bcc32" name="option.sysdefines.enabled" value="1"/>
           <property category="win32.*.win32b.bcc32" name="option.tWD.enabled" value="1"/>
           <property category="win32.*.win32b.bcc32" name="option.tWM.enabled" value="1"/>
-          <property category="win32.*.win32b.bcc32" name="option.v.enabled" value="1"/>
-          <property category="win32.*.win32b.bcc32" name="option.vi.enabled" value="0"/>
+          <property category="win32.*.win32b.bcc32" name="option.v.enabled" value="0"/>
+          <property category="win32.*.win32b.bcc32" name="option.vi.enabled" value="1"/>
           <property category="win32.*.win32b.bcc32" name="option.w.enabled" value="0"/>
           <property category="win32.*.win32b.bcc32" name="option.wpar.enabled" value="1"/>
-          <property category="win32.*.win32b.bcc32" name="option.y.enabled" value="1"/>
+          <property category="win32.*.win32b.bcc32" name="option.y.enabled" value="0"/>
           <property category="win32.*.win32b.brcc32" name="option.D.arg.1" value="_WINDOWS"/>
           <property category="win32.*.win32b.brcc32" name="option.D.arg.2" value="STDC_HEADERS=1"/>
           <property category="win32.*.win32b.brcc32" name="option.D.arg.3" value="HAVE_FCNTL_H=1"/>
@@ -143,6 +165,54 @@
           <property category="win32.*.win32b.brcc32" name="option.INCLUDEPATH.arg.3" value="$(BDS)\include\vcl"/>
           <property category="win32.*.win32b.brcc32" name="option.INCLUDEPATH.arg.merge" value="1"/>
           <property category="win32.*.win32b.brcc32" name="option.INCLUDEPATH.enabled" value="1"/>
+          <property category="win32.*.win32b.dcc32" name="option.$.arg.merge" value="1"/>
+          <property category="win32.*.win32b.dcc32" name="option.$.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.$A1.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.$A2.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.$A4.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.$O.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.$Z2.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.$Z4.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.D.arg.merge" value="1"/>
+          <property category="win32.*.win32b.dcc32" name="option.D.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.GD.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.GP.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.GS.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.I.arg.1" value="player"/>
+          <property category="win32.*.win32b.dcc32" name="option.I.arg.2" value="..\"/>
+          <property category="win32.*.win32b.dcc32" name="option.I.arg.3" value="plugins"/>
+          <property category="win32.*.win32b.dcc32" name="option.I.arg.4" value="..\xpi"/>
+          <property category="win32.*.win32b.dcc32" name="option.I.arg.merge" value="1"/>
+          <property category="win32.*.win32b.dcc32" name="option.I.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.J.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.JP.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.JPH.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.JPHN.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.O.arg.1" value="player"/>
+          <property category="win32.*.win32b.dcc32" name="option.O.arg.2" value="..\"/>
+          <property category="win32.*.win32b.dcc32" name="option.O.arg.3" value="plugins"/>
+          <property category="win32.*.win32b.dcc32" name="option.O.arg.4" value="..\xpi"/>
+          <property category="win32.*.win32b.dcc32" name="option.O.arg.merge" value="1"/>
+          <property category="win32.*.win32b.dcc32" name="option.O.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.R.arg.1" value="player"/>
+          <property category="win32.*.win32b.dcc32" name="option.R.arg.2" value="..\"/>
+          <property category="win32.*.win32b.dcc32" name="option.R.arg.3" value="plugins"/>
+          <property category="win32.*.win32b.dcc32" name="option.R.arg.4" value="..\xpi"/>
+          <property category="win32.*.win32b.dcc32" name="option.R.arg.merge" value="1"/>
+          <property category="win32.*.win32b.dcc32" name="option.R.enabled" value="0"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.1" value="..\"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.2" value="$(BDS)\lib"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.3" value="$(BDS)\lib\obj"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.arg.merge" value="1"/>
+          <property category="win32.*.win32b.dcc32" name="option.U.enabled" value="1"/>
+          <property category="win32.*.win32b.dcc32" name="param.filenames.merge" value="1"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.1" value="player"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.2" value="..\"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.3" value="plugins"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.4" value="..\plugins"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.5" value="xpi"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.arg.merge" value="1"/>
+          <property category="win32.*.win32b.idl2cpp" name="option.I.enabled" value="1"/>
           <property category="win32.*.win32b.ilink32" name="container.SelectedWarnings.containerenabled" value="1"/>
           <property category="win32.*.win32b.ilink32" name="option.-w-.enabled" value="0"/>
           <property category="win32.*.win32b.ilink32" name="option.D.arg" value=""/>
@@ -177,36 +247,50 @@
           <property category="win32.*.win32b.ilink32" name="param.objfiles.1" value="c0d32.obj"/>
           <property category="win32.*.win32b.ilink32" name="param.objfiles.2" value="$(PACKAGES)"/>
           <property category="win32.*.win32b.ilink32" name="param.objfiles.merge" value="1"/>
+          <property category="win32.*.win32b.tasm32" name="option.d.arg.merge" value="1"/>
+          <property category="win32.*.win32b.tasm32" name="option.d.enabled" value="0"/>
+          <property category="win32.*.win32b.tasm32" name="option.i.arg.merge" value="1"/>
+          <property category="win32.*.win32b.tasm32" name="option.i.enabled" value="0"/>
+          <property category="win32.*.win32b.tasm32" name="param.listfile.merge" value="1"/>
+          <property category="win32.*.win32b.tasm32" name="param.objfile.merge" value="1"/>
+          <property category="win32.*.win32b.tasm32" name="param.xreffile.merge" value="1"/>
         </optionset>
+        <file path="npaudio.cpp">
+          <optionset name="all_configurations">
+            <property category="node" name="displayname" value="All Configurations"/>
+            <property category="win32.*.win32b.bcc32" name="option.Hu.enabled" value="0"/>
+          </optionset>
+        </file>
       </project>
       <FILELIST>
         <FILE FILENAME="npaudio.bpf" CONTAINERID="BPF" LOCALCOMMAND="" UNITNAME="npaudio" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="npaudio.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="npaudio.rc" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\obsolete\protypes.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\prcpucfg.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\npupp.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\nptypes.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\npruntime.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\npapi.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\jritypes.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\jri_md.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\jri.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\jni_md.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\jni.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sdk\prtypes.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\audio.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="audio" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="player_win32.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="player_win32" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\file_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="file_player" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\media_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="media_player" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="npn_gate.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="npn_gate" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="np_entry.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="np_entry" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="npaudio.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="npaudio" FORMNAME="" DESIGNCLASS="" ADDITIONAL="npaudio.h"/>
-        <FILE FILENAME="debug.c" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="debug" FORMNAME="" DESIGNCLASS="" ADDITIONAL="debug.h"/>
+        <FILE FILENAME="npaudio.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="npaudio.rc" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="player" FORMNAME="" DESIGNCLASS="" ADDITIONAL="player.h"/>
-        <FILE FILENAME="..\config.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\exec_media_player.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="player_posix.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="player_posix" FORMNAME="" DESIGNCLASS="" ADDITIONAL="player_posix.h"/>
+        <FILE FILENAME="player_win32.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="player_win32" FORMNAME="" DESIGNCLASS="" ADDITIONAL="player_win32.h"/>
         <FILE FILENAME="buffer.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="buffer" FORMNAME="" DESIGNCLASS="" ADDITIONAL="buffer.h"/>
-        <FILE FILENAME="npplat.h" CONTAINERID="" LOCALCOMMAND=""/>
+        <FILE FILENAME="debug.c" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="debug" FORMNAME="" DESIGNCLASS="" ADDITIONAL="debug.h"/>
+        <FILE FILENAME="np_entry.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="np_entry" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="npn_gate.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="npn_gate" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\exec_media_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="exec_media_player" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sox_media_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="sox_media_player" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\exec_media_player.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\config.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\file_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="file_player" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\prtypes.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\jni.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\jni_md.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\jri.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\jri_md.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\jritypes.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\npapi.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\npruntime.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\nptypes.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\npupp.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\prcpucfg.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="npplat.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sdk\obsolete\protypes.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
       </FILELIST>
       <IDEOPTIONS>
         <VersionInfo>
@@ -274,6 +358,11 @@
           <Parameters Name="LoadAllSymbols">True</Parameters>
           <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
         </Parameters>
+        <Language>
+          <Language Name="ActiveLang"></Language>
+          <Language Name="ProjectLang">$00000000</Language>
+          <Language Name="RootDir"></Language>
+        </Language>
         <Linker>
           <Linker Name="LibPrefix"></Linker>
           <Linker Name="LibSuffix"></Linker>

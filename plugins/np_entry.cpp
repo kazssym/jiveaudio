@@ -140,6 +140,27 @@ static NPError fillNetscapeFunctionTable(NPNetscapeFuncs* aNPNFuncs)
   NPNFuncs.invalidaterect   = aNPNFuncs->invalidaterect;
   NPNFuncs.invalidateregion = aNPNFuncs->invalidateregion;
   NPNFuncs.forceredraw      = aNPNFuncs->forceredraw;
+  NPNFuncs.getstringidentifier    = aNPNFuncs->getstringidentifier;
+  NPNFuncs.getstringidentifiers   = aNPNFuncs->getstringidentifiers;
+  NPNFuncs.getintidentifier       = aNPNFuncs->getintidentifier;
+  NPNFuncs.identifierisstring     = aNPNFuncs->identifierisstring;
+  NPNFuncs.utf8fromidentifier     = aNPNFuncs->utf8fromidentifier;
+  NPNFuncs.intfromidentifier      = aNPNFuncs->intfromidentifier;
+  NPNFuncs.createobject           = aNPNFuncs->createobject;
+  NPNFuncs.retainobject           = aNPNFuncs->retainobject;
+  NPNFuncs.releaseobject          = aNPNFuncs->releaseobject;
+  NPNFuncs.invoke                 = aNPNFuncs->invoke;
+  NPNFuncs.invokeDefault          = aNPNFuncs->invokeDefault;
+  NPNFuncs.evaluate               = aNPNFuncs->evaluate;
+  NPNFuncs.getproperty            = aNPNFuncs->getproperty;
+  NPNFuncs.setproperty            = aNPNFuncs->setproperty;
+  NPNFuncs.removeproperty         = aNPNFuncs->removeproperty;
+  NPNFuncs.hasproperty            = aNPNFuncs->hasproperty;
+  NPNFuncs.hasmethod              = aNPNFuncs->hasmethod;
+  NPNFuncs.releasevariantvalue    = aNPNFuncs->releasevariantvalue;
+  NPNFuncs.setexception           = aNPNFuncs->setexception;
+  NPNFuncs.pushpopupsenabledstate = aNPNFuncs->pushpopupsenabledstate;
+  NPNFuncs.poppopupsenabledstate  = aNPNFuncs->poppopupsenabledstate;
 
   return NPERR_NO_ERROR;
 }

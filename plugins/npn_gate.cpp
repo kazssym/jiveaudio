@@ -221,3 +221,21 @@ void NPN_ForceRedraw(NPP instance)
 {
   CallNPN_ForceRedrawProc(NPNFuncs.forceredraw, instance);
 }
+
+NPUTF8 *NPN_UTF8FromIdentifier(NPIdentifier ident)
+{
+    NPUTF8 *rv = CallNPN_UTF8FromIdentifierProc(NPNFuncs.utf8fromidentifier, ident);
+    return rv;
+}
+
+NPObject *NPN_CreateObject(NPP instance, NPClass *_class)
+{
+  NPObject *rv = CallNPN_CreateObjectProc(NPNFuncs.createobject, instance, _class);
+  return rv;
+}
+
+NPObject *NPN_RetainObject(NPObject *object)
+{
+  NPObject *rv = CallNPN_RetainObjectProc(NPNFuncs.retainobject, object);
+  return rv;
+}

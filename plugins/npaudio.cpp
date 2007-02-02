@@ -30,9 +30,13 @@
 #define _REENTRANT 1
 
 #include <new>
+#include <cstring>
+#include <cctype>
 #include <cassert>
 #include <npapi.h>
 #include "debug.h"
+#include "player_posix.h"
+#include "player_win32.h"
 
 #include "npaudio.h"
 #pragma package (smart_init)
@@ -40,8 +44,19 @@
 #if _WIN32
 
 #pragma argsused
-BOOL WINAPI DllMain (HINSTANCE instance, DWORD reason, LPVOID)
+BOOL WINAPI DllMain (HINSTANCE instance, DWORD reason, LPVOID reserved)
 {
+    switch (reason) {
+    case DLL_THREAD_ATTACH:
+        CoInitializeEx (NULL, COINIT_MULTITHREADED);
+        break;
+    case DLL_THREAD_DETACH:
+        CoUninitialize ();
+        break;
+    default:
+        break;
+    }
+
     return TRUE;
 }
 
@@ -50,21 +65,12 @@ BOOL WINAPI DllMain (HINSTANCE instance, DWORD reason, LPVOID)
 /* Initializes this plugin.  */
 NPError NPP_Initialize ()
 {
-#if _WIN32
-    HRESULT result = CoInitializeEx (0, COINIT_MULTITHREADED);
-    if (result != S_OK && result != S_FALSE) {
-        return NPERR_GENERIC_ERROR;
-    }
-#endif
     return NPERR_NO_ERROR;
 }
 
 /* Finalizes this plugin.  */
 void NPP_Shutdown ()
 {
-#if _WIN32
-    CoUninitialize ();
-#endif
 }
 
 #ifdef XP_UNIX
@@ -72,28 +78,38 @@ void NPP_Shutdown ()
 /* Returns the MIME description.  */
 char *NPP_GetMIMEDescription ()
 {
-    return "audio/basic:au,snd:&#x03bc;-law PCM Audio;"
+    return "audio/basic::G.711 &#x03bc;-law Audio;"
         "audio/x-wav:wav:RIFF Waveform Audio;"
-        "audio/wav::RIFF Waveform Audio (Misuse)";
+        "audio/wav::RIFF Waveform Audio - Misuse";
 }
 
 #endif /* XP_UNIX */
            
 /* Returns the value of a plugin variable.  */
 #pragma argsused
-NPError NPP_GetValue (NPP instance, NPPVariable variable, void *value)
+NPError NPP_GetValue (NPP instance, NPPVariable var, void *value)
 {
-    switch (variable) {
+    plugin_data *data = plugin_data::from_instance (instance);
+
+    switch (var) {
 #ifdef XP_UNIX
     case NPPVpluginNameString:
-        *((const char **) value) = PACKAGE_NAME;
+        *static_cast <const char **> (value) = PACKAGE_NAME;
         break;
     case NPPVpluginDescriptionString:
-        *((const char **) value) = PACKAGE_STRING " for Gecko";
+        *static_cast <const char **> (value) = PACKAGE_NAME " Plugin";
         break;
 #endif
+    case NPPVpluginScriptableNPObject:
+        {
+            assert (data != NULL);
+
+            NPObject *object = NPN_CreateObject (instance, &data->runtime_class);
+            *static_cast <NPObject **> (value) = object;
+        }
+        break;
     default:
-        syslog (LOG_DEBUG, "NPP_GetValue %d", variable);
+        syslog (LOG_DEBUG, "NPP_GetValue: Unimplemented variable %#x", var);
         break;
     }
 
@@ -102,43 +118,116 @@ NPError NPP_GetValue (NPP instance, NPPVariable variable, void *value)
 
 /* Sets the value of a browser variable.  */
 #pragma argsused
-NPError NPP_SetValue (NPP instance, NPNVariable variable, void *value)
+NPError NPP_SetValue (NPP instance, NPNVariable var, void *value)
 {
-    syslog (LOG_DEBUG, "NPP_SetValue %d", variable);
+    syslog (LOG_DEBUG, "NPP_SetValue: Unimplemented variable %#x", var);
     return NPERR_NO_ERROR;
 }
-  
+
+namespace object {
+    void invalidate (NPObject *)
+    {
+        syslog (LOG_DEBUG, "invalidate: Unimplemented function");
+    }
+
+    bool hasMethod (NPObject *, NPIdentifier ident)
+    {
+        NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
+        syslog (LOG_DEBUG, "hasMethod: Unknown method '%s'", name);
+        NPN_MemFree (name);
+        return false;
+    }
+
+    bool invoke (NPObject *, NPIdentifier, const NPVariant *, uint32_t, NPVariant *)
+    {
+        syslog (LOG_DEBUG, "invoke: Unimplemented function");
+        return false;
+    }
+
+    bool invokeDefault (NPObject *, const NPVariant *, uint32_t, NPVariant *)
+    {
+        syslog (LOG_DEBUG, "invokeDefault: Unimplemented function");
+        return false;
+    }
+
+    bool hasProperty (NPObject *, NPIdentifier ident)
+    {
+        NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
+        syslog (LOG_DEBUG, "hasProperty: Unknown property '%s'", name);
+        NPN_MemFree (name);
+        return false;
+    }
+
+    bool getProperty (NPObject *, NPIdentifier, NPVariant *)
+    {
+        syslog (LOG_DEBUG, "getProperty: Unimplemented function");
+        return false;
+    }
+
+    bool setProperty (NPObject *, NPIdentifier, const NPVariant *)
+    {
+        syslog (LOG_DEBUG, "setProperty: Unimplemented function");
+        return false;
+    }
+
+    bool removeProperty (NPObject *, NPIdentifier)
+    {
+        syslog (LOG_DEBUG, "removeProperty: Unimplemented function");
+        return false;
+    }
+
+    bool enumerate (NPObject *, NPIdentifier **, uint32_t *)
+    {
+        syslog (LOG_DEBUG, "enumerate: Unimplemented function");
+        return false;
+    }
+}
+
+const NPClass default_class = {
+    NP_CLASS_STRUCT_VERSION,
+    NULL,
+    NULL,
+    &object::invalidate,
+    &object::hasMethod,
+    &object::invoke,
+    &object::invokeDefault,
+    &object::hasProperty,
+    &object::getProperty,
+    &object::setProperty,
+    &object::removeProperty,
+    &object::enumerate
+};
+
 #pragma argsused
 NPError NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
 	             int16 argc, char **argn, char **argv,
                  NPSavedData *savedData)
 {
-    syslog (LOG_DEBUG, "NPP_New \"%s\" %d", mime_type, mode);
+    using std::strcmp;
+    using std::tolower;
 
-    instance->pdata = NPN_MemAlloc (sizeof (plugin_data));
-    if (instance->pdata == 0)
+    plugin_data *data;
+    try {
+        data = new plugin_data ();
+    } catch (const std::bad_alloc &e) {
         return NPERR_OUT_OF_MEMORY_ERROR;
+    }
 
-    plugin_data *data = new (instance->pdata) plugin_data;
-    data->loop = false;
+    data->runtime_class = default_class;
     data->autostart = (mode == NP_FULL);
+    data->loop = false;
     data->window = 0;
-    data->player = 0;
 
     for (int i = 0; i != argc; ++i) {
-        if (strcmp (argn[i], "loop") == 0) {
-	        int c = argv[i][0];
-	        if (c == 't' || c == 'T')
-	            data->loop = true;
-	        else if (c == 'f' || c == 'F')
-	            data->loop = false;
-	    } else if (strcmp (argn[i], "autostart") == 0) {
-	        int c = argv[i][0];
-	        if (c == 't' || c == 'T')
-	            data->autostart = true;
-	        else if (c == 'f' || c == 'F')
-	            data->autostart = false;
-	    }
+        if (strcmp (argn[i], "autostart") == 0) {
+	        int c = tolower (argv[i][0]);
+	        data->autostart = (c == 't');
+	    } else if (strcmp (argn[i], "loop") == 0) {
+	        int c = tolower (argv[i][0]);
+	        data->loop = (c == 't');
+	    } else {
+            syslog (LOG_DEBUG, "NPP_New: Unknown parameter '%s'", argn[i]);
+        }
     }
 
 #if _WIN32
@@ -147,31 +236,163 @@ NPError NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
     NPN_SetValue (instance, NPPVpluginWindowBool,
                   reinterpret_cast <void *> (false));
 #endif
+
+    instance->pdata = data;
     return NPERR_NO_ERROR;
-}
-
-inline void stop (plugin_data *data)
-{
-    if (data->player == 0) {
-        return;
-    }
-
-    data->player->stop ();
-    delete data->player;
-    data->player = 0;
 }
 
 #pragma argsused
 NPError NPP_Destroy (NPP instance, NPSavedData **savedData)
 {
-    syslog (LOG_DEBUG, "NPP_Destroy");
+    plugin_data *data = plugin_data::from_instance (instance);
+    delete data;
 
-    plugin_data *data = static_cast <plugin_data *> (instance->pdata);
+    return NPERR_NO_ERROR;
+}
+
+#pragma argsused
+void NPP_Print (NPP instance, NPPrint *print)
+{
+    syslog (LOG_DEBUG, "NPP_Print: Unimplemented function");
+}
+
+#pragma argsused
+NPError NPP_SetWindow (NPP instance, NPWindow *window)
+{
+    plugin_data *data = plugin_data::from_instance (instance);
     assert (data != NULL);
 
-    delete data->player;
-    data->~plugin_data ();
+#if _WIN32
+    if (data->window != (HWND) window->window) {
+        data->window = (HWND) window->window;
+    }
+#else /* !_WIN32 */
+#if 0
+    Display *display =
+        static_cast <NPSetWindowCallbackStruct *> (window->ws_info)->display;
+    Widget w =
+        XtWindowToWidget(display, reinterpret_cast <Window> (window->window));
+    if (data->window != w) {
+        data->window = w;
 
-    NPN_MemFree (instance->pdata);
+        Arg args[1];
+        XtSetArg (args[0], XtNbackground,
+	          BlackPixelOfScreen(XtScreen(data->window)));
+        XtSetValues (data->window, args, 1);
+    }
+#endif
+    syslog (LOG_DEBUG, "NPP_SetWindow: Unimplemented function");
+#endif /* !_WIN32 */
+
     return NPERR_NO_ERROR;
+}
+
+#if _WIN32
+
+inline bool clear (HDC dc, const RECT *rect)
+{
+    HBRUSH black = (HBRUSH) GetStockObject (BLACK_BRUSH);
+    if (black != 0) {
+        return FillRect (dc, rect, black);
+    }
+    return false;
+}
+
+#endif /* _WIN32 */
+
+#pragma argsused
+int16 NPP_HandleEvent (NPP instance, void *event_data)
+{
+    NPEvent *event = static_cast <NPEvent *> (event_data);
+    assert (event != NULL);
+
+#if _WIN32
+    switch (event->event) {
+    case WM_PAINT:
+        return clear ((HDC) event->wParam, (LPRECT) event->lParam);
+    default:
+        syslog (LOG_DEBUG, "NPP_HandleEvent: Unknown event %#x", event->event);
+        break;
+    }
+#else /* !_WIN32 */
+    syslog (LOG_DEBUG, "NPP_HandleEvent: Unimplemented function");
+#endif /* !_WIN32 */
+    return false;
+}
+
+#pragma argsused
+NPError NPP_NewStream (NPP instance, NPMIMEType mime_type, NPStream *stream,
+	                   NPBool seekable, uint16 *mode)
+{
+    plugin_data *data = plugin_data::from_instance (instance);
+    assert (data != NULL);
+
+    try {
+#if _WIN32
+        data->player.reset (new dshow_player ());
+#else
+        if (strstr (mime_type, "mid") != 0) {
+            data->player.reset (new external_player ("timidity"));
+        } else {
+            data->player.reset (new sox_media_player ("play"));
+        }
+#endif
+    } catch (const std::bad_alloc &e) {
+        return NPERR_OUT_OF_MEMORY_ERROR;
+    }
+
+    data->player->set_loop (data->loop);
+    data->player->set_window (data->window);
+
+    if (!data->player->open_stream (mime_type)) {
+        return NPERR_GENERIC_ERROR;
+    }
+
+    return NPERR_NO_ERROR;
+}
+
+#pragma argsused
+NPError NPP_DestroyStream (NPP instance, NPStream *stream, NPReason reason)
+{
+    plugin_data *data = plugin_data::from_instance (instance);
+    assert (data != NULL);
+
+    //data->player->close_stream ();
+    if (reason == NPRES_DONE && data->autostart) {
+        data->player->start ();
+    }
+
+    return NPERR_NO_ERROR;
+}
+
+#pragma argsused
+int32 NPP_WriteReady (NPP instance, NPStream *stream)
+{
+    plugin_data *data = plugin_data::from_instance (instance);
+    assert (data != NULL);
+
+    return data->player->stream_buffer_size ();
+}
+
+#pragma argsused
+int32 NPP_Write (NPP instance, NPStream *stream,
+                 int32 off, int32 size, void *buf)
+{
+    plugin_data *data = plugin_data::from_instance (instance);
+    assert (data != NULL);
+
+    long n = data->player->write_stream (buf, size);
+    return n;
+}
+
+#pragma argsused
+void NPP_StreamAsFile (NPP instance, NPStream *stream, const char *name)
+{
+}
+
+#pragma argsused
+void NPP_URLNotify (NPP instance, const char *URL, NPReason reason,
+                    void *data)
+{
+    syslog (LOG_DEBUG, "NPP_URLNotify: Unimplemented function");
 }

@@ -22,11 +22,11 @@
 #ifndef player_win32H
 #define player_win32H 1
 
-#include "media_player.h"
+#include "player.h"
 
 #if _WIN32
 
-#include <dshow.h>
+class IGraphBuilder;
 
 class dshow_player : public file_media_player
 {

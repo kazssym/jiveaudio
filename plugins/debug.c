@@ -29,11 +29,11 @@
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
 
-#include "debug.h"
-#pragma package (smart_init)
-
 #include <stdarg.h>
 #include <stdio.h>
+
+#include "debug.h"
+#pragma package (smart_init)
 
 #if !HAVE_SYSLOG_H
 
