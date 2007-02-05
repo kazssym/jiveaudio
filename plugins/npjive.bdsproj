@@ -42,7 +42,7 @@
         <property category="win32.Debug_Build.win32b.bcc32" name="container.SelectedWarnings.containerenabled" value="1"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="option.CP.arg.merge" value="1"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="option.CP.enabled" value="0"/>
-        <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.1" value="_DEBUG"/>
+        <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.1" value="_DEBUG=1"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="option.D.arg.merge" value="1"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="option.D.enabled" value="1"/>
         <property category="win32.Debug_Build.win32b.bcc32" name="option.v.enabled" value="1"/>
@@ -62,7 +62,7 @@
         <property category="win32.Debug_Build.win32b.tasm32" name="option.zi.enabled" value="1"/>
         <property category="win32.Release_Build.win32b.bcc32" name="container.SelectedOptimizations.containerenabled" value="0"/>
         <property category="win32.Release_Build.win32b.bcc32" name="container.SelectedWarnings.containerenabled" value="1"/>
-        <property category="win32.Release_Build.win32b.bcc32" name="option.D.arg.1" value="NDEBUG"/>
+        <property category="win32.Release_Build.win32b.bcc32" name="option.D.arg.1" value="NDEBUG=1"/>
         <property category="win32.Release_Build.win32b.bcc32" name="option.D.arg.merge" value="1"/>
         <property category="win32.Release_Build.win32b.bcc32" name="option.D.enabled" value="1"/>
         <property category="win32.Release_Build.win32b.bcc32" name="option.O2.enabled" value="1"/>
@@ -103,7 +103,7 @@
           <property category="win32.*.win32b.bcc32" name="option.Hh=.arg.1" value="windows.h"/>
           <property category="win32.*.win32b.bcc32" name="option.Hh=.arg.merge" value="0"/>
           <property category="win32.*.win32b.bcc32" name="option.Hh=.enabled" value="1"/>
-          <property category="win32.*.win32b.bcc32" name="option.Hu.enabled" value="1"/>
+          <property category="win32.*.win32b.bcc32" name="option.Hu.enabled" value="0"/>
           <property category="win32.*.win32b.bcc32" name="option.I.arg.1" value="..\"/>
           <property category="win32.*.win32b.bcc32" name="option.I.arg.2" value="..\sdk"/>
           <property category="win32.*.win32b.bcc32" name="option.I.arg.3" value="$(BDS)\include"/>
@@ -255,17 +255,14 @@
           <property category="win32.*.win32b.tasm32" name="param.objfile.merge" value="1"/>
           <property category="win32.*.win32b.tasm32" name="param.xreffile.merge" value="1"/>
         </optionset>
-        <file path="npaudio.cpp">
-          <optionset name="all_configurations">
-            <property category="node" name="displayname" value="All Configurations"/>
-            <property category="win32.*.win32b.bcc32" name="option.Hu.enabled" value="0"/>
-          </optionset>
-        </file>
       </project>
       <FILELIST>
+        <FILE FILENAME="..\file_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="file_player" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\config.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\sox_media_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="sox_media_player" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="..\exec_media_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="exec_media_player" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="npjive.bpf" CONTAINERID="BPF" LOCALCOMMAND="" UNITNAME="npjive" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="npaudio.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="npaudio" FORMNAME="" DESIGNCLASS="" ADDITIONAL="npaudio.h"/>
-        <FILE FILENAME="npaudio.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="npaudio.rc" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="plugin.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="plugin" FORMNAME="" DESIGNCLASS="" ADDITIONAL="plugin.h"/>
         <FILE FILENAME="player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="player" FORMNAME="" DESIGNCLASS="" ADDITIONAL="player.h"/>
         <FILE FILENAME="player_posix.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="player_posix" FORMNAME="" DESIGNCLASS="" ADDITIONAL="player_posix.h"/>
         <FILE FILENAME="player_win32.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="player_win32" FORMNAME="" DESIGNCLASS="" ADDITIONAL="player_win32.h"/>
@@ -273,10 +270,7 @@
         <FILE FILENAME="debug.c" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="debug" FORMNAME="" DESIGNCLASS="" ADDITIONAL="debug.h"/>
         <FILE FILENAME="np_entry.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="np_entry" FORMNAME="" DESIGNCLASS=""/>
         <FILE FILENAME="npn_gate.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="npn_gate" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\exec_media_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="exec_media_player" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\sox_media_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="sox_media_player" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\config.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
-        <FILE FILENAME="..\file_player.cpp" CONTAINERID="CCompiler" LOCALCOMMAND="" UNITNAME="file_player" FORMNAME="" DESIGNCLASS=""/>
+        <FILE FILENAME="resources.rc" CONTAINERID="RCCompiler" LOCALCOMMAND="" UNITNAME="resources.rc" FORMNAME="resources.res" DESIGNCLASS=""/>
         <FILE FILENAME="npplat.h" CONTAINERID="" LOCALCOMMAND="" UNITNAME="" FORMNAME="" DESIGNCLASS=""/>
       </FILELIST>
       <IDEOPTIONS>

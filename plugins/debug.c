@@ -47,7 +47,7 @@ void log (int prio, const char *format,...)
 
     va_start (args, format);
 
-#if !NDEBUG
+#if !defined NDEBUG
 #if _WIN32
     vsnprintf (buf, 512, format, args);
     OutputDebugString (buf);
@@ -55,7 +55,7 @@ void log (int prio, const char *format,...)
     vfprintf (stderr, format, args);
     fputs ("\n", stderr);
 #endif /* !_WIN32 */
-#endif /* !NDEBUG */
+#endif /* !defined NDEBUG */
 
     va_end (args);
 }
