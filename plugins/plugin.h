@@ -19,8 +19,8 @@
  * 02111-1307, USA.
  */
 
-#ifndef npaudioH
-#define npaudioH 1
+#ifndef pluginH
+#define pluginH 1
         
 #if !_WIN32
 #define MOZ_X11 1

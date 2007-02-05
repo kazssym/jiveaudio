@@ -29,7 +29,7 @@
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
  
-#include "npaudio.h"
+#include "plugin.h"
 #pragma package (smart_init)
 
 #include "debug.h"
@@ -46,7 +46,8 @@
 #pragma argsused
 BOOL WINAPI DllMain (HINSTANCE instance, DWORD reason, LPVOID reserved)
 {
-    switch (reason) {
+    switch (reason)
+    {
     case DLL_THREAD_ATTACH:
         CoInitializeEx (NULL, COINIT_MULTITHREADED);
         break;
@@ -91,13 +92,14 @@ NPError NPP_GetValue (NPP instance, NPPVariable var, void *value)
 {
     plugin_data *data = plugin_data::from_instance (instance);
 
-    switch (var) {
+    switch (var)
+    {
 #ifdef XP_UNIX
     case NPPVpluginNameString:
         *static_cast <const char **> (value) = PACKAGE_NAME;
         break;
     case NPPVpluginDescriptionString:
-        *static_cast <const char **> (value) = PACKAGE_NAME " Plugin";
+        *static_cast <const char **> (value) = PACKAGE_STRING;
         break;
 #endif
     case NPPVpluginScriptableNPObject:
@@ -124,12 +126,16 @@ NPError NPP_SetValue (NPP instance, NPNVariable var, void *value)
     return NPERR_NO_ERROR;
 }
 
-namespace object {
+namespace object
+{
     NPObject *allocate (NPP, NPClass *)
     {
-        try {
+        try
+        {
             return new NPObject ();
-        } catch (const std::bad_alloc &e) {
+        }
+        catch (const std::bad_alloc &e)
+        {
             return NULL;
         }
     }
@@ -221,9 +227,12 @@ NPError NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
     using std::tolower;
 
     plugin_data *data;
-    try {
+    try
+    {
         data = new plugin_data ();
-    } catch (const std::bad_alloc &e) {
+    }
+    catch (const std::bad_alloc &e)
+    {
         return NPERR_OUT_OF_MEMORY_ERROR;
     }
 
@@ -232,14 +241,20 @@ NPError NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
     data->loop = false;
     data->window = 0;
 
-    for (int i = 0; i != argc; ++i) {
-        if (strcmp (argn[i], "autostart") == 0) {
+    for (int i = 0; i != argc; ++i)
+    {
+        if (strcmp (argn[i], "autostart") == 0)
+        {
 	        int c = tolower (argv[i][0]);
 	        data->autostart = (c == 't');
-	    } else if (strcmp (argn[i], "loop") == 0) {
+	    }
+        else if (strcmp (argn[i], "loop") == 0)
+        {
 	        int c = tolower (argv[i][0]);
 	        data->loop = (c == 't');
-	    } else {
+	    }
+        else
+        {
             syslog (LOG_DEBUG, "NPP_New: Unknown parameter '%s'", argn[i]);
         }
     }
@@ -277,7 +292,8 @@ NPError NPP_SetWindow (NPP instance, NPWindow *window)
     assert (data != NULL);
 
 #if _WIN32
-    if (data->window != (HWND) window->window) {
+    if (data->window != (HWND) window->window)
+    {
         data->window = (HWND) window->window;
     }
 #else /* !_WIN32 */
@@ -286,7 +302,8 @@ NPError NPP_SetWindow (NPP instance, NPWindow *window)
         static_cast <NPSetWindowCallbackStruct *> (window->ws_info)->display;
     Widget w =
         XtWindowToWidget(display, reinterpret_cast <Window> (window->window));
-    if (data->window != w) {
+    if (data->window != w)
+    {
         data->window = w;
 
         Arg args[1];
@@ -306,7 +323,8 @@ NPError NPP_SetWindow (NPP instance, NPWindow *window)
 inline bool clear (HDC dc, const RECT *rect)
 {
     HBRUSH black = (HBRUSH) GetStockObject (BLACK_BRUSH);
-    if (black != 0) {
+    if (black != 0)
+    {
         return FillRect (dc, rect, black);
     }
     return false;
@@ -321,7 +339,8 @@ int16 NPP_HandleEvent (NPP instance, void *event_data)
     assert (event != NULL);
 
 #if _WIN32
-    switch (event->event) {
+    switch (event->event)
+    {
     case WM_PAINT:
         return clear ((HDC) event->wParam, (LPRECT) event->lParam);
     default:
@@ -341,24 +360,31 @@ NPError NPP_NewStream (NPP instance, NPMIMEType mime_type, NPStream *stream,
     plugin_data *data = plugin_data::from_instance (instance);
     assert (data != NULL);
 
-    try {
+    try
+    {
 #if _WIN32
         data->player.reset (new dshow_player ());
 #else
-        if (strstr (mime_type, "mid") != 0) {
+        if (strstr (mime_type, "mid") != 0)
+        {
             data->player.reset (new external_player ("timidity"));
-        } else {
+        }
+        else
+        {
             data->player.reset (new sox_media_player ("play"));
         }
 #endif
-    } catch (const std::bad_alloc &e) {
+    }
+    catch (const std::bad_alloc &e)
+    {
         return NPERR_OUT_OF_MEMORY_ERROR;
     }
 
     data->player->set_loop (data->loop);
     data->player->set_window (data->window);
 
-    if (!data->player->open_stream (mime_type)) {
+    if (!data->player->open_stream (mime_type))
+    {
         return NPERR_GENERIC_ERROR;
     }
 
@@ -372,7 +398,8 @@ NPError NPP_DestroyStream (NPP instance, NPStream *stream, NPReason reason)
     assert (data != NULL);
 
     //data->player->close_stream ();
-    if (reason == NPRES_DONE && data->autostart) {
+    if (reason == NPRES_DONE && data->autostart)
+    {
         data->player->start ();
     }
 
@@ -408,5 +435,5 @@ void NPP_StreamAsFile (NPP instance, NPStream *stream, const char *name)
 void NPP_URLNotify (NPP instance, const char *URL, NPReason reason,
                     void *data)
 {
-    syslog (LOG_DEBUG, "NPP_URLNotify: Unimplemented function");
+    log (LOG_DEBUG, "NPP_URLNotify: Unimplemented function");
 }

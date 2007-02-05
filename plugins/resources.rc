@@ -23,7 +23,7 @@
 #endif
 
 1 VERSIONINFO
-    FILEVERSION 1, 0, 0, 0
+    FILEVERSION 0, 0, 0, 0
     PRODUCTVERSION 2, 1, 0, 0
     FILEFLAGSMASK VS_FF_DEBUG
 #if NDEBUG
@@ -39,10 +39,10 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
 	    VALUE "CompanyName", "Hypercore Online Solutions\0"
-	    VALUE "FileDescription", PACKAGE_NAME " Plugin\0"
-	    VALUE "FileVersion", "1.0.0.0\0"
-	    VALUE "LegalCopyright", "Copyright (C) 2003-2007 Hypercore Online Solutions\0"
-	    VALUE "OriginalFilename", "npaudio.dll\0"
+	    VALUE "FileDescription", PACKAGE_STRING "\0"
+	    VALUE "FileVersion", "0.0.0\0"
+	    VALUE "LegalCopyright", "Copyright (C) 2003-2007 Hypercore Software Design, Ltd., Japan\0"
+	    VALUE "OriginalFilename", "npjive.dll\0"
 	    VALUE "ProductName", PACKAGE_NAME "\0"
 	    VALUE "ProductVersion", PACKAGE_VERSION "\0"
 	    VALUE "MIMEType", "audio/basic|audio/mpeg|audio/x-wav|audio/wav\0"
