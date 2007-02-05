@@ -9,14 +9,15 @@
 		</Option>
 	</PersonalityInfo>
 	<Default.Personality>  <Projects>
-      <Projects Name="npaudio.dll">plugins\npaudio.bdsproj</Projects>
-      <Projects Name="Targets">npaudio.dll</Projects>
+      <Projects Name="npjive.dll">plugins\npjive.bdsproj</Projects>
+      <Projects Name="Targets">npjive.dll</Projects>
     </Projects>
     <Dependencies/>
   </Default.Personality>
 	<StarTeamAssociation></StarTeamAssociation>
-	<StarTeamNonRelativeFiles></StarTeamNonRelativeFiles>  <CheckinList>
+	<StarTeamNonRelativeFiles></StarTeamNonRelativeFiles>
+	<CheckinList>
     jiveaudio.bdsgroup;
-    plugins\npaudio.bdsproj
+    plugins\npjive.bdsproj
   </CheckinList>
 </BorlandProject>
