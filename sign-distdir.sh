@@ -2,6 +2,6 @@
 
 distdir="$1" && shift
 
-test -f "$distdir"/MD5SUMS || exit 0
+test -f "$distdir"/SHA1SUMS || exit 0
 
-gpg -sb "$distdir"/MD5SUMS
+gpg -sba "$distdir"/SHA1SUMS
