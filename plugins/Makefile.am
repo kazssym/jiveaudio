@@ -13,4 +13,4 @@ libaudioplugin_la_SOURCES = plugin.cpp player.cpp \
 noinst_HEADERS = plugin.h player.h \
         ../exec_media_player.h player_posix.h player_win32.h debug.h npplat.h
 
-EXTRA_DIST = npjive.bdsproj npjive.bpf resources.rc
+EXTRA_DIST = npjive.cbproj npjive.bdsproj npjive.bpf resources.rc

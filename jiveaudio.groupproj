@@ -1,0 +1,34 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{ef0aa5d1-85e6-4be5-9297-828df53a47c4}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="plugins\npjive.cbproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+  <BorlandProject xmlns=""> <Default.Personality> </Default.Personality> </BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="npjive">
+    <MSBuild Projects="plugins\npjive.cbproj" Targets="" />
+  </Target>
+  <Target Name="npjive:Clean">
+    <MSBuild Projects="plugins\npjive.cbproj" Targets="Clean" />
+  </Target>
+  <Target Name="npjive:Make">
+    <MSBuild Projects="plugins\npjive.cbproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="npjive" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="npjive:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="npjive:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

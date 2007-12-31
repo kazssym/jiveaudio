@@ -1,3 +1,23 @@
+2007-12-31  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/Makefile.am (EXTRA_DIST): Add npjive.cbproj.
+
+	* plugins/plugin.cpp: Use log instead of syslog.
+	(namespace plugin_method): Renamed from object.
+	(NPP_GetMIMEDescription): Add parentheses.
+	(plugin_class): Renamed from default_class.
+
+	* Makefile.am (noinst_HEADERS): New macro.
+	(EXTRA_DIST): Add jiveaudio.groupproj and remove config.h.win32.
+	(dist-hook): New target.
+
+	* configure.ac: Change version to 3.0.0.  Use subdir build-aux.
+
+	* plugins/npjive.cbproj: New file.
+	* jiveaudio.groupproj: New file.
+
+	* win32/config.h: Renamed from config.h.win32.
+
 2005-02-19  Kaz Sasayama  <kazssym@hypercore.co.jp>
 
 	* TODO: Updated.
