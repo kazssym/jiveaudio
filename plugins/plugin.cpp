@@ -42,74 +42,74 @@
 #include <cassert>
 
 struct plugin_method
+{
+  static NPObject *allocate (NPP, NPClass *)
   {
-    static NPObject *allocate (NPP, NPClass *)
-    {
-      return new (std::nothrow) NPPlugin;
-    }
+    return new (std::nothrow) NPPlugin;
+  }
 
-    static void deallocate (NPObject *object)
-    {
-      delete object;
-    }
+  static void deallocate (NPObject *object)
+  {
+    delete object;
+  }
 
-    static void invalidate (NPObject *)
-    {
-      log (LOG_DEBUG, "invalidate: Unimplemented function");
-    }
+  static void invalidate (NPObject *)
+  {
+    log (LOG_DEBUG, "invalidate: Unimplemented function");
+  }
 
-    static bool hasMethod (NPObject *, NPIdentifier ident)
-    {
-      NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
-      log (LOG_DEBUG, "hasMethod: Unknown method '%s'", name);
-      NPN_MemFree (name);
-      return false;
-    }
+  static bool hasMethod (NPObject *, NPIdentifier ident)
+  {
+    NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
+    log (LOG_DEBUG, "hasMethod: Unknown method '%s'", name);
+    NPN_MemFree (name);
+    return false;
+  }
 
-    static bool invoke (NPObject *, NPIdentifier, const NPVariant *, uint32_t, NPVariant *)
-    {
-      log (LOG_DEBUG, "invoke: Unimplemented function");
-      return false;
-    }
+  static bool invoke (NPObject *, NPIdentifier, const NPVariant *, uint32_t, NPVariant *)
+  {
+    log (LOG_DEBUG, "invoke: Unimplemented function");
+    return false;
+  }
 
-    static bool invokeDefault (NPObject *, const NPVariant *, uint32_t, NPVariant *)
-    {
-      log (LOG_DEBUG, "invokeDefault: Unimplemented function");
-      return false;
-    }
+  static bool invokeDefault (NPObject *, const NPVariant *, uint32_t, NPVariant *)
+  {
+    log (LOG_DEBUG, "invokeDefault: Unimplemented function");
+    return false;
+  }
 
-    static bool hasProperty (NPObject *, NPIdentifier ident)
-    {
-      NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
-      log (LOG_DEBUG, "hasProperty: Unknown property '%s'", name);
-      NPN_MemFree (name);
-      return false;
-    }
+  static bool hasProperty (NPObject *, NPIdentifier ident)
+  {
+    NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
+    log (LOG_DEBUG, "hasProperty: Unknown property '%s'", name);
+    NPN_MemFree (name);
+    return false;
+  }
 
-    static bool getProperty (NPObject *, NPIdentifier, NPVariant *)
-    {
-      log (LOG_DEBUG, "getProperty: Unimplemented function");
-      return false;
-    }
+  static bool getProperty (NPObject *, NPIdentifier, NPVariant *)
+  {
+    log (LOG_DEBUG, "getProperty: Unimplemented function");
+    return false;
+  }
 
-    static bool setProperty (NPObject *, NPIdentifier, const NPVariant *)
-    {
-      log (LOG_DEBUG, "setProperty: Unimplemented function");
-      return false;
-    }
+  static bool setProperty (NPObject *, NPIdentifier, const NPVariant *)
+  {
+    log (LOG_DEBUG, "setProperty: Unimplemented function");
+    return false;
+  }
 
-    static bool removeProperty (NPObject *, NPIdentifier)
-    {
-      log (LOG_DEBUG, "removeProperty: Unimplemented function");
-      return false;
-    }
+  static bool removeProperty (NPObject *, NPIdentifier)
+  {
+    log (LOG_DEBUG, "removeProperty: Unimplemented function");
+    return false;
+  }
 
-    static bool enumerate (NPObject *, NPIdentifier **, uint32_t *)
-    {
-      log (LOG_DEBUG, "enumerate: Unimplemented function");
-      return false;
-    }
-  };
+  static bool enumerate (NPObject *, NPIdentifier **, uint32_t *)
+  {
+    log (LOG_DEBUG, "enumerate: Unimplemented function");
+    return false;
+  }
+};
 
 static NPClass plugin_class =
   {
