@@ -1,4 +1,4 @@
-/* -*-C++-*- */
+/* -*- C++ -*- */
 /*
  * JiveAudio - multimedia plugin for Mozilla
  * Copyright (C) 2003-2006 Hypercore Software Design, Ltd.
@@ -33,9 +33,15 @@
 #include <npapi.h>
 #include <npruntime.h>
 
+struct plugin_data;
+
+struct NPPlugin : NPObject
+  {
+    plugin_data *data;
+  };
+
 struct plugin_data
-{
-    NPClass runtime_class;
+  {
     bool autostart;
     bool loop;
 #if _WIN32
@@ -45,21 +51,24 @@ struct plugin_data
 #endif /* !_WIN32 */
     std::auto_ptr <class player> player;
 
-    static plugin_data *from_instance (NPP instance)
+    static inline plugin_data *from_instance (NPP instance)
     {
-        if (instance != NULL) {
-            return static_cast <plugin_data *> (instance->pdata);
+      if (instance != NULL)
+        {
+          return static_cast <plugin_data *> (instance->pdata);
         }
-        return NULL;
+      return NULL;
     }
-    
-    static plugin_data *from_object (NPObject *object)
+
+    static inline plugin_data *from_object (NPObject *object)
     {
-        if (object != NULL) {
-            return reinterpret_cast <plugin_data *> (object->_class);
+      NPPlugin *plugin = static_cast <NPPlugin *> (object);
+      if (plugin != NULL)
+        {
+          return plugin->data;
         }
-        return NULL;
+      return NULL;
     }
-};
+  };
 
 #endif

@@ -1,3 +1,12 @@
+2008-01-01  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/plugin.cpp: Removed pragma argsused.
+	(allocate): Rewrite with placement new.
+
+	* plugins/plugin.h (struct NPPlugin): New struct.
+	(struct plugin_data): Remove member runtime_class.
+	(from_object): Rewrite with NPPlugin.
+
 2007-12-31  Kaz Sasayama  <kazssym@vx68k.org>
 
 	* plugins/Makefile.am (EXTRA_DIST): Add npjive.cbproj.

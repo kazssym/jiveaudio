@@ -28,7 +28,7 @@
 
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
- 
+
 #include "plugin.h"
 #pragma package (smart_init)
 
@@ -41,10 +41,95 @@
 #include <cctype>
 #include <cassert>
 
+struct plugin_method
+  {
+    static NPObject *allocate (NPP, NPClass *)
+    {
+      return new (std::nothrow) NPPlugin;
+    }
+
+    static void deallocate (NPObject *object)
+    {
+      delete object;
+    }
+
+    static void invalidate (NPObject *)
+    {
+      log (LOG_DEBUG, "invalidate: Unimplemented function");
+    }
+
+    static bool hasMethod (NPObject *, NPIdentifier ident)
+    {
+      NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
+      log (LOG_DEBUG, "hasMethod: Unknown method '%s'", name);
+      NPN_MemFree (name);
+      return false;
+    }
+
+    static bool invoke (NPObject *, NPIdentifier, const NPVariant *, uint32_t, NPVariant *)
+    {
+      log (LOG_DEBUG, "invoke: Unimplemented function");
+      return false;
+    }
+
+    static bool invokeDefault (NPObject *, const NPVariant *, uint32_t, NPVariant *)
+    {
+      log (LOG_DEBUG, "invokeDefault: Unimplemented function");
+      return false;
+    }
+
+    static bool hasProperty (NPObject *, NPIdentifier ident)
+    {
+      NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
+      log (LOG_DEBUG, "hasProperty: Unknown property '%s'", name);
+      NPN_MemFree (name);
+      return false;
+    }
+
+    static bool getProperty (NPObject *, NPIdentifier, NPVariant *)
+    {
+      log (LOG_DEBUG, "getProperty: Unimplemented function");
+      return false;
+    }
+
+    static bool setProperty (NPObject *, NPIdentifier, const NPVariant *)
+    {
+      log (LOG_DEBUG, "setProperty: Unimplemented function");
+      return false;
+    }
+
+    static bool removeProperty (NPObject *, NPIdentifier)
+    {
+      log (LOG_DEBUG, "removeProperty: Unimplemented function");
+      return false;
+    }
+
+    static bool enumerate (NPObject *, NPIdentifier **, uint32_t *)
+    {
+      log (LOG_DEBUG, "enumerate: Unimplemented function");
+      return false;
+    }
+  };
+
+static NPClass plugin_class =
+  {
+    NP_CLASS_STRUCT_VERSION,
+    &plugin_method::allocate,
+    &plugin_method::deallocate,
+    &plugin_method::invalidate,
+    &plugin_method::hasMethod,
+    &plugin_method::invoke,
+    &plugin_method::invokeDefault,
+    &plugin_method::hasProperty,
+    &plugin_method::getProperty,
+    &plugin_method::setProperty,
+    &plugin_method::removeProperty,
+    &plugin_method::enumerate,
+  };
+
 #if _WIN32
 
-#pragma argsused
-BOOL WINAPI DllMain (HINSTANCE instance, DWORD reason, LPVOID reserved)
+BOOL WINAPI DllMain (HINSTANCE, DWORD reason, LPVOID)
 {
   switch (reason)
     {
@@ -87,7 +172,6 @@ char *NPP_GetMIMEDescription ()
 #endif /* XP_UNIX */
 
 /* Returns the value of a plugin variable.  */
-#pragma argsused
 NPError NPP_GetValue (NPP instance, NPPVariable var, void *value)
 {
   plugin_data *data = plugin_data::from_instance (instance);
@@ -106,7 +190,9 @@ NPError NPP_GetValue (NPP instance, NPPVariable var, void *value)
       {
         assert (data != NULL);
 
-        NPObject *object = NPN_CreateObject (instance, &data->runtime_class);
+        NPPlugin *object =
+          static_cast <NPPlugin *> (NPN_CreateObject (instance, &plugin_class));
+        object->data = data;
         *static_cast <NPObject **> (value) = object;
       }
       break;
@@ -119,109 +205,15 @@ NPError NPP_GetValue (NPP instance, NPPVariable var, void *value)
 }
 
 /* Sets the value of a browser variable.  */
-#pragma argsused
-NPError NPP_SetValue (NPP instance, NPNVariable var, void *value)
+NPError NPP_SetValue (NPP, NPNVariable var, void *)
 {
   log (LOG_DEBUG, "NPP_SetValue: Unimplemented variable %#x", var);
   return NPERR_NO_ERROR;
 }
 
-namespace plugin_method
-{
-  NPObject *allocate (NPP, NPClass *)
-  {
-    try
-      {
-        return new NPObject ();
-      }
-    catch (const std::bad_alloc &e)
-      {
-        return NULL;
-      }
-  }
-
-  void deallocate (NPObject *object)
-  {
-    delete object;
-  }
-
-  void invalidate (NPObject *)
-  {
-    log (LOG_DEBUG, "invalidate: Unimplemented function");
-  }
-
-  bool hasMethod (NPObject *, NPIdentifier ident)
-  {
-    NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
-    log (LOG_DEBUG, "hasMethod: Unknown method '%s'", name);
-    NPN_MemFree (name);
-    return false;
-  }
-
-  bool invoke (NPObject *, NPIdentifier, const NPVariant *, uint32_t, NPVariant *)
-  {
-    log (LOG_DEBUG, "invoke: Unimplemented function");
-    return false;
-  }
-
-  bool invokeDefault (NPObject *, const NPVariant *, uint32_t, NPVariant *)
-  {
-    log (LOG_DEBUG, "invokeDefault: Unimplemented function");
-    return false;
-  }
-
-  bool hasProperty (NPObject *, NPIdentifier ident)
-  {
-    NPUTF8 *name = NPN_UTF8FromIdentifier (ident);
-    log (LOG_DEBUG, "hasProperty: Unknown property '%s'", name);
-    NPN_MemFree (name);
-    return false;
-  }
-
-  bool getProperty (NPObject *, NPIdentifier, NPVariant *)
-  {
-    log (LOG_DEBUG, "getProperty: Unimplemented function");
-    return false;
-  }
-
-  bool setProperty (NPObject *, NPIdentifier, const NPVariant *)
-  {
-    log (LOG_DEBUG, "setProperty: Unimplemented function");
-    return false;
-  }
-
-  bool removeProperty (NPObject *, NPIdentifier)
-  {
-    log (LOG_DEBUG, "removeProperty: Unimplemented function");
-    return false;
-  }
-
-  bool enumerate (NPObject *, NPIdentifier **, uint32_t *)
-  {
-    log (LOG_DEBUG, "enumerate: Unimplemented function");
-    return false;
-  }
-}
-
-const NPClass plugin_class = {
-  NP_CLASS_STRUCT_VERSION,
-  &plugin_method::allocate,
-  &plugin_method::deallocate,
-  &plugin_method::invalidate,
-  &plugin_method::hasMethod,
-  &plugin_method::invoke,
-  &plugin_method::invokeDefault,
-  &plugin_method::hasProperty,
-  &plugin_method::getProperty,
-  &plugin_method::setProperty,
-  &plugin_method::removeProperty,
-  &plugin_method::enumerate,
-};
-
-#pragma argsused
-NPError NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
+NPError NPP_New (NPMIMEType, NPP instance, uint16 mode,
 	               int16 argc, char **argn, char **argv,
-                 NPSavedData *savedData)
+                 NPSavedData *)
 {
   using std::strcmp;
   using std::tolower;
@@ -236,7 +228,6 @@ NPError NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
       return NPERR_OUT_OF_MEMORY_ERROR;
     }
 
-  data->runtime_class = plugin_class;
   data->autostart = (mode == NP_FULL);
   data->loop = false;
   data->window = 0;
@@ -270,8 +261,7 @@ NPError NPP_New (NPMIMEType mime_type, NPP instance, uint16 mode,
   return NPERR_NO_ERROR;
 }
 
-#pragma argsused
-NPError NPP_Destroy (NPP instance, NPSavedData **savedData)
+NPError NPP_Destroy (NPP instance, NPSavedData **)
 {
   plugin_data *data = plugin_data::from_instance (instance);
   delete data;
@@ -279,13 +269,11 @@ NPError NPP_Destroy (NPP instance, NPSavedData **savedData)
   return NPERR_NO_ERROR;
 }
 
-#pragma argsused
-void NPP_Print (NPP instance, NPPrint *print)
+void NPP_Print (NPP, NPPrint *)
 {
   log (LOG_DEBUG, "NPP_Print: Unimplemented function");
 }
 
-#pragma argsused
 NPError NPP_SetWindow (NPP instance, NPWindow *window)
 {
   plugin_data *data = plugin_data::from_instance (instance);
@@ -332,8 +320,7 @@ inline bool clear (HDC dc, const RECT *rect)
 
 #endif /* _WIN32 */
 
-#pragma argsused
-int16 NPP_HandleEvent (NPP instance, void *event_data)
+int16 NPP_HandleEvent (NPP, void *event_data)
 {
   NPEvent *event = static_cast <NPEvent *> (event_data);
   assert (event != NULL);
@@ -353,9 +340,8 @@ int16 NPP_HandleEvent (NPP instance, void *event_data)
   return false;
 }
 
-#pragma argsused
-NPError NPP_NewStream (NPP instance, NPMIMEType mime_type, NPStream *stream,
-	                   NPBool seekable, uint16 *mode)
+NPError NPP_NewStream (NPP instance, NPMIMEType mime_type, NPStream *,
+	                     NPBool, uint16 *)
 {
   plugin_data *data = plugin_data::from_instance (instance);
   assert (data != NULL);
@@ -391,8 +377,7 @@ NPError NPP_NewStream (NPP instance, NPMIMEType mime_type, NPStream *stream,
   return NPERR_NO_ERROR;
 }
 
-#pragma argsused
-NPError NPP_DestroyStream (NPP instance, NPStream *stream, NPReason reason)
+NPError NPP_DestroyStream (NPP instance, NPStream *, NPReason reason)
 {
   plugin_data *data = plugin_data::from_instance (instance);
   assert (data != NULL);
@@ -406,8 +391,7 @@ NPError NPP_DestroyStream (NPP instance, NPStream *stream, NPReason reason)
   return NPERR_NO_ERROR;
 }
 
-#pragma argsused
-int32 NPP_WriteReady (NPP instance, NPStream *stream)
+int32 NPP_WriteReady (NPP instance, NPStream *)
 {
   plugin_data *data = plugin_data::from_instance (instance);
   assert (data != NULL);
@@ -415,9 +399,8 @@ int32 NPP_WriteReady (NPP instance, NPStream *stream)
   return data->player->stream_buffer_size ();
 }
 
-#pragma argsused
-int32 NPP_Write (NPP instance, NPStream *stream,
-                 int32 off, int32 size, void *buf)
+int32 NPP_Write (NPP instance, NPStream *,
+                 int32, int32 size, void *buf)
 {
   plugin_data *data = plugin_data::from_instance (instance);
   assert (data != NULL);
@@ -426,14 +409,12 @@ int32 NPP_Write (NPP instance, NPStream *stream,
   return n;
 }
 
-#pragma argsused
-void NPP_StreamAsFile (NPP instance, NPStream *stream, const char *name)
+void NPP_StreamAsFile (NPP, NPStream *, const char *)
 {
 }
 
-#pragma argsused
-void NPP_URLNotify (NPP instance, const char *URL, NPReason reason,
-                    void *data)
+void NPP_URLNotify (NPP, const char *, NPReason,
+                    void *)
 {
   log (LOG_DEBUG, "NPP_URLNotify: Unimplemented function");
 }
