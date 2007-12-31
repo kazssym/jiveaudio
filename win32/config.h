@@ -71,13 +71,13 @@
 #define PACKAGE_NAME "JiveAudio"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "JiveAudio 2.1.0"
+#define PACKAGE_STRING "JiveAudio 3.0.0"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "jiveaudio"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.1.0"
+#define PACKAGE_VERSION "3.0.0"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1

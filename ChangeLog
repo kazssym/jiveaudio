@@ -1,5 +1,8 @@
 2008-01-01  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* win32/config.h (PACKAGE_STRING): Update version.
+	(PACKAGE_VERSION): Likewise.
+
 	* plugins/plugin.cpp: Removed pragma argsused.
 	(allocate): Rewrite with placement new.
 
