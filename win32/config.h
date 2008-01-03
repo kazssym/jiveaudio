@@ -65,10 +65,13 @@
 #define PACKAGE "jiveaudio"
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "jiveaudio@lists.yaromai.net"
+#define PACKAGE_BUGREPORT "jiveaudio@googlegroups.com"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "JiveAudio"
+
+/* Define to the release number of this package. */
+#define PACKAGE_RELEASE 0
 
 /* Define to the full name and version of this package. */
 #define PACKAGE_STRING "JiveAudio 3.0.0"
@@ -79,16 +82,22 @@
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "3.0.0"
 
+/* Define to the major version number of this package. */
+#define PACKAGE_VERSION_MAJOR 3
+
+/* Define to the minor version number of this package. */
+#define PACKAGE_VERSION_MINOR 0
+
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "2.1.0"
+#define VERSION "3.0.0"
 
 /* Define to `int' if <sys/types.h> does not define. */
 /* #undef pid_t */
 
-/* Define to `unsigned' if <sys/types.h> does not define. */
+/* Define to `unsigned int' if <sys/types.h> does not define. */
 /* #undef size_t */
 
 /* Define as `fork' if `vfork' does not work. */

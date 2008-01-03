@@ -1,3 +1,18 @@
+2008-01-03  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/resources.rc: Update versions.
+
+	* sdk/md/_win95.cfg: Removed.
+
+	* win32/config.h: Update with config.h.in.
+
+	* configure.ac: Define macros PACKAGE_VERSION_MAJOR,
+	PACKAGE_VERSION_MINOR, and PACKAGE_RELEASE.
+
+	* Makefile.am (noinst_HEADERS): Add win32/prcpucfg.h.
+
+	* win32/prcpucfg.h: New file.
+
 2008-01-01  Kaz Sasayama  <kazssym@vx68k.org>
 
 	* win32/config.h (PACKAGE_STRING): Update version.

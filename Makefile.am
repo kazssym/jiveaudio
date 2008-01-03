@@ -1,6 +1,6 @@
 ## Process this file with automake to produce a Makefile.in.
 
-noinst_HEADERS = win32/config.h
+noinst_HEADERS = win32/config.h win32/prcpucfg.h
 
 EXTRA_DIST = jiveaudio.groupproj jiveaudio.bdsgroup
 
