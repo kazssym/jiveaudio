@@ -17,7 +17,7 @@
    02111-1307, USA.  */
 
 #if HAVE_CONFIG_H
-#include "config.h"
+#include <config.h>
 #endif
 #define _GNU_SOURCE 1
 #define _REENTRANT 1
