@@ -19,6 +19,6 @@
 #ifndef _EXEC_MEDIA_PLAYER_H
 #define _EXEC_MEDIA_PLAYER_H 1
 
-#include "plugins/player_posix.h"
+#include "player_posix.h"
 
 #endif /* !_EXEC_MEDIA_PLAYER_H */

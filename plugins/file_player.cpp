@@ -28,7 +28,7 @@
 #pragma hdrstop
 #endif
 
-#include "plugins/player.h"
+#include "player.h"
 
 #include <cstdlib>
 #include <cstdio>
