@@ -28,12 +28,12 @@ AC_CHECK_FUNCS([tempnam])
 
 PACKAGE_VERSION_MAJOR=`expr "$PACKAGE_VERSION" : ['0*\([0-9]*\)']`
 PACKAGE_VERSION_MINOR=`expr "$PACKAGE_VERSION" : ['[0-9]*\\.0*\\([0-9]*\\)']`
-PACKAGE_RELEASE=`expr "$PACKAGE_VERSION" : ['[0-9]*\\.[0-9]*\\.0*\\([0-9]*\\)']`
+PACKAGE_VERSION_EXTRA=`expr "$PACKAGE_VERSION" : ['[0-9]*\\.[0-9]*\\.0*\\([0-9]*\\)']`
 AC_DEFINE_UNQUOTED([PACKAGE_VERSION_MAJOR], [${PACKAGE_VERSION_MAJOR:-0}],
 [Define to the major version number of this package.])
 AC_DEFINE_UNQUOTED([PACKAGE_VERSION_MINOR], [${PACKAGE_VERSION_MINOR:-0}],
 [Define to the minor version number of this package.])
-AC_DEFINE_UNQUOTED([PACKAGE_RELEASE], [${PACKAGE_RELEASE:-0}],
+AC_DEFINE_UNQUOTED([PACKAGE_VERSION_EXTRA], [${PACKAGE_VERSION_EXTRA:-0}],
 [Define to the release number of this package.])
 case $host_os in
 linux-gnu*)
@@ -49,6 +49,6 @@ mingw32*)
 esac
 
 AC_CONFIG_FILES([Makefile sdk/Makefile plugins/Makefile doc/Makefile])
-AC_CONFIG_HEADERS([config.h])
-AC_CONFIG_LINKS([sdk/prcpucfg.h:sdk/md/$cpucfg])
+AC_CONFIG_HEADERS([include/config.h])
+AC_CONFIG_LINKS([include/prcpucfg.h:sdk/md/$cpucfg])
 AC_OUTPUT

@@ -70,9 +70,6 @@
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "JiveAudio"
 
-/* Define to the release number of this package. */
-#define PACKAGE_RELEASE 0
-
 /* Define to the full name and version of this package. */
 #define PACKAGE_STRING "JiveAudio 3.0.0"
 
@@ -81,6 +78,9 @@
 
 /* Define to the version of this package. */
 #define PACKAGE_VERSION "3.0.0"
+
+/* Define to the release number of this package. */
+#define PACKAGE_VERSION_EXTRA 0
 
 /* Define to the major version number of this package. */
 #define PACKAGE_VERSION_MAJOR 3
