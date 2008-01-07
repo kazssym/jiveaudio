@@ -1,11 +1,11 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /* ***** BEGIN LICENSE BLOCK *****
- * Version: NPL 1.1/GPL 2.0/LGPL 2.1
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- * The contents of this file are subject to the Netscape Public License
- * Version 1.1 (the "License"); you may not use this file except in
- * compliance with the License. You may obtain a copy of the License at
- * http://www.mozilla.org/NPL/
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
  *
  * Software distributed under the License is distributed on an "AS IS" basis,
  * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
@@ -14,7 +14,7 @@
  *
  * The Original Code is mozilla.org code.
  *
- * The Initial Developer of the Original Code is 
+ * The Initial Developer of the Original Code is
  * Netscape Communications Corporation.
  * Portions created by the Initial Developer are Copyright (C) 1998
  * the Initial Developer. All Rights Reserved.
@@ -22,16 +22,16 @@
  * Contributor(s):
  *
  * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or 
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
  * in which case the provisions of the GPL or the LGPL are applicable instead
  * of those above. If you wish to allow use of your version of this file only
  * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the NPL, indicate your
+ * use your version of this file under the terms of the MPL, indicate your
  * decision by deleting the provisions above and replace them with the notice
  * and other provisions required by the GPL or the LGPL. If you do not delete
  * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the NPL, the GPL or the LGPL.
+ * the terms of any one of the MPL, the GPL or the LGPL.
  *
  * ***** END LICENSE BLOCK ***** */
 
@@ -68,18 +68,8 @@ extern "C" {
 
 /* DLL Entry modifiers... */
 
-/* PC */
-#if defined(XP_OS2)
-#  ifdef XP_OS2_VACPP
-#	  define JRI_PUBLIC_API(ResultType)	    ResultType _Optlink
-#	  define JRI_PUBLIC_VAR(VarType)        VarType
-#     define JRI_CALLBACK
-#  else
-#	  define JRI_PUBLIC_API(ResultType)	    ResultType
-#	  define JRI_PUBLIC_VAR(VarType)        VarType
-#     define JRI_CALLBACK
-#  endif
-#elif defined(XP_WIN) || defined(_WINDOWS) || defined(WIN32) || defined(_WIN32)
+/* Windows */
+#if defined(XP_WIN) || defined(_WINDOWS) || defined(WIN32) || defined(_WIN32)
 #	include <windows.h>
 #	if defined(_MSC_VER) || defined(__GNUC__)
 #		if defined(WIN32) || defined(_WIN32)
@@ -127,6 +117,25 @@ extern "C" {
 #	endif
 #	ifndef IS_LITTLE_ENDIAN
 #		define IS_LITTLE_ENDIAN
+#	endif
+
+/* OS/2 */
+#elif defined(XP_OS2)
+#	ifdef XP_OS2_VACPP
+#		define JRI_PUBLIC_API(ResultType)	ResultType _Optlink
+#		define JRI_PUBLIC_VAR(VarType)		VarType
+#     		define JRI_CALLBACK
+#	elif defined(__declspec)
+#		define JRI_PUBLIC_API(ResultType)  	__declspec(dllexport) ResultType
+#		define JRI_PUBLIC_VAR(VarType)	   	VarType
+#		define JRI_PUBLIC_VAR_EXP(VarType) 	__declspec(dllexport) VarType
+#		define JRI_PUBLIC_VAR_IMP(VarType) 	__declspec(dllimport) VarType
+#		define JRI_NATIVE_STUB(ResultType) 	__declspec(dllexport) ResultType
+#		define JRI_CALLBACK
+#	else
+#		define JRI_PUBLIC_API(ResultType)	ResultType
+#		define JRI_PUBLIC_VAR(VarType)		VarType
+#		define JRI_CALLBACK
 #	endif
 
 /* Mac */

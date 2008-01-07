@@ -1,23 +1,40 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  *
- * The contents of this file are subject to the Netscape Public
- * License Version 1.1 (the "License"); you may not use this file
- * except in compliance with the License. You may obtain a copy of
- * the License at http://www.mozilla.org/NPL/
+ * ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- * Software distributed under the License is distributed on an "AS
- * IS" basis, WITHOUT WARRANTY OF ANY KIND, either express or
- * implied. See the License for the specific language governing
- * rights and limitations under the License.
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
  *
  * The Original Code is mozilla.org code.
  *
- * The Initial Developer of the Original Code is Netscape
- * Communications Corporation.  Portions created by Netscape are
- * Copyright (C) 1998 Netscape Communications Corporation. All
- * Rights Reserved.
+ * The Initial Developer of the Original Code is
+ * Netscape Communications Corporation.
+ * Portions created by the Initial Developer are Copyright (C) 1998
+ * the Initial Developer. All Rights Reserved.
  *
- * Contributor(s): 
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK *****
  *
  *
  * This Original Code has been modified by IBM Corporation.
@@ -81,22 +98,10 @@
  ******************************************************************************/
 
 /* DLL Entry modifiers... */
-#if defined(XP_OS2)
-#  ifdef XP_OS2_VACPP
-#     define JNI_PUBLIC_API(ResultType)      ResultType _System
-#     define JNI_PUBLIC_VAR(VarType)         VarType
-#     define JNICALL                         _Optlink
-#     define JNIEXPORT
-#  else
-#     define JNI_PUBLIC_API(ResultType)	   ResultType
-#     define JNI_PUBLIC_VAR(VarType)         VarType
-#     define JNICALL
-#     define JNIEXPORT
-#  endif
 /* Win32 */
-#elif defined(XP_WIN) || defined(_WINDOWS) || defined(WIN32) || defined(_WIN32)
+#if defined(XP_WIN) || defined(_WINDOWS) || defined(WIN32) || defined(_WIN32)
 #	include <windows.h>
-#	if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__GNUC__)
+#	if defined(_MSC_VER) || defined(__GNUC__)
 #		if defined(WIN32) || defined(_WIN32)
 #			define JNI_PUBLIC_API(ResultType)	_declspec(dllexport) ResultType __stdcall
 #			define JNI_PUBLIC_VAR(VarType)		VarType
@@ -135,7 +140,33 @@
 #	endif
 	/*  This is the stuff inherited from JavaSoft .. */
 #	define JNIEXPORT __declspec(dllexport)
+#	define JNIIMPORT __declspec(dllimport)
 
+/* OS/2 */
+#elif defined(XP_OS2)
+#	ifdef XP_OS2_VACPP
+#		define JNI_PUBLIC_API(ResultType)	ResultType _System
+#		define JNI_PUBLIC_VAR(VarType)		VarType
+#		define JNICALL				_Optlink
+#		define JNIEXPORT
+#		define JNIIMPORT
+#	elif defined(__declspec)
+#		define JNI_PUBLIC_API(ResultType)	__declspec(dllexport) ResultType
+#		define JNI_PUBLIC_VAR(VarType)		VarType
+#		define JNI_NATIVE_STUB(ResultType)	__declspec(dllexport) ResultType
+#		define JNICALL
+#		define JNIEXPORT
+#		define JNIIMPORT
+#	else
+#		define JNI_PUBLIC_API(ResultType)	ResultType
+#		define JNI_PUBLIC_VAR(VarType)		VarType
+#		define JNICALL
+#		define JNIEXPORT
+#		define JNIIMPORT
+#	endif
+#	ifndef IS_LITTLE_ENDIAN
+#		define IS_LITTLE_ENDIAN
+#	endif
 
 /* Mac */
 #elif macintosh || Macintosh || THINK_C
@@ -161,6 +192,7 @@
 #	define JNICALL
 	/*  This is the stuff inherited from JavaSoft .. */
 #	define JNIEXPORT
+#	define JNIIMPORT
 
 /* Unix or else */
 #else
@@ -170,6 +202,7 @@
 #	define JNICALL
 	/*  This is the stuff inherited from JavaSoft .. */
 #	define JNIEXPORT
+#	define JNIIMPORT
 #endif
 
 #ifndef FAR		/* for non-Win16 */

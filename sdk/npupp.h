@@ -37,7 +37,7 @@
 
 
 /*
- *  npupp.h $Revision: 3.23 $
+ *  npupp.h $Revision: 3.26 $
  *  function call mecahnics needed by platform specific glue code.
  */
 
@@ -477,6 +477,28 @@ typedef bool (* NP_LOADDS NPN_PopPopupsEnabledStateUPP)(NPP npp);
 #define CallNPN_PopPopupsEnabledStateProc(FUNC, ARG1)		\
 		(*(FUNC))((ARG1))
 
+/* NPN_Enumerate */
+typedef bool (* NP_LOADDS NPN_EnumerateUPP)(NPP npp, NPObject *obj, NPIdentifier **identifier, uint32_t *count);
+#define NewNPN_EnumerateProc(FUNC)		\
+		((NPN_EnumerateUPP) (FUNC))
+#define CallNPN_EnumerateProc(FUNC, ARG1, ARG2, ARG3, ARG4)		\
+		(*(FUNC))((ARG1), (ARG2), (ARG3), (ARG4))
+
+/* NPN_PluginThreadAsyncCall */
+typedef void (* NP_LOADDS NPN_PluginThreadAsyncCallUPP)(NPP instance, void (*func)(void *), void *userData);
+#define NewNPN_PluginThreadAsyncCallProc(FUNC) \
+		((NPN_PluginThreadAsyncCallUPP) (FUNC))
+#define CallNPN_PluginThreadAsyncCallProc(FUNC, ARG1, ARG2, ARG3) \
+		(*(FUNC))((ARG1), (ARG2), (ARG3))
+
+/* NPN_Construct */
+typedef bool (* NP_LOADDS NPN_ConstructUPP)(NPP npp, NPObject* obj, const NPVariant *args, uint32_t argCount, NPVariant *result);
+#define NewNPN_ConstructProc(FUNC)		\
+		((NPN_ConstructUPP) (FUNC))
+#define CallNPN_ConstructProc(FUNC, ARG1, ARG2, ARG3, ARG4, ARG5)      \
+		(*(FUNC))((ARG1), (ARG2), (ARG3), (ARG4), (ARG5))
+
+
 
 /******************************************************************************************
  * The actual plugin function table definitions
@@ -546,6 +568,9 @@ typedef struct _NPNetscapeFuncs {
     NPN_SetExceptionUPP setexception;
     NPN_PushPopupsEnabledStateUPP pushpopupsenabledstate;
     NPN_PopPopupsEnabledStateUPP poppopupsenabledstate;
+    NPN_EnumerateUPP enumerate;
+    NPN_PluginThreadAsyncCallUPP pluginthreadasynccall;
+    NPN_ConstructUPP construct;
 } NPNetscapeFuncs;
 
 
@@ -615,13 +640,19 @@ typedef OSErr (* NP_LOADDS BP_GetSupportedMIMETypesUPP)(BPSupportedMIMETypes*, U
 #endif
 #endif
 
-#if defined( _WINDOWS ) || defined (__OS2__)
-
-#if defined (_WIN32)
-#define NP_EXPORT __declspec (dllexport)
+#if defined(XP_UNIX)
+/* GCC 3.3 and later support the visibility attribute. */
+#if defined(__GNUC__) && \
+    ((__GNUC__ >= 4) || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#define NP_VISIBILITY_DEFAULT __attribute__((visibility("default")))
 #else
-#define NP_EXPORT __export
+#define NP_VISIBILITY_DEFAULT
 #endif
+
+#define NP_EXPORT(__type) NP_VISIBILITY_DEFAULT __type
+#endif
+
+#if defined( _WINDOWS ) || defined (__OS2__)
 
 #ifdef __cplusplus
 extern "C" {
@@ -640,15 +671,17 @@ typedef struct _NPPluginData {   /* Alternate OS2 Plugin interface */
     unsigned long dwProductVersionLS;
 } NPPluginData;
 
-NPError OSCALL NP_EXPORT NP_GetPluginData(NPPluginData * pPluginData);
+NPError OSCALL NP_GetPluginData(NPPluginData * pPluginData);
 
 #endif
 
-NPError OSCALL NP_EXPORT NP_GetEntryPoints(NPPluginFuncs* pFuncs);
+NPError OSCALL NP_GetEntryPoints(NPPluginFuncs* pFuncs);
 
-NPError OSCALL NP_EXPORT NP_Initialize(NPNetscapeFuncs* pFuncs);
+NPError OSCALL NP_Initialize(NPNetscapeFuncs* pFuncs);
 
-NPError OSCALL NP_EXPORT NP_Shutdown();
+NPError OSCALL NP_Shutdown();
+
+char*	NP_GetMIMEDescription();
 
 #ifdef __cplusplus
 }
@@ -668,10 +701,10 @@ extern "C" {
 
 /* plugin meta member functions */
 
-char*	NP_GetMIMEDescription(void);
-NPError	NP_Initialize(NPNetscapeFuncs*, NPPluginFuncs*);
-NPError	NP_Shutdown(void);
-NPError	NP_GetValue(void *future, NPPVariable aVariable, void *aValue);
+NP_EXPORT(char*)   NP_GetMIMEDescription(void);
+NP_EXPORT(NPError) NP_Initialize(NPNetscapeFuncs*, NPPluginFuncs*);
+NP_EXPORT(NPError) NP_Shutdown(void);
+NP_EXPORT(NPError) NP_GetValue(void *future, NPPVariable aVariable, void *aValue);
 
 #ifdef __cplusplus
 }

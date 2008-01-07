@@ -161,6 +161,22 @@
 #define PR_CALLBACK_DECL
 #define PR_STATIC_CALLBACK(__x) static __x
 
+#elif defined(XP_OS2) && defined(__declspec)
+
+#define PR_EXPORT(__type) extern __declspec(dllexport) __type
+#define PR_EXPORT_DATA(__type) extern __declspec(dllexport) __type
+#define PR_IMPORT(__type) extern  __declspec(dllimport) __type
+#define PR_IMPORT_DATA(__type) extern __declspec(dllimport) __type
+
+#define PR_EXTERN(__type) extern __declspec(dllexport) __type
+#define PR_IMPLEMENT(__type) __declspec(dllexport) __type
+#define PR_EXTERN_DATA(__type) extern __declspec(dllexport) __type
+#define PR_IMPLEMENT_DATA(__type) __declspec(dllexport) __type
+
+#define PR_CALLBACK
+#define PR_CALLBACK_DECL
+#define PR_STATIC_CALLBACK(__x) static __x
+
 #elif defined(XP_OS2_VACPP) 
 
 #define PR_EXPORT(__type) extern __type
@@ -178,7 +194,9 @@
 
 #else /* Unix */
 
-#ifdef HAVE_VISIBILITY_PRAGMA
+/* GCC 3.3 and later support the visibility attribute. */
+#if (__GNUC__ >= 4) || \
+    (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)
 #define PR_VISIBILITY_DEFAULT __attribute__((visibility("default")))
 #else
 #define PR_VISIBILITY_DEFAULT
@@ -440,7 +458,11 @@ typedef ptrdiff_t PRPtrdiff;
 **  A type for pointer difference. Variables of this type are suitable
 **      for storing a pointer or pointer sutraction. 
 ************************************************************************/
+#ifdef _WIN64
+typedef unsigned __int64 PRUptrdiff;
+#else
 typedef unsigned long PRUptrdiff;
+#endif
 
 /************************************************************************
 ** TYPES:       PRBool
@@ -468,10 +490,6 @@ typedef PRUint8 PRPackedBool;
 */
 typedef enum { PR_FAILURE = -1, PR_SUCCESS = 0 } PRStatus;
 
-#ifdef MOZ_UNICODE
-/*
- * EXPERIMENTAL: This type may be removed in a future release.
- */
 #ifndef __PRUNICHAR__
 #define __PRUNICHAR__
 #if defined(WIN32) || defined(XP_MAC)
@@ -480,7 +498,6 @@ typedef wchar_t PRUnichar;
 typedef PRUint16 PRUnichar;
 #endif
 #endif
-#endif /* MOZ_UNICODE */
 
 /*
 ** WARNING: The undocumented data types PRWord and PRUword are
@@ -493,8 +510,13 @@ typedef PRUint16 PRUnichar;
 ** Specification, Addison-Wesley, September 1996.
 ** http://java.sun.com/docs/books/vmspec/index.html.)
 */
+#ifdef _WIN64
+typedef __int64 PRWord;
+typedef unsigned __int64 PRUword;
+#else
 typedef long PRWord;
 typedef unsigned long PRUword;
+#endif
 
 #if defined(NO_NSPR_10_SUPPORT)
 #else
