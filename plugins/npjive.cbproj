@@ -19,27 +19,23 @@
     <CfgParent>Base</CfgParent>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Base)'!=''">
-    <OutputExt>dll</OutputExt>
     <BCC_StopPCHAfter>windows.h</BCC_StopPCHAfter>
+    <OutputExt>dll</OutputExt>
     <Defines>_WINDOWS=1;HAVE_CONFIG_H=1</Defines>
     <DCC_CBuilderOutput>JPHNE</DCC_CBuilderOutput>
-    <DCC_ObjPath>player;..\;plugins;..\xpi</DCC_ObjPath>
     <BCC_InstructionSet>6</BCC_InstructionSet>
     <ILINK_AppType>Windows</ILINK_AppType>
     <BCC_SelectedOptimizations>true</BCC_SelectedOptimizations>
-    <ILINK_ObjectSearchPath>..\;..\..\jiveaudio-branch-2.1;..\..\jiveaudio-branch-3.0</ILINK_ObjectSearchPath>
     <BCC_FastFloatingPoint>false</BCC_FastFloatingPoint>
     <NoVCL>true</NoVCL>
     <PackageImports>vcl.bpi;rtl.bpi;vclx.bpi;dbrtl.bpi;vcldb.bpi;adortl.bpi;dbxcds.bpi;dbexpress.bpi;xmlrtl.bpi;vclie.bpi;inet.bpi;inetdbbde.bpi;inetdbxpress.bpi;soaprtl.bpi;dsnap.bpi;bcbie.bpi;bdertl.bpi;teeui.bpi;teedb.bpi;tee.bpi;vcldbx.bpi;vclactnband.bpi</PackageImports>
-    <DCC_UnitSearchPath>..\;$(BDS)\lib;$(BDS)\lib\obj</DCC_UnitSearchPath>
     <ILINK_WinAppType>DLL</ILINK_WinAppType>
     <BCC_GenerateMultithreaded>true</BCC_GenerateMultithreaded>
-    <IncludePath>..\win32;..;..\sdk;$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;..\..\jiveaudio-branch-3.0</IncludePath>
+    <IncludePath>..\win32;..\sdk;$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl</IncludePath>
     <ILINK_MapFileType>None</ILINK_MapFileType>
-    <ILINK_LibraryPath>$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;..\..\jiveaudio-branch-3.0</ILINK_LibraryPath>
+    <ILINK_LibraryPath>$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk</ILINK_LibraryPath>
     <Multithreaded>true</Multithreaded>
     <BCC_GenerateDLL>true</BCC_GenerateDLL>
-    <DCC_ResourcePath>player;..\;plugins;..\xpi</DCC_ResourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Cfg_1)'!=''">
     <DCC_Optimize>false</DCC_Optimize>
@@ -72,58 +68,72 @@
     <Borland.Personality>CPlusPlusBuilder.Personality</Borland.Personality>
     <Borland.ProjectType>CppDynamicLibrary</Borland.ProjectType>
     <BorlandProject>
-<BorlandProject><CPlusPlusBuilder.Personality><VersionInfo><VersionInfo Name="IncludeVerInfo">False</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1041</VersionInfo><VersionInfo Name="CodePage">932</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName"></VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Count">7</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item0">..\win32;..;..\sdk;$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;..\..\jiveaudio-branch-3.0</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item1">..\win32;..;..\sdk;$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item2">..\win32;..;..\sdk;$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;..\..\jiveaudio-branch-2.1;..\..\jiveaudio-branch-3.0</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item3">..\win32;..;..\sdk;$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl;..\..\jiveaudio-branch-2.1</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item4">..;..\sdk;$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item5">..\..\jiveaudio-branch-2.1</HistoryLists_hlIncludePath><HistoryLists_hlIncludePath Name="Item6">plugin;java;nspr;$(DXSDK)\include;$(BCB)\include;$(BCB)\include\vcl</HistoryLists_hlIncludePath></HistoryLists_hlIncludePath><HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Count">1</HistoryLists_hlLibraryPath><HistoryLists_hlLibraryPath Name="Item0">$(BCB)\lib\obj;$(BCB)\lib</HistoryLists_hlLibraryPath></HistoryLists_hlLibraryPath><HistoryLists_hlDebugSourcePath><HistoryLists_hlDebugSourcePath Name="Count">1</HistoryLists_hlDebugSourcePath><HistoryLists_hlDebugSourcePath Name="Item0">$(BCB)\source\vcl</HistoryLists_hlDebugSourcePath></HistoryLists_hlDebugSourcePath><HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Count">3</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item0">_WINDOWS;STDC_HEADERS=1;HAVE_FCNTL_H=1;HAVE_IO_H=1;HAVE_TEMPNAM=1;_DEBUG;WINDOWLESS=1</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item1">_WINDOWS;STDC_HEADERS=1;HAVE_FCNTL_H=1;HAVE_IO_H=1;HAVE_TEMPNAM=1;_DEBUG;WINDOWLESS</HistoryLists_hlConditionals><HistoryLists_hlConditionals Name="Item2">_WINDOWS;STDC_HEADERS=1;HAVE_FCNTL_H=1;HAVE_IO_H=1;HAVE_TEMPNAM=1;_DEBUG</HistoryLists_hlConditionals></HistoryLists_hlConditionals><Debugging><Debugging Name="DebugSourceDirs">$(BCB)\source\vcl</Debugging></Debugging><Parameters><Parameters Name="RunParams"></Parameters><Parameters Name="Launcher"></Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="DebugCWD"></Parameters><Parameters Name="HostApplication">C:\Program Files\Mozilla Firefox\firefox.exe</Parameters><Parameters Name="RemoteHost"></Parameters><Parameters Name="RemotePath"></Parameters><Parameters Name="RemoteParams"></Parameters><Parameters Name="RemoteLauncher"></Parameters><Parameters Name="UseRemoteLauncher">False</Parameters><Parameters Name="RemoteCWD"></Parameters><Parameters Name="RemoteDebug">False</Parameters><Parameters Name="Debug Symbols Search Path"></Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Linker><Linker Name="LibPrefix"></Linker><Linker Name="LibSuffix"></Linker><Linker Name="LibVersion"></Linker></Linker><ProjectProperties><ProjectProperties Name="AutoShowDeps">False</ProjectProperties><ProjectProperties Name="ManagePaths">True</ProjectProperties><ProjectProperties Name="VerifyPackages">True</ProjectProperties></ProjectProperties><HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Count">1</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item0">$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;..\..\jiveaudio-branch-3.0</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item1">$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;..\..\jiveaudio-branch-2.1;..\..\jiveaudio-branch-3.0</HistoryLists_hlILINK_LibraryPath><HistoryLists_hlILINK_LibraryPath Name="Item2">$(BDS)\lib\debug;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk;..\..\jiveaudio-branch-2.1;..\..\jiveaudio-branch-3.0</HistoryLists_hlILINK_LibraryPath></HistoryLists_hlILINK_LibraryPath><HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_MaxIdentifierLength Name="Count">1</HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_MaxIdentifierLength Name="Item0">250</HistoryLists_hlBCC_MaxIdentifierLength></HistoryLists_hlBCC_MaxIdentifierLength><HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_Defines Name="Count">1</HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_Defines Name="Item0">_DEBUG=1;STRICT;_WINDOWS=1;HAVE_CONFIG_H=1</HistoryLists_hlBCC_Defines></HistoryLists_hlBCC_Defines><HistoryLists_hlBCC_StopPCHAfter><HistoryLists_hlBCC_StopPCHAfter Name="Count">1</HistoryLists_hlBCC_StopPCHAfter><HistoryLists_hlBCC_StopPCHAfter Name="Item0">windows.h</HistoryLists_hlBCC_StopPCHAfter></HistoryLists_hlBCC_StopPCHAfter><HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_MaxErrors Name="Count">1</HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_MaxErrors Name="Item0">0</HistoryLists_hlILINK_MaxErrors></HistoryLists_hlILINK_MaxErrors><HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_FileAlignment Name="Count">1</HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_FileAlignment Name="Item0">0x200</HistoryLists_hlILINK_FileAlignment></HistoryLists_hlILINK_FileAlignment><HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlILINK_ObjectAlignment Name="Count">1</HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlILINK_ObjectAlignment Name="Item0">4096</HistoryLists_hlILINK_ObjectAlignment></HistoryLists_hlILINK_ObjectAlignment><HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_BaseAddress Name="Count">1</HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_BaseAddress Name="Item0">0x00400000</HistoryLists_hlILINK_BaseAddress></HistoryLists_hlILINK_BaseAddress><HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapCommitSize Name="Count">1</HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapCommitSize Name="Item0">0x00001000</HistoryLists_hlILINK_HeapCommitSize></HistoryLists_hlILINK_HeapCommitSize><HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_HeapReserveSize Name="Count">1</HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_HeapReserveSize Name="Item0">0x00100000</HistoryLists_hlILINK_HeapReserveSize></HistoryLists_hlILINK_HeapReserveSize><HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackCommitSize Name="Count">1</HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackCommitSize Name="Item0">0x00002000</HistoryLists_hlILINK_StackCommitSize></HistoryLists_hlILINK_StackCommitSize><HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlILINK_StackReserveSize Name="Count">1</HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlILINK_StackReserveSize Name="Item0">0x00100000</HistoryLists_hlILINK_StackReserveSize></HistoryLists_hlILINK_StackReserveSize><HistoryLists_hlDCC_CodePage><HistoryLists_hlDCC_CodePage Name="Count">1</HistoryLists_hlDCC_CodePage><HistoryLists_hlDCC_CodePage Name="Item0">0</HistoryLists_hlDCC_CodePage></HistoryLists_hlDCC_CodePage><HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Count">2</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item0">Debug</HistoryLists_hlFinalOutputDir><HistoryLists_hlFinalOutputDir Name="Item1">Release</HistoryLists_hlFinalOutputDir></HistoryLists_hlFinalOutputDir><HistoryLists_hlTASM_HashTableCapacity><HistoryLists_hlTASM_HashTableCapacity Name="Count">1</HistoryLists_hlTASM_HashTableCapacity><HistoryLists_hlTASM_HashTableCapacity Name="Item0">8192</HistoryLists_hlTASM_HashTableCapacity></HistoryLists_hlTASM_HashTableCapacity><HistoryLists_hlTASM_MaxSymbolLength><HistoryLists_hlTASM_MaxSymbolLength Name="Count">1</HistoryLists_hlTASM_MaxSymbolLength><HistoryLists_hlTASM_MaxSymbolLength Name="Item0">12</HistoryLists_hlTASM_MaxSymbolLength></HistoryLists_hlTASM_MaxSymbolLength><HistoryLists_hlTASM_Passes><HistoryLists_hlTASM_Passes Name="Count">1</HistoryLists_hlTASM_Passes><HistoryLists_hlTASM_Passes Name="Item0">1</HistoryLists_hlTASM_Passes></HistoryLists_hlTASM_Passes><HistoryLists_hlTASM_VersionId><HistoryLists_hlTASM_VersionId Name="Count">1</HistoryLists_hlTASM_VersionId><HistoryLists_hlTASM_VersionId Name="Item0">0</HistoryLists_hlTASM_VersionId></HistoryLists_hlTASM_VersionId><HistoryLists_hlDefines><HistoryLists_hlDefines Name="Count">1</HistoryLists_hlDefines><HistoryLists_hlDefines Name="Item0">_WINDOWS=1;HAVE_CONFIG_H=1</HistoryLists_hlDefines><HistoryLists_hlDefines Name="Item1">HAVE_CONFIG_H=1</HistoryLists_hlDefines><HistoryLists_hlDefines Name="Item2">_DEBUG;HAVE_CONFIG_H=1</HistoryLists_hlDefines></HistoryLists_hlDefines></CPlusPlusBuilder.Personality></BorlandProject></BorlandProject>
+<BorlandProject><CPlusPlusBuilder.Personality><VersionInfo><VersionInfo Name="IncludeVerInfo">False</VersionInfo><VersionInfo Name="AutoIncBuild">False</VersionInfo><VersionInfo Name="MajorVer">1</VersionInfo><VersionInfo Name="MinorVer">0</VersionInfo><VersionInfo Name="Release">0</VersionInfo><VersionInfo Name="Build">0</VersionInfo><VersionInfo Name="Debug">False</VersionInfo><VersionInfo Name="PreRelease">False</VersionInfo><VersionInfo Name="Special">False</VersionInfo><VersionInfo Name="Private">False</VersionInfo><VersionInfo Name="DLL">False</VersionInfo><VersionInfo Name="Locale">1041</VersionInfo><VersionInfo Name="CodePage">932</VersionInfo></VersionInfo><VersionInfoKeys><VersionInfoKeys Name="CompanyName"></VersionInfoKeys><VersionInfoKeys Name="FileDescription"></VersionInfoKeys><VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="InternalName"></VersionInfoKeys><VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys><VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys><VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys><VersionInfoKeys Name="ProductName"></VersionInfoKeys><VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys><VersionInfoKeys Name="Comments"></VersionInfoKeys></VersionInfoKeys><Debugging><Debugging Name="DebugSourceDirs"></Debugging></Debugging><Parameters><Parameters Name="RunParams"></Parameters><Parameters Name="Launcher"></Parameters><Parameters Name="UseLauncher">False</Parameters><Parameters Name="DebugCWD"></Parameters><Parameters Name="HostApplication"></Parameters><Parameters Name="RemoteHost"></Parameters><Parameters Name="RemotePath"></Parameters><Parameters Name="RemoteParams"></Parameters><Parameters Name="RemoteLauncher"></Parameters><Parameters Name="UseRemoteLauncher">False</Parameters><Parameters Name="RemoteCWD"></Parameters><Parameters Name="RemoteDebug">False</Parameters><Parameters Name="Debug Symbols Search Path"></Parameters><Parameters Name="LoadAllSymbols">True</Parameters><Parameters Name="LoadUnspecifiedSymbols">False</Parameters></Parameters><Linker><Linker Name="LibPrefix"></Linker><Linker Name="LibSuffix"></Linker><Linker Name="LibVersion"></Linker></Linker><ProjectProperties><ProjectProperties Name="AutoShowDeps">False</ProjectProperties><ProjectProperties Name="ManagePaths">True</ProjectProperties><ProjectProperties Name="VerifyPackages">True</ProjectProperties></ProjectProperties>  <HistoryLists_hlIncludePath>
+      <HistoryLists_hlIncludePath Name="Count">1</HistoryLists_hlIncludePath>
+      <HistoryLists_hlIncludePath Name="Item0">..\win32;..\sdk;$(BDS)\include;$(BDS)\include\dinkumware;$(BDS)\include\vcl</HistoryLists_hlIncludePath>
+    </HistoryLists_hlIncludePath>
+    <HistoryLists_hlILINK_LibraryPath>
+      <HistoryLists_hlILINK_LibraryPath Name="Count">1</HistoryLists_hlILINK_LibraryPath>
+      <HistoryLists_hlILINK_LibraryPath Name="Item0">$(BDS)\lib\release;$(BDS)\lib;$(BDS)\lib\obj;$(BDS)\lib\psdk</HistoryLists_hlILINK_LibraryPath>
+    </HistoryLists_hlILINK_LibraryPath>
+    <HistoryLists_hlDefines>
+      <HistoryLists_hlDefines Name="Count">1</HistoryLists_hlDefines>
+      <HistoryLists_hlDefines Name="Item0">NDEBUG;_WINDOWS=1;HAVE_CONFIG_H=1</HistoryLists_hlDefines>
+    </HistoryLists_hlDefines>
+    <HistoryLists_hlIntermediateOutputDir>
+      <HistoryLists_hlIntermediateOutputDir Name="Count">1</HistoryLists_hlIntermediateOutputDir>
+      <HistoryLists_hlIntermediateOutputDir Name="Item0">Release</HistoryLists_hlIntermediateOutputDir>
+    </HistoryLists_hlIntermediateOutputDir>
+    <HistoryLists_hlDCC_CodePage>
+      <HistoryLists_hlDCC_CodePage Name="Count">1</HistoryLists_hlDCC_CodePage>
+      <HistoryLists_hlDCC_CodePage Name="Item0">0</HistoryLists_hlDCC_CodePage>
+    </HistoryLists_hlDCC_CodePage>
+  </CPlusPlusBuilder.Personality></BorlandProject></BorlandProject>
   </ProjectExtensions>
   <Import Project="$(MSBuildBinPath)\Borland.Cpp.Targets" />
   <ItemGroup>
-    <CppCompile Include="..\exec_media_player.cpp">
-      <BuildOrder>2</BuildOrder>
-    </CppCompile>
-    <CppCompile Include="..\file_player.cpp">
-      <BuildOrder>0</BuildOrder>
-    </CppCompile>
-    <CppCompile Include="..\sox_media_player.cpp">
-      <BuildOrder>1</BuildOrder>
-    </CppCompile>
     <CppCompile Include="buffer.cpp">
       <DependentOn>buffer.h</DependentOn>
-      <BuildOrder>8</BuildOrder>
+      <BuildOrder>7</BuildOrder>
     </CppCompile>
     <CppCompile Include="debug.c">
       <DependentOn>debug.h</DependentOn>
-      <BuildOrder>9</BuildOrder>
+      <BuildOrder>8</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="exec_media_player.cpp">
+      <BuildOrder>2</BuildOrder>
+    </CppCompile>
+    <CppCompile Include="file_player.cpp">
+      <BuildOrder>0</BuildOrder>
     </CppCompile>
     <CppCompile Include="npn_gate.cpp">
-      <BuildOrder>11</BuildOrder>
+      <BuildOrder>10</BuildOrder>
     </CppCompile>
     <CppCompile Include="np_entry.cpp">
-      <BuildOrder>10</BuildOrder>
+      <BuildOrder>9</BuildOrder>
     </CppCompile>
     <CppCompile Include="player.cpp">
       <DependentOn>player.h</DependentOn>
-      <BuildOrder>5</BuildOrder>
+      <BuildOrder>4</BuildOrder>
     </CppCompile>
     <CppCompile Include="player_posix.cpp">
       <DependentOn>player_posix.h</DependentOn>
-      <BuildOrder>6</BuildOrder>
+      <BuildOrder>5</BuildOrder>
     </CppCompile>
     <CppCompile Include="player_win32.cpp">
       <DependentOn>player_win32.h</DependentOn>
-      <BuildOrder>7</BuildOrder>
+      <BuildOrder>6</BuildOrder>
     </CppCompile>
     <CppCompile Include="plugin.cpp">
       <DependentOn>plugin.h</DependentOn>
-      <BuildOrder>4</BuildOrder>
-    </CppCompile>
-    <None Include="..\win32\config.h">
       <BuildOrder>3</BuildOrder>
-    </None>
-    <None Include="npplat.h">
-      <BuildOrder>13</BuildOrder>
-    </None>
+    </CppCompile>
+    <CppCompile Include="sox_media_player.cpp">
+      <BuildOrder>1</BuildOrder>
+    </CppCompile>
     <ResourceCompile Include="resources.rc">
       <Form>resources.res</Form>
-      <BuildOrder>12</BuildOrder>
+      <BuildOrder>11</BuildOrder>
     </ResourceCompile>
     <BuildConfiguration Include="Debug">
       <Key>Cfg_1</Key>
