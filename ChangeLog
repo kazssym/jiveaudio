@@ -1,3 +1,11 @@
+2008-01-12  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/Makefile.am (pkglib_LTLIBRARIES): Change the target
+	libtool library name.
+	(noinst_HEADERS): Remove npplat.h and add buffer.h.
+	(libjiveplugin_la_SOURCES): Add buffer.cpp.
+	(AM_CPPFLAGS): Remove ../sdk.
+
 2008-01-07  Kaz Sasayama  <kazssym@vx68k.org>
 
 	* Update np_entry.cpp and npn_gate.cpp.
