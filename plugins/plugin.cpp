@@ -124,7 +124,9 @@ static NPClass plugin_class =
     &plugin_method::getProperty,
     &plugin_method::setProperty,
     &plugin_method::removeProperty,
+#if NP_CLASS_STRUCT_VERSION >= NP_CLASS_STRUCT_VERSION_ENUM
     &plugin_method::enumerate,
+#endif
   };
 
 #if _WIN32
@@ -212,7 +214,7 @@ NPError NPP_SetValue (NPP, NPNVariable var, void *)
 }
 
 NPError NPP_New (NPMIMEType, NPP instance, uint16 mode,
-	               int16 argc, char **argn, char **argv,
+                 int16 argc, char **argn, char **argv,
                  NPSavedData *)
 {
   using std::strcmp;

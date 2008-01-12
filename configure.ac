@@ -6,9 +6,9 @@ AM_INIT_AUTOMAKE([1.9])
 
 # Checks for programs.
 AC_PROG_CC
+AC_PROG_CC_STDC
 AC_PROG_CXX
-AC_DISABLE_STATIC
-AC_PROG_LIBTOOL
+AC_USE_SYSTEM_EXTENSIONS
 
 # Checks for libraries.
 
@@ -25,6 +25,9 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_FUNC_FORK
 AC_CHECK_FUNCS([tempnam])
+
+AC_DISABLE_STATIC
+AC_PROG_LIBTOOL
 
 PACKAGE_VERSION_MAJOR=`expr "$PACKAGE_VERSION" : ['0*\([0-9]*\)']`
 PACKAGE_VERSION_MINOR=`expr "$PACKAGE_VERSION" : ['[0-9]*\\.0*\\([0-9]*\\)']`

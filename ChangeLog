@@ -1,5 +1,12 @@
 2008-01-12  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/plugin.cpp (plugin_class): Guard the enumerate member
+	from the old API version.
+
+	* configure.ac: Use AC_PROG_CC_STDC.  Move libtool macros below.
+
+	* jiveautio.groupproj, plugins/npjive.cbproj: Update.
+
 	* plugins/Makefile.am (pkglib_LTLIBRARIES): Change the target
 	libtool library name.
 	(noinst_HEADERS): Remove npplat.h and add buffer.h.
