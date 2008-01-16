@@ -1,5 +1,9 @@
-History of user-visible changes in JiveAudio -*-Outline-*-
+History of user-visible changes in JiveAudio (-*- Outline -*-)
 
+* Changes from version 2.0.8 to version 3.0.1
+
+** Updated for the new NPRuntime API.
+
 * Version 2.0.8
 
 Fixed the problem preventing users without proper write permissions

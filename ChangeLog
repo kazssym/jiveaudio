@@ -1,5 +1,7 @@
 2008-01-16  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* NEWS: Update the information.
+
 	* plugins/plugin.cpp (NPP_New): Ignore common parameters
 	explicitly.
 
