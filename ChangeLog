@@ -1,5 +1,7 @@
 2008-01-16  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/debug.c (log): Append CR-LF for OutputDebugString.
+
 	* configure.ac: Change the version number.
 	* win32/config.h: Likewise.
 

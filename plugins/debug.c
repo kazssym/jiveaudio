@@ -49,7 +49,8 @@ void log (int prio, const char *format,...)
 
 #if !defined NDEBUG
 #if _WIN32
-    vsnprintf (buf, 512, format, args);
+    vsnprintf (buf, 512 - 2, format, args);
+    strcat (buf, "\r\n");
     OutputDebugString (buf);
 #else /* !_WIN32 */
     vfprintf (stderr, format, args);
