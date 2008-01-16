@@ -1,5 +1,8 @@
 2008-01-16  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/plugin.cpp (NPP_New): Ignore common parameters
+	explicitly.
+
 	* plugins/np_entry.cpp: Handle old versions of struct
 	NPNetscapeFuncs.
 

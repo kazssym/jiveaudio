@@ -236,7 +236,15 @@ NPError NPP_New (NPMIMEType, NPP instance, uint16 mode,
 
   for (int i = 0; i != argc; ++i)
     {
-      if (strcmp (argn[i], "autostart") == 0)
+      if (strcmp (argn[i], "type") == 0 ||
+          strcmp (argn[i], "src") == 0 ||
+          strcmp (argn[i], "name") == 0 ||
+          strcmp (argn[i], "height") == 0 ||
+          strcmp (argn[i], "width") == 0)
+        {
+          log (LOG_DEBUG, "NPP_New: Ignored common parameter '%s'", argn[i]);
+        }
+      else if (strcmp (argn[i], "autostart") == 0)
         {
           int c = tolower (argv[i][0]);
           data->autostart = (c == 't');
@@ -255,8 +263,7 @@ NPError NPP_New (NPMIMEType, NPP instance, uint16 mode,
 #if _WIN32
   /* FIXME: Windowless plugins are apparently not implemented
      on POSIX systems.  */
-  NPN_SetValue (instance, NPPVpluginWindowBool,
-                reinterpret_cast <void *> (false));
+  NPN_SetValue (instance, NPPVpluginWindowBool, NULL);
 #endif
 
   instance->pdata = data;
