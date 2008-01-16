@@ -71,7 +71,7 @@
 #define PACKAGE_NAME "JiveAudio"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "JiveAudio 3.0.0"
+#define PACKAGE_STRING "JiveAudio 3.0.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "jiveaudio"
