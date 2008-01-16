@@ -77,10 +77,10 @@
 #define PACKAGE_TARNAME "jiveaudio"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.0.0"
+#define PACKAGE_VERSION "3.0.1"
 
 /* Define to the release number of this package. */
-#define PACKAGE_VERSION_EXTRA 0
+#define PACKAGE_VERSION_EXTRA 1
 
 /* Define to the major version number of this package. */
 #define PACKAGE_VERSION_MAJOR 3
@@ -92,7 +92,7 @@
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "3.0.0"
+#define VERSION "3.0.1"
 
 /* Define to `int' if <sys/types.h> does not define. */
 /* #undef pid_t */

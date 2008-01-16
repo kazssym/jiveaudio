@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([JiveAudio], [3.0.0], [jiveaudio@googlegroups.com], [jiveaudio])
+AC_INIT([JiveAudio], [3.0.1], [jiveaudio@googlegroups.com], [jiveaudio])
 AC_CONFIG_SRCDIR([plugins/plugin.cpp])
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([1.9])

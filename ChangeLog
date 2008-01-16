@@ -1,5 +1,8 @@
 2008-01-16  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* configure.ac: Change the version number.
+	* win32/config.h: Likewise.
+
 	* plugins/npjive.def: New file.
 
 	* Makefile.am (dist-hook): Sort the file list.
