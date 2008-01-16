@@ -1,3 +1,9 @@
+2008-01-16  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/npjive.def: New file.
+
+	* Makefile.am (dist-hook): Sort the file list.
+
 2008-01-12  Kaz Sasayama  <kazssym@vx68k.org>
 
 	* plugins/plugin.cpp (plugin_class): Guard the enumerate member

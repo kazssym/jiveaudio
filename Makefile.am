@@ -8,7 +8,7 @@ SUBDIRS = sdk plugins doc
 
 dist-hook:
 	cd $(distdir); \
-find . ! -name \*SUMS -type f -print | sed 's,^\./,,' | xargs sha1sum > SHA1SUMS \
+find . ! -name \*SUMS -type f -print | sed 's,^\./,,' | sort | xargs sha1sum > SHA1SUMS \
 || rm -f SHA1SUMS
 	if test -f $(srcdir)/sign-distdir.sh; then \
   $(SHELL) $(srcdir)/sign-distdir.sh $(distdir); \
