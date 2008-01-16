@@ -115,7 +115,7 @@ NP_Initialize(NPNetscapeFuncs* pFuncs
   if(HIBYTE(pFuncs->version) > NP_VERSION_MAJOR)
     return NPERR_INCOMPATIBLE_VERSION_ERROR;
 
-  if(pFuncs->size < sizeof(NPNetscapeFuncs))
+  if(pFuncs->size < offsetof(NPNetscapeFuncs, enumerate))
     return NPERR_INVALID_FUNCTABLE_ERROR;
 
   NPNFuncs.size                    = pFuncs->size;
@@ -160,6 +160,12 @@ NP_Initialize(NPNetscapeFuncs* pFuncs
   NPNFuncs.hasmethod               = pFuncs->hasmethod;
   NPNFuncs.releasevariantvalue     = pFuncs->releasevariantvalue;
   NPNFuncs.setexception            = pFuncs->setexception;
+  if(pFuncs->size >= offsetof(NPNetscapeFuncs, pluginthreadasynccall))
+    NPNFuncs.enumerate             = pFuncs->enumerate;
+  if(pFuncs->size >= offsetof(NPNetscapeFuncs, construct))
+    NPNFuncs.pluginthreadasynccall = pFuncs->pluginthreadasynccall;
+  if(pFuncs->size >= sizeof(NPNetscapeFuncs))
+    NPNFuncs.construct             = pFuncs->construct;
 
 #ifdef XP_UNIX
   /*
