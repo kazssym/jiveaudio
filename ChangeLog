@@ -1,4 +1,13 @@
+2008-01-17  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* win32/config.h: Change the version information.
+	(pid_t): Define to int.
+
+	* configure.ac: Changed the version number.
+
 2008-01-16  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* Version 3.0.1 released.
 
 	* NEWS: Update the information.
 
