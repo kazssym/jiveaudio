@@ -1,3 +1,7 @@
+2008-01-22  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/npjive.cbproj: Update.
+
 2008-01-17  Kaz Sasayama  <kazssym@vx68k.org>
 
 	* win32/config.h: Change the version information.
