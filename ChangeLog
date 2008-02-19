@@ -1,5 +1,8 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/np_entry.cpp (NP_Initialize): Support for older API
+	versions.
+
 	* plugins/npjive.rc: Update the content.
 
 	* NEWS: Update the content for 3.0.2.
