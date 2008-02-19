@@ -1,6 +1,8 @@
 History of user-visible changes in JiveAudio (-*- Outline -*-)
 
-* Changes from version 2.0.8 to version 3.0.1
+Internal-Version-Id: $ProjectVersion: 2.83 $
+
+* Changes from version 2.0.8 to version 3.0.2
 
 ** Updated for the new NPRuntime API.
 

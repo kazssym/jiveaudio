@@ -1,5 +1,7 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* NEWS: Update the content for 3.0.2.
+
 	* doc/jiveaudio.texi: Include version.texi.
 
 	* README: Remove the KNOWN PROBLEMS section.
