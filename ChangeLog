@@ -1,5 +1,8 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* configure.ac: Test for libmad.  Reorganize tests for header
+	files.  Check for GTK+ 2.0.  Remove the include subdirectory.
+
 	* plugins/Makefile.am (EXTRA_DIST): Remove the old BDS project
 	files.
 

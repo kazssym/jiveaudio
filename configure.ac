@@ -11,12 +11,11 @@ AC_PROG_CXX
 AC_USE_SYSTEM_EXTENSIONS
 
 # Checks for libraries.
+AC_CHECK_LIB([mad], [mad_decoder_init], [MAD_LIBS="-lmad $MAD_LIBS"])
+AC_SUBST([MAD_LIBS])dnl
 
 # Checks for header files.
-AC_PATH_X
-AC_HEADER_STDC
-AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS([fcntl.h io.h syslog.h unistd.h])
+AC_CHECK_HEADERS([fcntl.h io.h sys/wait.h syslog.h mad.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_PID_T
@@ -28,6 +27,8 @@ AC_CHECK_FUNCS([tempnam])
 
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
+
+AM_PATH_GTK_2_0([2.0.0])
 
 PACKAGE_VERSION_MAJOR=`expr "$PACKAGE_VERSION" : ['0*\([0-9]*\)']`
 PACKAGE_VERSION_MINOR=`expr "$PACKAGE_VERSION" : ['[0-9]*\\.0*\\([0-9]*\\)']`
@@ -52,6 +53,6 @@ mingw32*)
 esac
 
 AC_CONFIG_FILES([Makefile sdk/Makefile plugins/Makefile doc/Makefile])
-AC_CONFIG_HEADERS([include/config.h])
-AC_CONFIG_LINKS([include/prcpucfg.h:sdk/md/$cpucfg])
+AC_CONFIG_HEADERS([config.h])
+AC_CONFIG_LINKS([prcpucfg.h:sdk/md/$cpucfg])
 AC_OUTPUT
