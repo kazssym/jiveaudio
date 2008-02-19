@@ -1,8 +1,15 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/plugin.cpp (plugin_method::construct): New function.
+	(plugin_class): Add construct.
+	(DllMain): Removed.
+	(NPP_Initialize): [_WIN32] Initialize COM.
+	(NPP_Shutdown): [_WIN32] Uninitialize COM.
+
 	* plugins/player.cpp: Remove feature macro definitions.
 	* plugins/debug.c: Likewise.
 	* plugins/buffer.cpp: Likewise.
+	* plugins/plugin.cpp: Likewise.
 
 	* plugins/np_entry.cpp (NP_Initialize): Support for older API
 	versions.

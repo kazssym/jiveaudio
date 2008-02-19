@@ -1,6 +1,6 @@
 /*
  * JiveAudio - multimedia plugin for Mozilla
- * Copyright (C) 2003-2006 Hypercore Software Design, Ltd.
+ * Copyright (C) 2003-2008 Hypercore Software Design, Ltd.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -26,11 +26,10 @@
 #include <windows.h>
 #endif
 
-#define _GNU_SOURCE 1
-#define _REENTRANT 1
-
 #include "plugin.h"
+#if __BORLANDC__
 #pragma package (smart_init)
+#endif
 
 #include "debug.h"
 #include "player_posix.h"
@@ -109,6 +108,12 @@ struct plugin_method
     log (LOG_DEBUG, "enumerate: Unimplemented function");
     return false;
   }
+
+  static bool construct (NPObject *, const NPVariant *, uint32_t, NPVariant *)
+  {
+    log (LOG_DEBUG, "construct: Unimplemented function");
+    return false;
+  }
 };
 
 static NPClass plugin_class =
@@ -124,41 +129,34 @@ static NPClass plugin_class =
     &plugin_method::getProperty,
     &plugin_method::setProperty,
     &plugin_method::removeProperty,
-#if NP_CLASS_STRUCT_VERSION >= NP_CLASS_STRUCT_VERSION_ENUM
     &plugin_method::enumerate,
-#endif
+    &plugin_method::construct,
   };
 
-#if _WIN32
-
-BOOL WINAPI DllMain (HINSTANCE, DWORD reason, LPVOID)
-{
-  switch (reason)
-    {
-    case DLL_THREAD_ATTACH:
-      CoInitializeEx (NULL, COINIT_MULTITHREADED);
-      break;
-    case DLL_THREAD_DETACH:
-      CoUninitialize ();
-      break;
-    default:
-      break;
-    }
-
-  return TRUE;
-}
-
-#endif /* _WIN32 */
-
-/* Initializes this plugin.  */
+/**
+ * Initializes this plugin.
+ */
 NPError NPP_Initialize ()
 {
+#if _WIN32
+  HRESULT result = CoInitializeEx (NULL, COINIT_MULTITHREADED);
+  if (result != S_OK && result != S_FALSE)
+    {
+      return NPERR_MODULE_LOAD_FAILED_ERROR;
+    }
+#endif
+
   return NPERR_NO_ERROR;
 }
 
-/* Finalizes this plugin.  */
+/**
+ * Finalizes this plugin.
+ */
 void NPP_Shutdown ()
 {
+#if _WIN32
+  CoUninitialize ();
+#endif
 }
 
 #ifdef XP_UNIX
