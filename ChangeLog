@@ -1,5 +1,9 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* Makefile.am (AUTOMAKE_OPTIONS): New macro.
+	(EXTRA_DIST): Remove the old BDS project file.
+	(dist-hook): Invoke sign-dist.sh and export-dist.sh if any.
+
 	* win32/config.h: Update the content.
 
 2008-01-22  Kaz Sasayama  <kazssym@vx68k.org>
