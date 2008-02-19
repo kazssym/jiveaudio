@@ -1,5 +1,9 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/player.cpp: Remove feature macro definitions.
+	* plugins/debug.c: Likewise.
+	* plugins/buffer.cpp: Likewise.
+
 	* plugins/np_entry.cpp (NP_Initialize): Support for older API
 	versions.
 
