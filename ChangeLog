@@ -1,5 +1,7 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* README: Remove the KNOWN PROBLEMS section.
+
 	* configure.ac: Test for libmad.  Reorganize tests for header
 	files.  Check for GTK+ 2.0.  Remove the include subdirectory.
 
