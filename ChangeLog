@@ -1,5 +1,7 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* doc/jiveaudio.texi: Update the content.
+
 	* plugins/plugin.cpp (plugin_method::construct): New function.
 	(plugin_class): Add construct.
 	(DllMain): Removed.

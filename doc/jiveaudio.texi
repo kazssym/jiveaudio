@@ -1,57 +1,45 @@
-\input texinfo                  @c -*- Texinfo -*-
+\input texinfo                  @c -*-texinfo-*-
 @c %**start of header
 @setfilename jiveaudio.info
-@settitle JiveAudio Reference Manual
-@c $Format: "@set DATE $Date$" $
-@set DATE Tue, 19 Feb 2008 15:26:12 +0900
+@include version.texi
+@settitle JiveAudio @value{VERSION}
 @c %**end of header
 
-@include version.texi
+@copying
+This manual is for JiveAudio @value{VERSION}.
 
-@dircategory Mozilla plugins
+Copyright @copyright{} 2003-2008 Hypercore Software Design, Ltd.
+
+@quotation
+Permission is granted to make and distribute verbatim copies of this
+manual provided the copyright notice and this permission notice are
+preserved on all copies.
+@end quotation
+@end copying
+
+@dircategory Gecko plugins
 @direntry
 * JiveAudio: (jiveaudio).       Multimedia plugin for Mozilla.
 @end direntry
 
-@ifinfo
-This file documents JiveAudio.
-
-Copyright 2003 Hypercore Software Design, Ltd.
-
-Permission is granted to make and distribute verbatim copies of this
-manual provided the copyright notice and this permission notice are
-preserved on all copies.
-@end ifinfo
-
 @titlepage
-@title JiveAudio Reference Manual
-@subtitle Version 2.0
+@title Using JiveAudio
+@subtitle for version @value{VERSION}
 @author Kaz Sasayama
+
 @page
 @vskip 0pt plus 1filll
 
-Last updated @value{DATE}.
-
-Copyright @copyright{} 2003 Hypercore Software Design, Ltd.
-
-Permission is granted to make and distribute verbatim copies of this
-manual provided the copyright notice and this permission notice are
-preserved on all copies.
+@insertcopying
 @end titlepage
 
 @contents
 
 @ifnottex
 @node Top, Getting Started, (dir), (dir)
-@top JiveAudio
+@top Using JiveAudio
 
-This document describes JiveAudio.
-
-This document applies to version 2.0 of the program named JiveAudio,
-and was last updated @value{DATE}.
-
-JiveAudio is a multimedia plugin for WWW browsers based on Netscape
-Gecko.
+@insertcopying
 @end ifnottex
 
 @menu
