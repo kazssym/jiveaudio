@@ -3,8 +3,10 @@
 @setfilename jiveaudio.info
 @settitle JiveAudio Reference Manual
 @c $Format: "@set DATE $Date$" $
-@set DATE Mon, 13 Nov 2006 18:33:22 +0900
+@set DATE Tue, 19 Feb 2008 15:26:12 +0900
 @c %**end of header
+
+@include version.texi
 
 @dircategory Mozilla plugins
 @direntry
