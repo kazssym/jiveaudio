@@ -1,6 +1,6 @@
 /*
  * JiveAudio - multimedia plugin for Mozilla
- * Copyright (C) 2003 Hypercore Software Design, Ltd.
+ * Copyright (C) 2003-2008 Hypercore Software Design, Ltd.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as
@@ -23,25 +23,25 @@
 #endif
 
 1 VERSIONINFO
-  FILEVERSION 1, 0
-  PRODUCTVERSION PACKAGE_VERSION_MAJOR, PACKAGE_VERSION_MINOR, PACKAGE_VERSION_EXTRA
-  FILEFLAGSMASK VS_FF_DEBUG
+FILEVERSION PACKAGE_VERSION_MAJOR, PACKAGE_VERSION_MINOR, PACKAGE_VERSION_EXTRA
+PRODUCTVERSION PACKAGE_VERSION_MAJOR, PACKAGE_VERSION_MINOR, PACKAGE_VERSION_EXTRA
+FILEFLAGSMASK VS_FF_DEBUG
 #if NDEBUG
-  FILEFLAGS 0
+FILEFLAGS 0
 #else
-  FILEFLAGS VS_FF_DEBUG
+FILEFLAGS VS_FF_DEBUG
 #endif
-  FILEOS VOS__WINDOWS32
-  FILETYPE VFT_DLL
+FILEOS VOS__WINDOWS32
+FILETYPE VFT_DLL
 BEGIN
   BLOCK "StringFileInfo"
   BEGIN
     BLOCK "040904e4"
     BEGIN
-      VALUE "CompanyName", "Hypercore Online Solutions\0"
+      VALUE "CompanyName", "Hypercore Software Design, Ltd.\0"
       VALUE "FileDescription", PACKAGE_STRING "\0"
-      VALUE "FileVersion", "1.0.0\0"
-      VALUE "LegalCopyright", "Copyright (C) 2003-2007 Hypercore Software Design, Ltd., Japan\0"
+      VALUE "FileVersion", PACKAGE_VERSION "\0"
+      VALUE "LegalCopyright", "Copyright (C) 2003-2008 Hypercore Software Design, Ltd., Japan\0"
       VALUE "OriginalFilename", "npjive.dll\0"
       VALUE "ProductName", PACKAGE_NAME "\0"
       VALUE "ProductVersion", PACKAGE_VERSION "\0"
