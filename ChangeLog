@@ -1,5 +1,8 @@
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/Makefile.am (EXTRA_DIST): Remove the old BDS project
+	files.
+
 	* Makefile.am (AUTOMAKE_OPTIONS): New macro.
 	(EXTRA_DIST): Remove the old BDS project file.
 	(dist-hook): Invoke sign-dist.sh and export-dist.sh if any.
