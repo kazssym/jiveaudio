@@ -36,13 +36,14 @@ preserved on all copies.
 @contents
 
 @ifnottex
-@node Top, Getting Started, (dir), (dir)
+@node Top, Copying, (dir), (dir)
 @top Using JiveAudio
 
 @insertcopying
 @end ifnottex
 
 @menu
+* Copying::                     
 * Getting Started::             
 * Using JiveAudio::             
 
@@ -62,7 +63,12 @@ Using JiveAudio in Your Web Page
 @end detailmenu
 @end menu
 
-@node Getting Started, Using JiveAudio, Top, Top
+@node Copying, Getting Started, Top, Top
+@unnumbered GNU General Public License
+
+@include gpl-3.0.texi
+
+@node Getting Started, Using JiveAudio, Copying, Top
 @chapter Getting Started with JiveAudio
 
 @iftex

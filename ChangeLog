@@ -1,5 +1,9 @@
 2008-02-21  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* doc/Makefile.am (EXTRA_DIST): Add gpl-3.0.texi.
+
+	* doc/jiveaudio.texi: Include gpl-3.0.texi.
+
 	* plugins/npjive.cbproj: Update the content.
 
 	* plugins/Makefile.am (libjiveplugin_la_SOURCES): Rename
