@@ -1,3 +1,20 @@
+2008-02-21  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/npjive.cbproj: Update the content.
+
+	* plugins/Makefile.am (libjiveplugin_la_SOURCES): Rename
+	plugin.cpp.
+	(noinst_HEADERS): Rename plugin.h.
+
+	* plugins/jive.cpp: Renamed from plugins/plugin.cpp.
+	* plugins/jive.h: Renamed from plugins/plugin.h.
+
+	* plugins/Makefile.am (EXTRA_DIST): Rename npjive.rc.  Add
+	npjive.def.
+
+	* plugins/resource.rc: Renamed from npjive.rc.  Test _DEBUG
+	instead of NDEBUG.
+
 2008-02-19  Kaz Sasayama  <kazssym@vx68k.org>
 
 	* doc/jiveaudio.texi: Update the content.
