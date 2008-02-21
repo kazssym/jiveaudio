@@ -1,5 +1,9 @@
 2008-02-21  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* configure.ac: Add gl_EARLY and gl_INIT.
+
+	* Makefile.am (ACLOCAL_AMFLAGS): Add m4 to the include path.
+
 	* doc/Makefile.am (EXTRA_DIST): Add gpl-3.0.texi.
 
 	* doc/jiveaudio.texi: Include gpl-3.0.texi.

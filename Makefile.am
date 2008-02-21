@@ -1,6 +1,7 @@
 ## Process this file with automake to produce a Makefile.in.
 
 AUTOMAKE_OPTIONS = check-news dist-zip
+ACLOCAL_AMFLAGS = -I m4
 
 noinst_HEADERS = win32/config.h win32/prcpucfg.h
 

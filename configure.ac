@@ -10,6 +10,8 @@ AC_PROG_CC_STDC
 AC_PROG_CXX
 AC_USE_SYSTEM_EXTENSIONS
 
+gl_EARLY
+
 # Checks for libraries.
 AC_CHECK_LIB([mad], [mad_decoder_init], [MAD_LIBS="-lmad $MAD_LIBS"])
 AC_SUBST([MAD_LIBS])dnl
@@ -24,6 +26,8 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_FUNC_FORK
 AC_CHECK_FUNCS([tempnam])
+
+gl_INIT
 
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
