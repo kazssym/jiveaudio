@@ -57,8 +57,8 @@
     <Defines>NDEBUG;$(Defines)</Defines>
     <ILINK_DisableIncrementalLinking>true</ILINK_DisableIncrementalLinking>
     <BCC_UseRegisterVariables>Always</BCC_UseRegisterVariables>
-    <DCC_DebugInformation>false</DCC_DebugInformation>
     <BCC_SelectedOptimizations>false</BCC_SelectedOptimizations>
+    <DCC_DebugInformation>false</DCC_DebugInformation>
     <IntermediateOutputDir>Release</IntermediateOutputDir>
     <ILINK_LibraryPath>$(BDS)\lib\release;$(ILINK_LibraryPath)</ILINK_LibraryPath>
     <TASM_Debugging>None</TASM_Debugging>
@@ -72,6 +72,9 @@
   </ProjectExtensions>
   <Import Project="$(MSBuildBinPath)\Borland.Cpp.Targets" />
   <ItemGroup>
+    <DefFile Include="npjive.def">
+      <BuildOrder>0</BuildOrder>
+    </DefFile>
     <CppCompile Include="buffer.cpp">
       <DependentOn>buffer.h</DependentOn>
       <BuildOrder>7</BuildOrder>
@@ -84,40 +87,37 @@
       <BuildOrder>5</BuildOrder>
     </CppCompile>
     <CppCompile Include="file_player.cpp">
-      <BuildOrder>2</BuildOrder>
+      <BuildOrder>3</BuildOrder>
     </CppCompile>
     <CppCompile Include="jive.cpp">
       <DependentOn>jive.h</DependentOn>
-      <BuildOrder>0</BuildOrder>
+      <BuildOrder>1</BuildOrder>
     </CppCompile>
     <CppCompile Include="npn_gate.cpp">
-      <BuildOrder>10</BuildOrder>
+      <BuildOrder>11</BuildOrder>
     </CppCompile>
     <CppCompile Include="np_entry.cpp">
-      <BuildOrder>9</BuildOrder>
+      <BuildOrder>10</BuildOrder>
     </CppCompile>
     <CppCompile Include="player.cpp">
       <DependentOn>player.h</DependentOn>
-      <BuildOrder>1</BuildOrder>
+      <BuildOrder>2</BuildOrder>
     </CppCompile>
     <CppCompile Include="player_posix.cpp">
       <DependentOn>player_posix.h</DependentOn>
-      <BuildOrder>3</BuildOrder>
-    </CppCompile>
-    <CppCompile Include="player_win32.cpp">
-      <DependentOn>player_win32.h</DependentOn>
       <BuildOrder>4</BuildOrder>
     </CppCompile>
     <CppCompile Include="sox_media_player.cpp">
       <BuildOrder>6</BuildOrder>
     </CppCompile>
+    <CppCompile Include="win32.cpp">
+      <DependentOn>win32.h</DependentOn>
+      <BuildOrder>9</BuildOrder>
+    </CppCompile>
     <ResourceCompile Include="resource.rc">
       <Form>resource.res</Form>
-      <BuildOrder>11</BuildOrder>
-    </ResourceCompile>
-    <DefFile Include="npjive.def">
       <BuildOrder>12</BuildOrder>
-    </DefFile>
+    </ResourceCompile>
     <None Include="ModelSupport_npjive\default.txvpck">
       <BuildOrder>13</BuildOrder>
     </None>
