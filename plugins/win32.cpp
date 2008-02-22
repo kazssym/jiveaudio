@@ -1,20 +1,20 @@
-/* JiveAudio - multimedia plugin for Mozilla
-   Copyright (C) 2003 Hypercore Software Design, Ltd.
-
-   This program is free software; you can redistribute it and/or
-   modify it under the terms of the GNU General Public License as
-   published by the Free Software Foundation; either version 2 of the
-   License, or (at your option) any later version.
-
-   This program is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   General Public License for more details.
-
-   You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-   02111-1307, USA.  */
+/*
+ * win32 - Win32-specific unit for JiveAudio
+ * Copyright (C) 2003-2008 Hypercore Software Design, Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
 #if HAVE_CONFIG_H
 #include <config.h>
@@ -24,16 +24,30 @@
 #include <windows.h>
 #endif
 
-#define _GNU_SOURCE 1
-#define _REENTRANT 1
-
-#include "player_win32.h"
+#include "win32.h"
+#if __BORLANDC__
 #pragma package (smart_init)
+#endif
 
 #if _WIN32
  
 #include <cstdio>
 #include <dshow.h>
+
+#ifndef PLUGINID
+#define PLUGINID "@linuxfront.com/" PACKAGE_NAME ",version=" PACKAGE_VERSION
+#endif
+
+extern "C" void CALLBACK UnregisterPlugin (HWND, HINSTANCE, LPSTR, int);
+extern "C" void CALLBACK RegisterPlugin (HWND, HINSTANCE, LPSTR, int);
+
+void CALLBACK UnregisterPlugin (HWND, HINSTANCE, LPSTR, int)
+{
+}
+
+void CALLBACK RegisterPlugin (HWND, HINSTANCE, LPSTR, int)
+{
+}
 
 dshow_player::dshow_player () :
     graph (0)
