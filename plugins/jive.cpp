@@ -33,7 +33,7 @@
 
 #include "debug.h"
 #include "player_posix.h"
-#include "player_win32.h"
+#include "win32.h"
 
 #include <new>
 #include <cstring>
