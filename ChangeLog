@@ -1,5 +1,8 @@
 2008-02-22  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/debug.c: Update to GPLv3.
+	* plugins/debug.h: Likewise.
+
 	* plugins/npjive.def: Export UnregisterPlugin and RegisterPlugin.
 
 	* plugins/win32.h: Update to GPLv3.
