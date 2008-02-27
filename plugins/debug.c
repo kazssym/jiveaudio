@@ -37,25 +37,25 @@
 #pragma argsused
 void log (int prio, const char *format,...)
 {
-    va_list args;
+  va_list args;
 #if _WIN32
-    char buf[512];
+  char buf[512];
 #endif
 
-    va_start (args, format);
+  va_start (args, format);
 
 #if !defined NDEBUG
 #if _WIN32
-    vsnprintf (buf, 512 - 2, format, args);
-    strcat (buf, "\r\n");
-    OutputDebugString (buf);
+  vsnprintf (buf, 512 - 2, format, args);
+  strcat (buf, "\r\n");
+  OutputDebugString (buf);
 #else /* !_WIN32 */
-    vfprintf (stderr, format, args);
-    fputs ("\n", stderr);
+  vfprintf (stderr, format, args);
+  fputs ("\n", stderr);
 #endif /* !_WIN32 */
 #endif /* !defined NDEBUG */
 
-    va_end (args);
+  va_end (args);
 }
 
 #endif /* !HAVE_SYSLOG_H */
