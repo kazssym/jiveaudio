@@ -1,15 +1,18 @@
 2008-02-27  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/jive.cpp: Upgrade to GPLv3.
+	* plugins/jive.h: Likewise.
+
 	* plugins/npjive.cbproj: Update the project options.
 
 2008-02-22  Kaz Sasayama  <kazssym@vx68k.org>
 
-	* plugins/debug.c: Update to GPLv3.
+	* plugins/debug.c: Upgrade to GPLv3.
 	* plugins/debug.h: Likewise.
 
 	* plugins/npjive.def: Export UnregisterPlugin and RegisterPlugin.
 
-	* plugins/win32.h: Update to GPLv3.
+	* plugins/win32.h: Upgrade to GPLv3.
 	* plugins/win32.cpp: Likewise.  Remove unnecessary macro
 	definitions.
 	(UnregisterPlugin): New function.
