@@ -1,3 +1,7 @@
+2008-02-27  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/npjive.cbproj: Update the project options.
+
 2008-02-22  Kaz Sasayama  <kazssym@vx68k.org>
 
 	* plugins/debug.c: Update to GPLv3.
