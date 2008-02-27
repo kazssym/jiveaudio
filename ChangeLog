@@ -1,5 +1,7 @@
 2008-02-27  Kaz Sasayama  <kazssym@vx68k.org>
 
+	* plugins/resource.rc: Update the VERSIONINFO.
+
 	* plugins/jive.cpp: Upgrade to GPLv3.
 	* plugins/jive.h: Likewise.
 
