@@ -24,7 +24,7 @@
 #include <windows.h>
 #endif
 
-#include "jive.h"
+#include "audio.h"
 #if __BORLANDC__
 #pragma package (smart_init)
 #endif

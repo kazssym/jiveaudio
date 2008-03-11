@@ -1,9 +1,14 @@
+2008-03-11  Kaz Sasayama  <kazssym@vx68k.org>
+
+	* plugins/npjive.bpf: Removed.
+	* plugins/npjive.bdsproj: Removed.
+
 2008-02-27  Kaz Sasayama  <kazssym@vx68k.org>
 
 	* plugins/resource.rc: Update the VERSIONINFO.
 
-	* plugins/jive.cpp: Upgrade to GPLv3.
-	* plugins/jive.h: Likewise.
+	* plugins/audio.cpp: Upgrade to GPLv3.
+	* plugins/audio.h: Likewise.
 
 	* plugins/npjive.cbproj: Update the project options.
 
@@ -44,8 +49,8 @@
 	plugin.cpp.
 	(noinst_HEADERS): Rename plugin.h.
 
-	* plugins/jive.cpp: Renamed from plugins/plugin.cpp.
-	* plugins/jive.h: Renamed from plugins/plugin.h.
+	* plugins/audio.cpp: Renamed from plugins/plugin.cpp.
+	* plugins/audio.h: Renamed from plugins/plugin.h.
 
 	* plugins/Makefile.am (EXTRA_DIST): Rename npjive.rc.  Add
 	npjive.def.

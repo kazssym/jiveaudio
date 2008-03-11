@@ -96,8 +96,8 @@
     <CppCompile Include="file_player.cpp">
       <BuildOrder>3</BuildOrder>
     </CppCompile>
-    <CppCompile Include="jive.cpp">
-      <DependentOn>jive.h</DependentOn>
+    <CppCompile Include="audio.cpp">
+      <DependentOn>audio.h</DependentOn>
       <BuildOrder>1</BuildOrder>
     </CppCompile>
     <CppCompile Include="npn_gate.cpp">

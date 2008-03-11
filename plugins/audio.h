@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef jiveH
-#define jiveH 1
+#ifndef audioH
+#define audioH 1
         
 #if !_WIN32
 #define MOZ_X11 1
